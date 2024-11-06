@@ -1,0 +1,49 @@
+#groupOneProject{ 
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#teamIntroductions {
+    text-align: center;
+    border: 1px solid;
+    padding: 1%;
+    width: 30%;
+}
+
+#projectIntroduction {
+    text-align: center;
+    border: 1px solid;
+    padding: 1%;
+    width: 62%;
+}
+
+#designArea {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#designContent {
+    border: 1px solid;
+    width: 100%;
+    background: black;
+    /* change front once family decided
+    font-family: 'Rock Salt', cursive; */
+    color: #f5f5f5;
+    text-align: center;
+    padding: 1px;
+}
+
+H1 {
+    font-weight: bold;
+}
+
+H2 {
+    text-decoration: underline;
+}
+
+H3 {
+    text-decoration: underline;
+}
+
