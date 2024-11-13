@@ -9,7 +9,7 @@ teamIntroductions.innerHTML=`
 <p>Enter your favourite hobby here </p>
 
 <h2>Emma</h2>
-<p>Enter your favourite hobby here </p>
+<p>My favourite hobbies are hiking and baking</p>
 
 <h2>Jenni</h2>
 <p>My favourite hobby is snowboarding </p>
