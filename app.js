@@ -6,7 +6,7 @@ teamIntroductions.innerHTML=`
 <h1>Team Introductions</h1>
 
 <h2>Beth</h2>
-<p>Enter your favourite hobby here </p>
+<p>Favourite hobbies include: Reading, gaming and napping.</p>
 
 <h2>Emma</h2>
 <p>My favourite hobbies are hiking and baking</p>
