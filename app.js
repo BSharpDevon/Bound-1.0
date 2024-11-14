@@ -21,7 +21,7 @@ teamIntroductions.innerHTML=`
 <p>Enter your favourite hobby here </p>
 
 <h2>Stephanie</h2>
-<p>Enter your favourite hobby here </p>
+<p>Favourite hobbies: reading, gym, travelling, building footwear collection and being in nature</p>
 
 <h2>Suzanne</h2>
 <p>Enter your favourite hobby here </p>
