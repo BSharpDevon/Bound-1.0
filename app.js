@@ -18,7 +18,7 @@ teamIntroductions.innerHTML=`
 <p>Favourite hobbies: cooking/baking, knitting and running </p>
 
 <h2>Lydia</h2>
-<p>Enter your favourite hobby here </p>
+<p>My favourites hobbies include: gaming, cooking, and bouldering </p>
 
 <h2>Stephanie</h2>
 <p>Favourite hobbies: reading, gym, travelling, building footwear collection and being in nature</p>
