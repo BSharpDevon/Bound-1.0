@@ -1,5 +1,4 @@
 # Group One Project  
-Group assignment for Group One  
 
 ## Project Introduction  
 
