@@ -1,16 +1,36 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#  Bound 
 
 
-##Installing Axios library for the API
+### Introduction  
+This react project is a platform where readers can create profiles to store their favourite books, rate them and write reviews. They can bind with a friend to read a book together and view comments made by their bound buddy. 
 
-Step One
-$ npm install axios
 
-Step Two 
+### Installation Guide  
+- Clone the repository  
+- install one of the following plugins to get React working in Vite with HMR and some ESLint rules.:   
+    - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+    - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Installing Axios library for the API
+    - npm install axios
+- Copy the database code into your SQL Workbench  
+- Update the .env with your SQL workbench password  
+
+
+### Usage
+
+
+
+### API Endpoints  
+
+
+
+### Technologies Used  
+
+
+### Authors  
+* [Beth Sharp](https://github.com/BSharpDevon/)
+* [Emma Nestor](https://github.com/SuperGlitterGeek/)
+* [Jennifer Scott](https://github.com/Jenni-Rose/)
+* [Jeveria Raja](https://github.com/jvrrj/)
+* [Lydia Johnson](https://github.com/lydia-ibrahim/)
+* [Stephanie Johnson](https://github.com/stephaniehello/)
