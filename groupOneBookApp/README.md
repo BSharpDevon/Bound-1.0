@@ -16,6 +16,20 @@ This react project is a platform where readers can create profiles to store thei
 - Update the .env with your SQL workbench password  
 
 
+### Install Express for SQL API 
+
+Makes a json file:
+$ npm init 
+
+installs express:
+$ npm install express 
+
+Adds node.js to the json file: 
+$ npm init -y
+
+Connects to the MySQL database, and cors for enabling Cross-Origin Resource Sharing.
+npm install express mysql2 cors
+
 ### Usage
 
 
