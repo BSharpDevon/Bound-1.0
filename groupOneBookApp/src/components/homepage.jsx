@@ -13,8 +13,17 @@ function HomePage(){
   }
 
   function loginPassword(event){
-    setPassword(event.target.value); 
-}
+   setPassword(event.target.value); 
+  }
+
+  function login(event){
+    onClick();
+  }
+
+  function signUp(event){
+    onClick();
+  }
+
 
   return (<div>
             <h1>Welcome to Bound</h1>
@@ -36,9 +45,23 @@ function HomePage(){
               onChange={loginPassword}
               />
 
-          </div>);
+              <br />
 
-          // PUT IN THE BUTTONS
+              <input
+              name="Login"
+              type="button"
+              value="Login"
+              onClick={login}
+              />
+
+              <input
+              name="signUp"
+              type="button"
+              value="Sign up"
+              onClick={signUp}
+              />
+
+          </div>);
 };
 
 export default HomePage;
