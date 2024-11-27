@@ -30,36 +30,47 @@ function HomePage(){
 
             <p>Find books to read and share with friends.</p>
 
-            <p>Username:</p>
-            <input 
-              type="text" 
-              value={username} 
-              placeholder={"Enter your username"}
-              onChange={loginUser}/>
+            <label>
+              Username: 
+                <input
+                  type="text" 
+                  value={username} 
+                  placeholder={"Enter your username"}
+                  onChange={loginUser}
+                />
+            </label>
 
-            <p>Password:</p>
-            <input 
-              type="password" 
-              value={password} 
-              placeholder={"Enter your password"}
-              onChange={loginPassword}
-              />
+            <br />
+            
+            <label>
+              Password:
+                <input 
+                  type="password" 
+                  value={password} 
+                  placeholder={"Enter your password"}
+                  onChange={loginPassword}
+                />
+            </label>
 
-              <br />
+            <br />
 
+            <label>
               <input
-              name="Login"
-              type="button"
-              value="Login"
-              onClick={login}
+                name="Login"
+                type="button"
+                value="Login"
+                onClick={login}
               />
+            </label>
 
+            <label>
               <input
               name="signUp"
               type="button"
               value="Sign up"
               onClick={signUp}
               />
+            </label>
 
           </div>);
 };
