@@ -37,7 +37,7 @@ const PORT = 8000;
 // It makes it easy for our server to get the information from the client in a format it can use.
 app.use(express.json());
 
-// Get all items
+// Get all items example
 app.get('/api/items', (req, res) => {
     db.query('SELECT * FROM items', (err, results) => {
         if (err) throw err;
@@ -45,7 +45,7 @@ app.get('/api/items', (req, res) => {
     });
 });
 
-
+// connect example
 db.connect((err) => {
     if (err) {
         console.error('Database connection failed: ' + err.stack);
