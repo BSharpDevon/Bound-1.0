@@ -13,15 +13,6 @@ app.use(cors());
 // It is also one of the installed dependencies.
 const mysql = require('mysql2');
 
-// Get all items
-app.get('/api/items', (req, res) => {
-    db.query('SELECT * FROM items', (err, results) => {
-        if (err) throw err;
-        res.json(results);
-    });
-});
-
-
 // This loads the dotenv library, which helps us use settings stored in a .env file.
 // These settings include important information like passwords and API keys without showing them in our code.
 require('dotenv').config();
@@ -46,6 +37,13 @@ const PORT = 8000;
 // It makes it easy for our server to get the information from the client in a format it can use.
 app.use(express.json());
 
+// Get all items
+app.get('/api/items', (req, res) => {
+    db.query('SELECT * FROM items', (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
 
 
 db.connect((err) => {
