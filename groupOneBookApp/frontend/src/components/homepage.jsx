@@ -16,8 +16,9 @@ function HomePage(){
    setPassword(event.target.value); 
   }
 
+  // Example of how to call axios for button function -- change the port number to backend port number
   function login(event){
-    onClick();
+    onClick(axios.get("http://127.0.0.1:5000/fetchBooks").then(........));
   }
 
   function signUp(event){
