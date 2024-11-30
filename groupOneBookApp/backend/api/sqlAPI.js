@@ -20,14 +20,16 @@ require('dotenv').config();
 // This sets up a connection pool for MySQL, which is like having a group of helpers ready to talk to the database.
 // It allows our app to handle multiple requests at once without making a new connection each time.
 const pool = mysql.createPool({
-    host: process.env.DB_HOST,          // The MySQL server address - linking to the env file.
-    user: process.env.DB_USER,          // The MySQL server username - (connects to the MySQL server through the linked env file).
-    password: process.env.DB_PASSWORD,  // The MySQL user password - this is safe in the .env file.
+    host: 'localhost',          // The MySQL server address - linking to the env file.
+    user: 'CallumandBethPC',          // The MySQL server username - (connects to the MySQL server through the linked env file).
+    password: 'Willow2024?',  // The MySQL user password - this is safe in the .env file.
     database: 'bound_db',          // The name of the MySQL database we want to use.
     waitForConnections: true,            // This waits for a free connection if all are busy.
     connectionLimit: 10,                 // The maximum number of connections we can have at the same time.
     queueLimit: 0,                       // There's no limit on how many requests can wait for a connection.
 });
+
+
 
 // A constant named `PORT`, which sets the number 8000 as the place where our server will listen for requests.
 // It’s like giving our server a specific door to wait for visitors to come in.
@@ -45,15 +47,14 @@ app.get('/api/items', (req, res) => {
     });
 });
 
-// connect example
-db.connect((err) => {
+pool.getConnection((err, connection) => {
     if (err) {
         console.error('Database connection failed: ' + err.stack);
         return;
     }
     console.log('Connected to database.');
+    connection.release(); // Release the connection back to the pool.
 });
-
 
 // This line makes our server listen for incoming requests on the port we specified at the start (8000).
 // It logs a message to the console when the server is running, so we know it’s working.
