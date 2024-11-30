@@ -21,7 +21,7 @@ require('dotenv').config();
 // It allows our app to handle multiple requests at once without making a new connection each time.
 const pool = mysql.createPool({
     host: 'localhost',          // The MySQL server address - linking to the env file.
-    user: 'CallumandBethPC',          // The MySQL server username - (connects to the MySQL server through the linked env file).
+    user: 'root',          // The MySQL server username - (connects to the MySQL server through the linked env file).
     password: 'Willow2024?',  // The MySQL user password - this is safe in the .env file.
     database: 'bound_db',          // The name of the MySQL database we want to use.
     waitForConnections: true,            // This waits for a free connection if all are busy.
