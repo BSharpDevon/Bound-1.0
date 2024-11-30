@@ -1,5 +1,6 @@
 import React from 'react';                      // Import the React library, necessary for JSX to work
-import HomePage from './components/HomePage';   // Import the HomePage component
+import signIn from './components/signIn';   // Import the signIn component
+import signUp from './components/signUp';   // Import the SignUp component
 import './App.css';                             // Import the CSS file
 
 function App() {    // Define the App component as a functional component
