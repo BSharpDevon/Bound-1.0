@@ -1,7 +1,7 @@
-// src/components/HomePage.jsx
+// src/components/signIn.jsx
 import React, {useState} from 'react';
 
-function HomePage(){
+function SignIn(){
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,14 +33,15 @@ function HomePage(){
     
   }
 
-  function MyForm() {
-    
-
-
-  function signUp(event){
+// function to create an account
+  function signUpBtn(event){
     onClick();
   }
 
+// function to take us to the sign in page
+function signInBtn(event){
+  onClick();
+}
 
   return (<div>
             <h1>Welcome to Bound</h1>
@@ -85,11 +86,11 @@ function HomePage(){
               name="signUp"
               type="button"
               value="Sign up"
-              onClick={signUp}
+              onClick={signUpBtn}
               />
             </label>
 
           </div>);
 };
 
-export default HomePage;
+export default signIn;
