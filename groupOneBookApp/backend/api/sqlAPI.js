@@ -15,21 +15,19 @@ const mysql = require('mysql2');
 
 // This loads the dotenv library, which helps us use settings stored in a .env file.
 // These settings include important information like passwords and API keys without showing them in our code.
-require('dotenv').config();
+require('dotenv').config({ path: './passwords.env' }); 
 
 // This sets up a connection pool for MySQL, which is like having a group of helpers ready to talk to the database.
 // It allows our app to handle multiple requests at once without making a new connection each time.
 const pool = mysql.createPool({
-    host: 'localhost',          // The MySQL server address - linking to the env file.
-    user: 'root',          // The MySQL server username - (connects to the MySQL server through the linked env file).
-    password: 'Willow2024?',  // The MySQL user password - this is safe in the .env file.
-    database: 'bound_db',          // The name of the MySQL database we want to use.
-    waitForConnections: true,            // This waits for a free connection if all are busy.
-    connectionLimit: 10,                 // The maximum number of connections we can have at the same time.
-    queueLimit: 0,                       // There's no limit on how many requests can wait for a connection.
+    host: process.env.DB_HOST,          // The MySQL server address - linking to the env file.
+    user: process.env.DB_USER,          // The MySQL server username - (connects to the MySQL server through the linked env file).
+    password: process.env.DB_PASSWORD,  // The MySQL user password - this is safe in the .env file.
+    database: 'bound_db',               // The name of the MySQL database we want to use.
+    waitForConnections: true,           // This waits for a free connection if all are busy.
+    connectionLimit: 10,                // The maximum number of connections we can have at the same time.
+    queueLimit: 0,                      // There's no limit on how many requests can wait for a connection.
 });
-
-
 
 // A constant named `PORT`, which sets the number 8000 as the place where our server will listen for requests.
 // It’s like giving our server a specific door to wait for visitors to come in.
