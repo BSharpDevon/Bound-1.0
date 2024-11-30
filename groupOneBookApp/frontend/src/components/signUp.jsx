@@ -7,7 +7,7 @@ function signUpPage(){
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isChecked, setIsChecked] = useState(false);
 
   // These Functions set the new values to each of the above const
   function loginName(event){
@@ -22,9 +22,8 @@ function signUpPage(){
    setPassword(event.target.value); 
   }
 
-  // Jenni / Jeveria - Needs to be edited for checkbox formatting
   function privacyCheckbox(event){
-    tickBox(event.target.value); 
+    setIsChecked(event.target.checked); 
    }
 
   // Basic HTML, creating buttons etc
@@ -76,8 +75,8 @@ function signUpPage(){
               <input
                 name="PrivacyCheckbox"
                 type="checkbox"
-                value="By continuing you accept our privacy policy"
                 onChange={privacyCheckbox}
+
               />
             </label>
 
@@ -88,6 +87,7 @@ function signUpPage(){
                 value="Sign up"
                 onClick={signUp}
               />
+              By continuing you accept our privacy policy
             </label>
 
             {/* Jenni / Jeveria - add URL once created */}
