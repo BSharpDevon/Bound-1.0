@@ -2,20 +2,18 @@
 import React, {useState} from 'react';
 
 // Setting the values to blank
-function favouriteBooksPage(){
+function FavouriteBooksPage(){
 
-  const [bookOne, setBookOne] = useState("");
-  const [bookTwo, setBookTwo] = useState("");
-  const [bookThree, setBookThree] = useState("");
-
-  
+const [bookOne, setBookOne] = useState("");
+const [bookTwo, setBookTwo] = useState("");
+const [bookThree, setBookThree] = useState("");
 
   // These Functions set the new values to each of the above const
-  function bookOneChoice(event){
-      setBookOne(event.target.value); 
-  }
+function bookOneChoice(event){
+    setBookOne(event.target.value); 
+}
 
-  function bookTwoChoice(event){
+function bookTwoChoice(event){
     setBookTwo(event.target.value); 
 }
 
@@ -26,7 +24,7 @@ function bookThreeChoice(event){
 function finished(event){}
 
   // Basic HTML, creating buttons etc
-  return (<div>
+    return (<div>
             {/* Lydia / Emma - mini logo image to be inserted here */}
             <img src="MINI LOGO IMG NAME" alt="This is the mini Bound logo" width="500" height="600"></img>
 
@@ -40,10 +38,10 @@ function finished(event){}
 
             <label>
                 <input 
-                  type="text" 
-                  value={bookOne} 
-                  placeholder={"Select your first book"}
-                  onChange={bookOneChoice}
+                type="text" 
+                value={bookOne} 
+                placeholder={"Select your first book"}
+                onChange={bookOneChoice}
                 />
             </label>
 
@@ -51,10 +49,10 @@ function finished(event){}
 
             <label>
                 <input 
-                  type="text" 
-                  value={bookTwo} 
-                  placeholder={"Select your first book"}
-                  onChange={bookTwoChoice}
+                type="text" 
+                value={bookTwo} 
+                placeholder={"Select your first book"}
+                onChange={bookTwoChoice}
                 />
             </label>
 
@@ -62,25 +60,25 @@ function finished(event){}
 
             <label>
                 <input 
-                  type="text" 
-                  value={bookThree} 
-                  placeholder={"Select your first book"}
-                  onChange={bookThreeChoice}
+                type="text" 
+                value={bookThree} 
+                placeholder={"Select your first book"}
+                onChange={bookThreeChoice}
                 />
             </label>
 
             <br />
 
             <label>
-              <input
+            <input
                 name="finished"
                 type="button"
                 value="I'M FINISHED"
                 onClick={finished}
-              />
+            />
             </label>
 
-          </div>
+        </div>
         );
 }
 

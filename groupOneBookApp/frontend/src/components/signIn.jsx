@@ -13,7 +13,7 @@ function SignIn(){
   }
 
   function loginPassword(event){
-   setPassword(event.target.value); 
+    setPassword(event.target.value); 
   }
 
   // Example of how to call axios for button function -- change the port number to backend port number
