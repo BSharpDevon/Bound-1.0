@@ -1,4 +1,4 @@
-// src/components/SignUp.jsx
+// src/components/signUp.jsx
 import React, {useState} from 'react';
 
 // Setting the values to blank
@@ -7,7 +7,7 @@ function signUpPage(){
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isChecked, setIsChecked] = useState(false);
 
   // These Functions set the new values to each of the above const
   function loginName(event){
@@ -22,15 +22,14 @@ function signUpPage(){
    setPassword(event.target.value); 
   }
 
-  // Jenni / Jeveria - Needs to be edited for checkbox formatting
   function privacyCheckbox(event){
-    tickBox(event.target.value); 
+    setIsChecked(event.target.checked); 
    }
 
   // Basic HTML, creating buttons etc
   return (<div>
-            {/* Lydia / Emma - Image to be inserted here */}
-            <img src="LOGO NAME" alt="This is the Bound logo" width="500" height="600">
+            {/* Lydia / Emma - Main logo image to be inserted here */}
+            <img src="LOGO IMG NAME" alt="This is the Bound logo" width="500" height="600">
 
             <p>- YOUR NEXT BEST CHAPTER -</p>
 
@@ -76,8 +75,8 @@ function signUpPage(){
               <input
                 name="PrivacyCheckbox"
                 type="checkbox"
-                value="By continuing you accept our privacy policy"
                 onChange={privacyCheckbox}
+
               />
             </label>
 
@@ -88,6 +87,7 @@ function signUpPage(){
                 value="Sign up"
                 onClick={signUp}
               />
+              By continuing you accept our privacy policy
             </label>
 
             {/* Jenni / Jeveria - add URL once created */}
