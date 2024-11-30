@@ -1,4 +1,4 @@
-// src/components/SignUp.jsx
+// src/components/signUp.jsx
 import React, {useState} from 'react';
 
 // Setting the values to blank
@@ -29,8 +29,8 @@ function signUpPage(){
 
   // Basic HTML, creating buttons etc
   return (<div>
-            {/* Lydia / Emma - Image to be inserted here */}
-            <img src="LOGO NAME" alt="This is the Bound logo" width="500" height="600">
+            {/* Lydia / Emma - Main logo image to be inserted here */}
+            <img src="LOGO IMG NAME" alt="This is the Bound logo" width="500" height="600">
 
             <p>- YOUR NEXT BEST CHAPTER -</p>
 
