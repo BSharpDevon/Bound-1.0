@@ -1,9 +1,19 @@
+import axios from 'axios';
+export default axios.create({
+    baseURL: "http://localhost:8000",  
+    // Use port 8000 - the one being listened to on backend.
+    // This is the default URL for our app
+  });
+
 // Imports the express library, which is one of the installed dependencies.
 // It's a special tool to build a web server and lets us communicate with users' computers.
 const express = require('express');
 // Creates a variable which represents the Express app. 
 // We can use this to build our web server and handle requests (explained below).
 const app = express();
+
+// Use bcrypt for password hashing
+const bcrypt = require("bcrypt"); 
 
 // Creates a variable which represents the cors app.
 const cors = require('cors');
@@ -37,49 +47,113 @@ const PORT = 8000;
 // It makes it easy for our server to get the information from the client in a format it can use.
 app.use(express.json());
 
-
 // Set up a route (a path where we handle login requests):
-app.post('/bound/login', (req, res) => {
+app.post('http://localhost:8000/bound/login', (req, res) => {
     // Pull the email and password from the request body (what the user typed):
     const { email, password } = req.body;
 
-    // SQL query to find the user in the database by their email:
-    const findMember = 'SELECT * FROM members WHERE email = ?';
 
-    // Ask the database if there’s a match for this email
-    pool.query(findMember, [email], (err, results) => {
-        // If something goes wrong with the database it will print below error:
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: 'Database error' });
-        }
+//Another end point to test for log in button: 
 
-        // If no user is found, send back a "not found" message:
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'Email not found' });
-        }
+// Login endpoint
+// app.post("/bound/login", async (req, res) => {
+//     const { email, password } = req.body;
+  
+//     try {
+//       // 1. Check if the user exists in the database
+//       const userQuery = "SELECT * FROM users WHERE email = $1";
+//       const userResult = await pool.query(userQuery, [email]);
+  
+//       if (userResult.rows.length === 0) {
+//         // User not found
+//         return res.status(404).json({ success: false, message: "User not found" });
+//       }
+  
+//       const user = userResult.rows[0];
+  
+//       // 2. Check if the password matches (assuming passwords are hashed)
+//       const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+//       if (!isPasswordValid) {
+//         // Password does not match
+//         return res.status(401).json({ success: false, message: "Invalid password" });
+//       }
+  
+//       // 3. If everything checks out, return success
+//       return res.status(200).json({
+//         success: true,
+//         message: "Login successful",
+//         user: { email: user.email, id: user.id }, // Example: return user info
+//       });
+//     } catch (error) {
+//       console.error("Error during login:", error);
+//       return res.status(500).json({ success: false, message: "Internal server error" });
+//     }
+//   });
 
-        // Take the first result (the user we found)
-        const boundMember= results[0];
 
-        // Check if the password matches the one in the database
-        bcrypt.compare(password, boundMember.password, (bcryptErr, isMatch) => {
-            // If there’s an error checking the password, let us know
-            if (bcryptErr) {
-                return res.status(500).json({ message: 'Error verifying password' });
-            }
 
-            // If the password doesn’t match, send back an "invalid" message
-            if (!isMatch) {
-                return res.status(401).json({ message: 'Invalid email or password' });
-            }
 
-            // If everything is good, send back a success message and user details
-            res.status(200).json({ message: 'Login successful', boundMember });
-        });
-    });
-});
+    //First attempt to connect Login button email and password
+    // // SQL query to find the user in the database by their email:
+    // const findMember = 'SELECT * FROM members WHERE email = ?';
 
+    // // Ask the database if there’s a match for this email
+    // pool.query(findMember, [email], (err, results) => {
+    //     // If something goes wrong with the database it will print below error:
+    //     if (err) {
+    //         console.error(err);
+    //         return res.status(500).json({ message: 'Database error' });
+    //     }
+
+    //     // If no user is found, send back a "not found" message:
+    //     if (results.length === 0) {
+    //         return res.status(404).json({ message: 'Email not found' });
+    //     }
+
+    //     // Take the first result (the user we found)
+    //     const boundMember= results[0];
+
+    //     // Check if the password matches the one in the database
+    //     bcrypt.compare(password, boundMember.password, (bcryptErr, isMatch) => {
+    //         // If there’s an error checking the password, let us know
+    //         if (bcryptErr) {
+    //             return res.status(500).json({ message: 'Error verifying password' });
+    //         }
+
+    //         // If the password doesn’t match, send back an "invalid" message
+    //         if (!isMatch) {
+    //             return res.status(401).json({ message: 'Invalid email or password' });
+    //         }
+
+    //         // If everything is good, send back a success message and user details
+    //         res.status(200).json({ message: 'Login successful', boundMember });
+//         });
+//     });
+// });
+
+
+//Example hashing function for registration endpoint: 
+
+// const bcrypt = require("bcrypt");
+
+// app.post("/register", async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     // Hash the password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Insert the user into the database
+//     const insertQuery = "INSERT INTO users (email, password) VALUES ($1, $2)";
+//     await pool.query(insertQuery, [email, hashedPassword]);
+
+//     res.status(201).json({ success: true, message: "User registered successfully" });
+//   } catch (error) {
+//     console.error("Error during registration:", error);
+//     res.status(500).json({ success: false, message: "Internal server error" });
+//   }
+// });
 
 
 

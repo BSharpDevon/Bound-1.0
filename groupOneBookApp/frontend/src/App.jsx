@@ -8,8 +8,7 @@ function App() {    // Define the App component as a functional component
    <div className="App">  
      <HomePage /> {/* Render HomePage component inside the App */}
      <SignIn />
-     <SignUp />
-    
+     <SignUpPage />
    </div>
  );
 };
