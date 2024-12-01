@@ -37,14 +37,53 @@ const PORT = 8000;
 // It makes it easy for our server to get the information from the client in a format it can use.
 app.use(express.json());
 
-// Get all items example
-app.get('/api/items', (req, res) => {
-    db.query('SELECT * FROM items', (err, results) => {
-        if (err) throw err;
-        res.json(results);
+
+// Set up a route (a path where we handle login requests):
+app.post('/bound/login', (req, res) => {
+    // Pull the email and password from the request body (what the user typed):
+    const { email, password } = req.body;
+
+    // SQL query to find the user in the database by their email:
+    const findMember = 'SELECT * FROM members WHERE email = ?';
+
+    // Ask the database if there’s a match for this email
+    pool.query(findMember, [email], (err, results) => {
+        // If something goes wrong with the database it will print below error:
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Database error' });
+        }
+
+        // If no user is found, send back a "not found" message:
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Email not found' });
+        }
+
+        // Take the first result (the user we found)
+        const boundMember= results[0];
+
+        // Check if the password matches the one in the database
+        bcrypt.compare(password, boundMember.password, (bcryptErr, isMatch) => {
+            // If there’s an error checking the password, let us know
+            if (bcryptErr) {
+                return res.status(500).json({ message: 'Error verifying password' });
+            }
+
+            // If the password doesn’t match, send back an "invalid" message
+            if (!isMatch) {
+                return res.status(401).json({ message: 'Invalid email or password' });
+            }
+
+            // If everything is good, send back a success message and user details
+            res.status(200).json({ message: 'Login successful', boundMember });
+        });
     });
 });
 
+
+
+
+// Tests the connect to SQL
 pool.getConnection((err, connection) => {
     if (err) {
         console.error('Database connection failed: ' + err.stack);
