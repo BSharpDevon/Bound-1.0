@@ -34,6 +34,36 @@ function finished(event){}
 
            {/* Jenni / Jeveria - code to create a changing number to be added here */}
 
+                      {/* I started a counter but I need to figure out how to put the user input of the books into an array and then use a function which counts numbers in the array and displays as a counter*/}
+
+           function bookCounter() {
+            const [Count, setCount] = useState(0);
+            const increment = (event) => {
+                event.preventDefault(); //this stops the page constantly refreshing the value
+                setCount = ((prevCount) => prevCount+ 1);
+            }
+
+            const decrement = (event) => {
+                event.preventDefault();
+                setCount=((prevCount) => prevCount - 1);
+            }
+
+            const reset = (event) => {
+                event.preventDefault();
+                setCount(0);
+            };
+
+
+//showing count in body of text
+
+            return  (
+                <div className="counter-container"><p className="count-display">{Count}/3</p></div>
+            );
+            
+
+           }
+        
+
             {/* Jenni / Jeveria - code to add books one, two and three needs to be corrected */}
 
             <label>
