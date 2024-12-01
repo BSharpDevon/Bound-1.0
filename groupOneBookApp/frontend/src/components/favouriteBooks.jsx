@@ -82,4 +82,4 @@ function finished(event){}
         );
 }
 
-export default favouriteBooks;
+export default FavouriteBooksPage;

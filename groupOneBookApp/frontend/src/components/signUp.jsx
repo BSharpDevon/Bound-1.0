@@ -2,14 +2,13 @@
 import React, {useState} from 'react';
 
 // Setting the values to blank
-function signUpPage(){
+function SignUpPage(){
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [isChecked, setIsChecked] = useState(false);
 
-const [fullName, setFullName] = useState("");
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [isChecked, setIsChecked] = useState(false);
-
-// These Functions set the new values to each of the above const
+// These Functions set the new values to state variables
 function loginName(event){
     setFullName(event.target.value); 
 }
@@ -116,4 +115,4 @@ function signUp() {
         </div>);
 }
 
-export default signUpPage;
+export default SignUpPage;
