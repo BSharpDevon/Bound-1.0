@@ -15,6 +15,8 @@ This react project is a platform where readers can create profiles to store thei
 - Copy the database code into your SQL Workbench  
 - Update the .env with your SQL workbench password  
 
+### For hashing passwords install bcrypt
+npm i bcrypt
 
 ### Install Express for SQL API 
 
