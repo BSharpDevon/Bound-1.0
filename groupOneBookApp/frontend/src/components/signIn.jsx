@@ -1,27 +1,63 @@
 // src/components/signIn.jsx
 import React, {useState} from 'react';
+import axios from 'axios';
 
 function SignIn(){
 
-  const [username, setUsername] = useState("");
+  const [loginDetails, setLoginDetails] = useState({
+    email: '',
+    password ''
+  });
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
 
-  // This Function is connected to the username box - needs to be written
-  function loginUser(event){
-      setUsername(event.target.value); 
+  // This Function is connected to the email text box
+  // Tells SQL to check if it matches records
+  function loginUser(event) {
+    // Set the username from the input box
+    setEmail(event.target.value);
+  
+    // Fetch the data when the username changes
+    axios.get('https://bound/login')  // GET fetches the username
+      .then(res => {
+        // Sets the response to below const
+        const user = res.data.content;  // Example: { content: [{ email: 'john' }, { username: 'jane' }] }
+  
+        // Check if the username exists in the response
+        const emailFound = user.some(user => user.email === email);
+  
+        if (emailFound) {
+          console.log(`User: ${email} found`);
+        } else {
+          console.log(`User: ${email} not found`);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+      });
   }
 
+
+
+
+
+
   function loginPassword(event){
+<<<<<<< update-frontend
     setPassword(event.target.value); 
   }
+=======
+   setPassword(event.target.value); 
+  }++
+
+>>>>>>> main
 
   // Example of how to call axios for button function -- change the port number to backend port number
   function login(event){
     // onClick(axios.get("http://127.0.0.1:5000/fetchBooks").then(........));
-    const [formData, setFormData] = useState({
-      name: '',
-      email: '',
+    
     });
 
     const checkDetails = (e) => {
@@ -77,7 +113,7 @@ function signInBtn(event){
                 name="Login"
                 type="button"
                 value="Login"
-                onClick={login}
+                onClick={loginUser}
               />
             </label>
 
