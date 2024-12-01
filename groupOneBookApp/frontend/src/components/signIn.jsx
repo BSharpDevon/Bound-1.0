@@ -124,4 +124,4 @@ function signInBtn(event){
           </div>);
 };
 
-export default signIn;
+export default SignIn;
