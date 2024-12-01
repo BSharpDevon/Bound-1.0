@@ -1,9 +1,19 @@
+import axios from 'axios';
+export default axios.create({
+    baseURL: "http://localhost:8000",  
+    // Use port 8000 - the one being listened to on backend.
+    // This is the default URL for our app
+  });
+
 // Imports the express library, which is one of the installed dependencies.
 // It's a special tool to build a web server and lets us communicate with users' computers.
 const express = require('express');
 // Creates a variable which represents the Express app. 
 // We can use this to build our web server and handle requests (explained below).
 const app = express();
+
+// Use bcrypt for password hashing
+const bcrypt = require("bcrypt"); 
 
 // Creates a variable which represents the cors app.
 const cors = require('cors');
@@ -39,7 +49,7 @@ app.use(express.json());
 
 
 // Set up a route (a path where we handle login requests):
-app.post('/bound/login', (req, res) => {
+app.post('http://localhost:8000/bound/login', (req, res) => {
     // Pull the email and password from the request body (what the user typed):
     const { email, password } = req.body;
 
