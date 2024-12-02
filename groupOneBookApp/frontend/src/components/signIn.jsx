@@ -12,8 +12,7 @@ function SignIn(){
 
   // Login function, happens after clicking login button:
   const loginBtn = (e) => {
-    e.preventDefault(); // Prevent default (reloading the page when button is clicked.)
-
+    
   // Validate input
     if (!email || !password) {
       console.log("Please enter both email and password");
