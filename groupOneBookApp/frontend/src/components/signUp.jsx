@@ -1,5 +1,5 @@
 // src/components/signUp.jsx
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 // Setting the values to blank
 function SignUpPage(){
