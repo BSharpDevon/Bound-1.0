@@ -48,7 +48,7 @@ const PORT = 8000;
 app.use(express.json());
 
 // Set up a route (a path where we handle login requests):
-app.post('http://localhost:8000/bound/login', (req, res) => {
+app.post('bound/login', (req, res) => {
     // Pull the email and password from the request body (what the user typed):
     const { email, password } = req.body;
 
@@ -57,6 +57,7 @@ app.post('http://localhost:8000/bound/login', (req, res) => {
 
 // Login endpoint
 // app.post("/bound/login", async (req, res) => {
+    // Pull the email and password from the request body (what the user typed):
 //     const { email, password } = req.body;
   
 //     try {
@@ -130,7 +131,7 @@ app.post('http://localhost:8000/bound/login', (req, res) => {
     //         res.status(200).json({ message: 'Login successful', boundMember });
 //         });
 //     });
-// });
+});
 
 
 //Example hashing function for registration endpoint: 
