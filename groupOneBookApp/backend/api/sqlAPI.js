@@ -56,43 +56,45 @@ app.post('bound/login', (req, res) => {
 //Another end point to test for log in button: 
 
 // Login endpoint
-// app.post("/bound/login", async (req, res) => {
-    // Pull the email and password from the request body (what the user typed):
-//     const { email, password } = req.body;
+app.post("/bound/login", async (req, res) => {
+    // Extract the email and password from the request body
+    const { email, password } = req.body;
   
-//     try {
-//       // 1. Check if the user exists in the database
-//       const userQuery = "SELECT * FROM users WHERE email = $1";
-//       const userResult = await pool.query(userQuery, [email]);
+    try {
+      // 1. Query the database to find the user by their email
+      const userQuery = "SELECT * FROM users WHERE email = $1";
+      const userResult = await pool.query(userQuery, [email]);
   
-//       if (userResult.rows.length === 0) {
-//         // User not found
-//         return res.status(404).json({ success: false, message: "User not found" });
-//       }
+      // 2. Check if the user exists
+      if (userResult.rows.length === 0) {
+        // If no user is found, send a 404 response with a message
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
   
-//       const user = userResult.rows[0];
+      // 3. Retrieve the user details from the query result
+      const user = userResult.rows[0];
   
-//       // 2. Check if the password matches (assuming passwords are hashed)
-//       const isPasswordValid = await bcrypt.compare(password, user.password);
+      // 4. Compare the provided password with the stored (hashed) password in the database
+      const isPasswordValid = await bcrypt.compare(password, user.password);
   
-//       if (!isPasswordValid) {
-//         // Password does not match
-//         return res.status(401).json({ success: false, message: "Invalid password" });
-//       }
+      // 5. If the password is incorrect, send a 401 Unauthorized response
+      if (!isPasswordValid) {
+        return res.status(401).json({ success: false, message: "Invalid password" });
+      }
   
-//       // 3. If everything checks out, return success
-//       return res.status(200).json({
-//         success: true,
-//         message: "Login successful",
-//         user: { email: user.email, id: user.id }, // Example: return user info
-//       });
-//     } catch (error) {
-//       console.error("Error during login:", error);
-//       return res.status(500).json({ success: false, message: "Internal server error" });
-//     }
-//   });
-
-
+      // 6. If everything checks out, send a success response with the user's details
+      return res.status(200).json({
+        success: true,
+        message: "Login successful",
+        user: { email: user.email, id: user.id }, // Example of returning user info
+      });
+    } catch (error) {
+      // 7. Handle any errors that occur during the process
+      console.error("Error during login:", error);
+      // Send a 500 Internal Server Error response if an error occurs
+      return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
 
 
     //First attempt to connect Login button email and password
