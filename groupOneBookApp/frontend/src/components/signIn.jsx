@@ -1,5 +1,5 @@
 // src/components/signIn.jsx
-import React, {useState} from 'react';
+import {useState} from 'react';
 import axios from 'axios';
 
 function SignIn(){
@@ -29,19 +29,18 @@ function SignIn(){
       .then((res) => { // fetches the username
         // API checks details and if they match responds with success.
         const loginSuccessful = res.data.success;
-           if (LoginSuccessful) {
-              console.log(`User: ${email} found and logged in successfully`);
-              loadHomepage();
-            } else {
-              console.log(`Invalid email or password`);
-            }
-          });
-
+        if (loginSuccessful) {
+            console.log(`User: ${email} found and logged in successfully`);
+            loadHomepage();
+        } else {
+            console.log(`Invalid email or password`);
+          }
+      })              
       // An error message if the database can't get the user 
       .catch(error => {
         console.error(`Error during login:`, error);
       });
-  };
+  }
 
     // Jenny/Jeveria: Function needed to load homepage
     const loadHomepage = () => {
@@ -51,7 +50,8 @@ function SignIn(){
 
   // function to create an account
   function signUpBtn(e){
-    onClick();
+    console.log("Sign up button clicked");
+    // Add sign-up logic here - on click
   }
 
   return (
@@ -59,7 +59,7 @@ function SignIn(){
       <h1>Welcome to Bound</h1>
       <p>Find books to read and share with friends.</p>
 
-      <form onSubmit={stopFormPgRefresh}>     
+      <form onSubmit={(e) => e.preventDefault()}>     
         <label>
           Email: 
           <input
@@ -98,6 +98,6 @@ function SignIn(){
       </form>
     </div>
   );
-};
+}
 
 export default SignIn;
