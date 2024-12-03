@@ -31,10 +31,18 @@ function HomePage() {
     searchBooks(event.target.value);
   };
 
-  // Function to handle adding book to library
-  const handleAddToLibrary = (book) => {
-    setUserLibrary((prevLibrary) => [...prevLibrary, book]);  // Add the book to the library
-  };
+// Function to handle adding book to library
+const handleAddToLibrary = (book) => {
+  setUserLibrary((prevLibrary) => {
+    // Check if the book is already in the library
+    if (prevLibrary.some((b) => b.id === book.id)) {
+      alert(`${book.title} is already in your library.`);
+      return prevLibrary;
+    }
+    // Add the book to the library
+    return [...prevLibrary, book];
+  });
+};
 
   // Function to navigate to the "Start Bind" page
   const startBind = () => {
