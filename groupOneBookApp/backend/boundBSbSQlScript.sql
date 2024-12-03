@@ -5,14 +5,21 @@ USE bound_db;
 -- Members table: Stores user details
 CREATE TABLE members (
     member_id INT PRIMARY KEY AUTO_INCREMENT, -- Unique identifier for each user
-    username VARCHAR(25) UNIQUE,              -- Unique username
-    first_name VARCHAR(50),                   -- First name of the user
-    last_name VARCHAR(50),                    -- Last name of the user
+	full_name VARCHAR(100),
     email VARCHAR(100) UNIQUE CHECK (email LIKE '%@%'), -- Email must be unique and contain '@'
     password VARCHAR(100)                     -- Password (should ideally store hashed values)
 );
 
+ALTER TABLE members
+ADD COLUMN privacy_checkbox BOOLEAN DEFAULT FALSE;
+
+UPDATE members
+SET privacy_checkbox = TRUE
+WHERE member_id = 1;
+
 SELECT * FROM members; 
+
+SELECT * FROM members WHERE email = 'beth_sharp@groupone.com';
 
 CREATE TABLE favourite_books (
     member_id INT,                             -- Links to the member who liked the book
