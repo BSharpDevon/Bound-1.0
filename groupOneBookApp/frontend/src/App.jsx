@@ -1,13 +1,24 @@
-import {useState} from 'react';
-import SignUpPage from './components/signUp'; 
-import AuthPage from './components/authPage';  // Import the SignUp component
-import './App.css';                             // Import the CSS file
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
+import AuthPage from './components/authPage';
+import FavouriteBooksPage from './components/favouriteBooks'; // Add this import
+import HomePage from './components/homePage'; // Add your homepage component
+import Bind from './components/bind';
+import './App.css';
 
+// function to nevigate through the pages of the website
 function App() {
   return (
-    <div className="App">
-      <AuthPage /> 
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<AuthPage />} /> {/* Authentication page */}
+          <Route path="/favourite-books" element={<FavouriteBooksPage />} /> {/* FavouriteBooksPage */}
+          <Route path="/homepage" element={<HomePage />} /> {/* Homepage */}
+          <Route path="/bind" element={<Bind />} /> {/* Bind page */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
