@@ -1,4 +1,3 @@
-// src/components/HomePage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +7,6 @@ function HomePage() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [userLibrary, setUserLibrary] = useState([]);  // Local state for user's library
   const [userBinds, setUserBinds] = useState([]);  // Local state for user's binds
-  const fullName = "John Doe";  // Example full name
   const navigate = useNavigate();
 
   // Fetch books from API based on search query
