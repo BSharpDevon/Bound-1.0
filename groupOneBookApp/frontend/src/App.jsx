@@ -1,5 +1,4 @@
-import {useState} from 'react';
-import SignUpPage from './components/signUp'; 
+import {useState} from 'react'; 
 import AuthPage from './components/authPage';  // Import the SignUp component
 import './App.css';                             // Import the CSS file
 
