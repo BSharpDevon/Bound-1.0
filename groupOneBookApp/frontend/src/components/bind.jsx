@@ -10,3 +10,4 @@ function BindPage() {
 }
 
 export default BindPage;
+
