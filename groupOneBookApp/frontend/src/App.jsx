@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import AuthPage from './components/authPage';
 import FavouriteBooksPage from './components/favouriteBooks'; // Add this import
-import HomePage from './components/homePage'; // Add your homepage component
+import HomePage from './components/homepage'; // Add your homepage component
 import Bind from './components/bind';
 import './App.css';
 

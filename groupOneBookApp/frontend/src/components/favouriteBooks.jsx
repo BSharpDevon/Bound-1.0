@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
-function FavouriteBooksPage({ userName }) {
+function FavouriteBooksPage({ fullName }) {
   const [bookOne, setBookOne] = useState("");
   const [bookTwo, setBookTwo] = useState("");
   const [bookThree, setBookThree] = useState("");
@@ -84,7 +84,7 @@ function FavouriteBooksPage({ userName }) {
       />
 
       {/* Welcome Message */}
-      <p>WELCOME, {userName}!</p>
+      <p>WELCOME, {fullName}!</p>
       <p>Search for your favourite books and add them to your library.</p>
 
       {/* Counter */}
@@ -146,7 +146,7 @@ function FavouriteBooksPage({ userName }) {
 }
 
 FavouriteBooksPage.propTypes = {
-    userName: PropTypes.string.isRequired, // Ensuring userName is a string and required
+    fullName: PropTypes.string.isRequired, // Ensuring fullName is a string and required
 };
 
 export default FavouriteBooksPage;
