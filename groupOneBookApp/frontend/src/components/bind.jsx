@@ -1,5 +1,4 @@
 // src/components/bind.jsx
-import React from 'react';
 
 function BindPage() {
   return (
