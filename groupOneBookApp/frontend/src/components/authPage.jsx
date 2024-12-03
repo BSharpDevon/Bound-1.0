@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import Carousel from "./imageCarousel";
+import React from "react";
 import axios from 'axios';
+import logo from '../assets/images/logo.svg';
 
 function AuthPage() {
   // State for Sign In
@@ -54,102 +57,106 @@ function AuthPage() {
   };
 
   return (
-    <div>
-      {/* Welcome and Instructions */}
-      <h1>Welcome to Bound</h1>
-      <p>Find books to read and share with friends.</p>
+    <div className="auth-page">
 
-      {/* SignIn Section */}
-      <div>
-        <h2>Sign In</h2>
-        <form onSubmit={(e) => e.preventDefault()}>
+            {/* SignIn Section */}
+      <div class="login">
+        <img id="logo" src={logo} alt="Bound Logo" />
+        <form class="signin" onSubmit={(e) => e.preventDefault()}>
           <label>
-            Email:
             <input
               type="text"
               value={emailSignIn}
-              placeholder={"Enter your email address"}
+              placeholder={"Email address"}
               onChange={(e) => setEmailSignIn(e.target.value)}
             />
           </label>
           <br />
 
           <label>
-            Password:
             <input
               type="password"
               value={passwordSignIn}
-              placeholder={"Enter your password"}
+              placeholder={"Password"}
               onChange={(e) => setPasswordSignIn(e.target.value)}
             />
           </label>
           <br />
 
-          <input
+          <input id="signUpButton"
             name="Login"
-            type="button"
-            value="Login"
+            type= "button"
+            value="LOGIN"
             onClick={signInBtn}
           />
         </form>
       </div>
 
-      <hr />
-
+      {/* Welcome and Instructions */}
+      <div className="intro">
+        <h1>Let your friends find your next best read</h1>
+        <p id="introMessage">
+          Can't settle on what to read? Find out how your literary interests bind with friends and get a reading recommendation to enjoy together.
+        </p>
+      </div>
+      
       {/* SignUp Section */}
-      <div>
-        <h2>Sign Up</h2>
+      <div className="signup">
         <form onSubmit={(e) => e.preventDefault()}>
           <label>
-            Full Name:
             <input
               type="text"
               value={fullName}
-              placeholder={"Enter your full name"}
+              placeholder={"Full name"}
               onChange={(e) => setFullName(e.target.value)}
             />
           </label>
           <br />
 
           <label>
-            Email:
             <input
               type="text"
               value={emailSignUp}
-              placeholder={"Enter your email"}
+              placeholder={"Email address"}
               onChange={(e) => setEmailSignUp(e.target.value)}
             />
           </label>
           <br />
 
           <label>
-            Password:
             <input
               type="password"
               value={passwordSignUp}
-              placeholder={"Enter your password"}
+              placeholder={"Password"}
               onChange={(e) => setPasswordSignUp(e.target.value)}
             />
           </label>
           <br />
 
-          <label>
+          <label id="privacyPolicy">
             <input
               name="PrivacyCheckbox"
               type="checkbox"
               onChange={(e) => setIsChecked(e.target.checked)}
             />
-            By continuing, you accept our privacy policy
+            By signing up, you acknowledge that you have read our Privacy
+            Policy.
           </label>
           <br />
 
           <input
             name="signUp"
             type="button"
-            value="Sign Up"
+            value="SIGN UP"
             onClick={signUpBtn}
+            id="signUpButton"
           />
         </form>
+      </div>
+
+      {/* Carousel Section at the Bottom */}
+      <div className="carousel-bottom">
+        <Carousel />
       </div>
     </div>
   );
