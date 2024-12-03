@@ -1,175 +1,142 @@
-import axios from 'axios';
-export default axios.create({
-    baseURL: "http://localhost:8000",  
-    // Use port 8000 - the one being listened to on backend.
-    // This is the default URL for our app
-  });
+// Imports built-in and third-party libraries
+import axios from 'axios'; // For making HTTP requests
+import express from 'express'; // For building the web server
+import bcrypt from 'bcrypt'; // For password hashing
+import cors from 'cors'; // For handling cross-origin requests
+import mysql from 'mysql2/promise'; // For promise-compatible database communication
+import dotenv from 'dotenv'; // For loading environment variables
 
-// Imports the express library, which is one of the installed dependencies.
-// It's a special tool to build a web server and lets us communicate with users' computers.
-const express = require('express');
-// Creates a variable which represents the Express app. 
-// We can use this to build our web server and handle requests (explained below).
+// Load environment variables from the `.env` file
+dotenv.config({ path: './passwords.env' });
+
+// Create an instance of Axios for API requests
+export default axios.create({
+  baseURL: "http://localhost:8000", // Default base URL for the backend
+});
+
+// Initialise the Express application
 const app = express();
 
-// Use bcrypt for password hashing
-const bcrypt = require("bcrypt"); 
-
-// Creates a variable which represents the cors app.
-const cors = require('cors');
+// Set up CORS middleware
 app.use(cors());
 
-// This connects the MySQL library to the JavaScript file.
-// It is also one of the installed dependencies.
-const mysql = require('mysql2');
-
-// This loads the dotenv library, which helps us use settings stored in a .env file.
-// These settings include important information like passwords and API keys without showing them in our code.
-require('dotenv').config({ path: './passwords.env' }); 
-
-// This sets up a connection pool for MySQL, which is like having a group of helpers ready to talk to the database.
-// It allows our app to handle multiple requests at once without making a new connection each time.
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,          // The MySQL server address - linking to the env file.
-    user: process.env.DB_USER,          // The MySQL server username - (connects to the MySQL server through the linked env file).
-    password: process.env.DB_PASSWORD,  // The MySQL user password - this is safe in the .env file.
-    database: 'bound_db',               // The name of the MySQL database we want to use.
-    waitForConnections: true,           // This waits for a free connection if all are busy.
-    connectionLimit: 10,                // The maximum number of connections we can have at the same time.
-    queueLimit: 0,                      // There's no limit on how many requests can wait for a connection.
-});
-
-// A constant named `PORT`, which sets the number 8000 as the place where our server will listen for requests.
-// It’s like giving our server a specific door to wait for visitors to come in.
-const PORT = 8000;
-
-// This sets up middleware to read and understand JSON data sent by the client.
-// It makes it easy for our server to get the information from the client in a format it can use.
+// Set up middleware to parse JSON requests
 app.use(express.json());
 
-// Set up a route (a path where we handle login requests):
-app.post('bound/login', (req, res) => {
-    // Pull the email and password from the request body (what the user typed):
-    const { email, password } = req.body;
+// Configure the MySQL connection pool using promise-based API
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,          // Database server address
+  user: process.env.DB_USER,          // Database username
+  password: process.env.DB_PASSWORD,  // Database password
+  database: 'bound_db',               // Database name
+  waitForConnections: true,           // Wait if all connections are busy
+  connectionLimit: 10,                // Maximum number of connections
+  queueLimit: 0,                      // No limit on queued requests
+});
 
+// Define the port where the server will listen for incoming requests
+const PORT = 8000;
 
-//Another end point to test for log in button: 
+// Sign up endpoint
+app.post("/bound/signup", async (req, res) => {
+  const { email, fullName, password, privacyAccepted } = req.body;
+
+  if (!email || !fullName || !password || !privacyAccepted) {
+    return res.status(400).json({
+      success: false,
+      message: "All fields are required, and privacy must be accepted.",
+    });
+  }
+
+  try {
+    // Step 1: Look in the database to see if someone already signed up with this email.
+    const [searchMembers] = await pool.query("SELECT * FROM members WHERE email = ?", [email]);
+
+    if (searchMembers.length > 0) {
+      return res.status(409).json({
+        success: false,
+        message: "Email is already registered.",
+      });
+    }
+
+    // Step 2: Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Step 3: Add the new user to the database
+    const [newUserResult] = await pool.query(
+      "INSERT INTO members (email, full_name, password) VALUES (?, ?, ?)",
+      [email, fullName, hashedPassword]
+    );
+
+    // Step 4: Respond with success and the user details
+    return res.status(201).json({
+      success: true,
+      message: "New member added",
+      user: { fullName, email }, // Returning new member_id and email
+    });
+
+  } catch (error) {
+    console.error("Error during signup:", error); // Enhanced logging for the error
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+      error: error.message, // Send the error message for debugging
+    });
+  }
+});
 
 // Login endpoint
-// app.post("/bound/login", async (req, res) => {
-    // Pull the email and password from the request body (what the user typed):
-//     const { email, password } = req.body;
-  
-//     try {
-//       // 1. Check if the user exists in the database
-//       const userQuery = "SELECT * FROM users WHERE email = $1";
-//       const userResult = await pool.query(userQuery, [email]);
-  
-//       if (userResult.rows.length === 0) {
-//         // User not found
-//         return res.status(404).json({ success: false, message: "User not found" });
-//       }
-  
-//       const user = userResult.rows[0];
-  
-//       // 2. Check if the password matches (assuming passwords are hashed)
-//       const isPasswordValid = await bcrypt.compare(password, user.password);
-  
-//       if (!isPasswordValid) {
-//         // Password does not match
-//         return res.status(401).json({ success: false, message: "Invalid password" });
-//       }
-  
-//       // 3. If everything checks out, return success
-//       return res.status(200).json({
-//         success: true,
-//         message: "Login successful",
-//         user: { email: user.email, id: user.id }, // Example: return user info
-//       });
-//     } catch (error) {
-//       console.error("Error during login:", error);
-//       return res.status(500).json({ success: false, message: "Internal server error" });
-//     }
-//   });
+app.post("/bound/login", async (req, res) => {
+  const { email, password } = req.body;
 
+  try {
+      // 1. Query the database to find the user by their email
+      const [memberResultsFound] = await pool.query("SELECT * FROM members WHERE email = ?", [email]);
 
+      // 2. Check if the user exists
+      if (memberResultsFound.length === 0) {
+          console.log(`Login attempt failed for email: ${email} - User not found`);
+          return res.status(404).json({ success: false, message: "User not found" });
+      }
 
+      const user = memberResultsFound[0];
 
-    //First attempt to connect Login button email and password
-    // // SQL query to find the user in the database by their email:
-    // const findMember = 'SELECT * FROM members WHERE email = ?';
+      // 3. Compare the provided password with the stored (hashed) password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    // // Ask the database if there’s a match for this email
-    // pool.query(findMember, [email], (err, results) => {
-    //     // If something goes wrong with the database it will print below error:
-    //     if (err) {
-    //         console.error(err);
-    //         return res.status(500).json({ message: 'Database error' });
-    //     }
+      if (!isPasswordValid) {
+          console.log(`Login attempt failed for email: ${email} - Invalid password`);
+          return res.status(401).json({ success: false, message: "Invalid password" });
+      }
 
-    //     // If no user is found, send back a "not found" message:
-    //     if (results.length === 0) {
-    //         return res.status(404).json({ message: 'Email not found' });
-    //     }
-
-    //     // Take the first result (the user we found)
-    //     const boundMember= results[0];
-
-    //     // Check if the password matches the one in the database
-    //     bcrypt.compare(password, boundMember.password, (bcryptErr, isMatch) => {
-    //         // If there’s an error checking the password, let us know
-    //         if (bcryptErr) {
-    //             return res.status(500).json({ message: 'Error verifying password' });
-    //         }
-
-    //         // If the password doesn’t match, send back an "invalid" message
-    //         if (!isMatch) {
-    //             return res.status(401).json({ message: 'Invalid email or password' });
-    //         }
-
-    //         // If everything is good, send back a success message and user details
-    //         res.status(200).json({ message: 'Login successful', boundMember });
-//         });
-//     });
+      console.log(`Login successful for email: ${email}`);
+      return res.status(200).json({
+          success: true,
+          message: "Login successful",
+          user: { email: user.email, id: user.id },
+      });
+  } catch (error) {
+      console.error("Error during login:", error);
+      return res.status(500).json({ success: false, message: "Internal server error" });
+  }
 });
 
 
-//Example hashing function for registration endpoint: 
-
-// const bcrypt = require("bcrypt");
-
-// app.post("/register", async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     // Hash the password
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     // Insert the user into the database
-//     const insertQuery = "INSERT INTO users (email, password) VALUES ($1, $2)";
-//     await pool.query(insertQuery, [email, hashedPassword]);
-
-//     res.status(201).json({ success: true, message: "User registered successfully" });
-//   } catch (error) {
-//     console.error("Error during registration:", error);
-//     res.status(500).json({ success: false, message: "Internal server error" });
-//   }
-// });
-
-
-
-// Tests the connect to SQL
-pool.getConnection((err, connection) => {
-    if (err) {
+// Test the database connection
+const testDatabaseConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connected to database.');
+        connection.release(); // Release the connection back to the pool.
+    } catch (err) {
         console.error('Database connection failed: ' + err.stack);
-        return;
     }
-    console.log('Connected to database.');
-    connection.release(); // Release the connection back to the pool.
-});
+};
 
-// This line makes our server listen for incoming requests on the port we specified at the start (8000).
-// It logs a message to the console when the server is running, so we know it’s working.
+// Call the database connection test
+testDatabaseConnection();
+
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

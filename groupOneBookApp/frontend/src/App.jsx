@@ -1,14 +1,20 @@
 import {useState} from 'react';
 import SignUpPage from './components/signUp'; 
-import AuthPage from './components/authPage';
-import './index.css'; 
-     
+import AuthPage from './components/authPage';  // Import the SignUp component
+import './App.css';                             // Import the CSS file
 
 function App() {
   return (
-    <div className="App">
-      <AuthPage /> 
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<AuthPage />} /> {/* Authentication page */}
+          <Route path="/favourite-books" element={<FavouriteBooksPage />} /> {/* FavouriteBooksPage */}
+          <Route path="/homepage" element={<HomePage />} /> {/* Homepage */}
+          <Route path="/bind" element={<Bind />} /> {/* Bind page */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
