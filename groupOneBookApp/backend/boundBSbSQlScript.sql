@@ -10,6 +10,9 @@ CREATE TABLE members (
     password VARCHAR(100)                     -- Password (should ideally store hashed values)
 );
 
+DELETE FROM members WHERE member_id = 7;
+
+
 ALTER TABLE members
 ADD COLUMN privacy_checkbox BOOLEAN DEFAULT FALSE;
 

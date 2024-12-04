@@ -4,10 +4,6 @@ import express from 'express'; // For building the web server
 import bcrypt from 'bcrypt'; // For password hashing
 import cors from 'cors'; // For handling cross-origin requests
 import mysql from 'mysql2/promise'; // For promise-compatible database communication
-import dotenv from 'dotenv'; // For loading environment variables
-
-// Load environment variables from the `.env` file
-dotenv.config({ path: './passwords.env' });
 
 // Create an instance of Axios for API requests
 export default axios.create({
@@ -15,13 +11,13 @@ export default axios.create({
 });
 
 // Initialise the Express application
-const app = express();
+const sqlDBApi = express();
 
 // Set up CORS middleware
-app.use(cors());
+sqlDBApi.use(cors());
 
 // Set up middleware to parse JSON requests
-app.use(express.json());
+sqlDBApi.use(express.json());
 
 // Configure the MySQL connection pool using promise-based API
 const pool = mysql.createPool({
@@ -34,11 +30,8 @@ const pool = mysql.createPool({
   queueLimit: 0,                      // No limit on queued requests
 });
 
-// Define the port where the server will listen for incoming requests
-const PORT = 8000;
-
 // Sign up endpoint
-app.post("/bound/signup", async (req, res) => {
+sqlDBApi.post("/bound/signup", async (req, res) => {
   const { email, fullName, password, privacyAccepted } = req.body;
 
   if (!email || !fullName || !password || !privacyAccepted) {
@@ -72,11 +65,11 @@ app.post("/bound/signup", async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "New member added",
-      user: { fullName, email }, // Returning new member_id and email
+      user: { fullName, email }, // Returning new members' details
     });
 
   } catch (error) {
-    console.error("Error during signup:", error); // Enhanced logging for the error
+    console.error("Error during signup:", error); // Logging for the error
     return res.status(500).json({
       success: false,
       message: "Internal server error.",
@@ -86,7 +79,7 @@ app.post("/bound/signup", async (req, res) => {
 });
 
 // Login endpoint
-app.post("/bound/login", async (req, res) => {
+sqlDBApi.post("/bound/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -121,7 +114,6 @@ app.post("/bound/login", async (req, res) => {
   }
 });
 
-
 // Test the database connection
 const testDatabaseConnection = async () => {
     try {
@@ -136,7 +128,5 @@ const testDatabaseConnection = async () => {
 // Call the database connection test
 testDatabaseConnection();
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Export the app to be used elsewhere (like in `server.js`)
+export default sqlDBApi;
