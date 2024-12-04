@@ -44,8 +44,23 @@ h1 {
   padding: 0;
 }
 
+h2 {
+  font-family: 'IMFellEnglish';
+  font-size: 2.0em;
+  line-height: 1.0;
+  margin: 65px 0px 15px;
+  padding: 0;
+}
+
 .highlight {
   color: #ffca0b;
+}
+
+#favouriteBooksContent {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 p {
@@ -90,6 +105,7 @@ input {
   padding-right: 20px;
   margin-bottom: 10px;
   border-radius: 10px;
+  color: white;
 }
 
 input:focus {
@@ -113,15 +129,34 @@ input:focus {
   flex-direction: row;
 }
 
-.button {
+.count-display {
+  font-family: 'IMFellEnglish', serif;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.favouriteBooksMessage {
+  font-family: 'IMFellEnglish', serif;
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+}
+
+button {
   background-color: #10282A;
-  font-family: 'French', serif;
+  font-family: 'IMFellEnglish', serif;
   color: white;
   padding: 10px 40px;
   border: solid white 1px;
   text-align: center;
   border-radius: 412px;
   cursor: pointer;
+  margin: 20px;
+}
+
+Button:hover {
+  background-color: #ffca0b;
+  color: #091819;
 }
 
 #signUpButton {
