@@ -167,10 +167,71 @@ Button:hover {
   padding: 0 20px;
 }
 
+.homepage {
+  width: 100%;
+}
+
 .homepage-logo {
   flex: 0 0 auto;
   font-size: 20px;
   font-weight: bold;
+}
+
+.homepage-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 350px;
+}
+
+.central-panel {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.059), #00000052);
+  height: 850px;
+  width: 1050px;
+  color: white;
+  margin-top: 40px;
+  margin-left: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.homepage-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-library {
+  background-color: #071D1C;
+  border-radius: 20px;
+  max-width: 350px;
+  height: 400px;
+  color: white;
+  margin-top: 40px;
+  margin-left: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.user-binds {
+  background-color: #071D1C;
+  color: white;
+  border-radius: 20px;
+  max-width: 350px;
+  height: 400px;
+  margin-top: 40px;
+  margin-left: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+#homepage-subheadings {
+font-family: 'IMFellEnglish';
+  font-size: 1.5em;
+  opacity: 80%;
+  line-height: 1.0;
+  padding: 0;
+  text-align: center;
 }
 
 .search-bar {

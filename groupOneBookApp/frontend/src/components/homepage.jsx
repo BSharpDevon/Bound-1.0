@@ -92,9 +92,13 @@ const handleAddToLibrary = (book) => {
 
       </div>
 
+      <div class="homepage-content">
+
+      <div class="homepage-sidebar">
+
       {/* User's Library Section */}
       <div className="user-library">
-        <h2>Your Library</h2>
+        <h2 id="homepage-subheadings">YOUR FRIENDS & BINDS</h2>
         <div className="library-books">
           {userLibrary.map((book, index) => (
             <div key={index} className="library-book">
@@ -108,7 +112,7 @@ const handleAddToLibrary = (book) => {
 
       {/* User's Binds Section */}
       <div className="user-binds">
-        <h2>Your Binds</h2>
+        <h2 id="homepage-subheadings">BINDS</h2>
         <div className="binds">
           {userBinds.map((bind, index) => (
             <div key={index} className="bind-item">
@@ -117,11 +121,18 @@ const handleAddToLibrary = (book) => {
             </div>
           ))}
         </div>
+
+              <div className="start-bind">
+        <button id="signUpButton" onClick={startBind}>START NEW BIND</button>
       </div>
 
-      {/* Start New Bind Section */}
-      <div className="start-bind">
-        <button id="signUpButton" onClick={startBind}>START NEW BIND</button>
+      </div>
+      </div>
+
+      <div class="central-panel">
+        <h2 id="homepage-subheadings">YOUR BOOKS</h2>
+      </div>
+
       </div>
 
       <Footer/>
