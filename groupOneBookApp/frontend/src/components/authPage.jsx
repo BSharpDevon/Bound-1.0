@@ -100,7 +100,7 @@ function AuthPage() {
       <div className="intro-section">
         <div id="introMessage">
           <h1>Let Your <span class="highlight">Friends</span> Find Your Next Best Book</h1>
-          <p>Bound searches millions of titles to match you and your friend’s unique tastes. Sign up for a free unique book recommendation.</p>
+          <p>Bound searches millions of titles to match you and your friend’s unique tastes. Sign up for a free book recommendation.</p>
           
           
           {/* SignUp Section */}

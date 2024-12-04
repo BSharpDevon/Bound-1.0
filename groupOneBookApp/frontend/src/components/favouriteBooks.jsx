@@ -56,7 +56,7 @@ function FavouriteBooksPage({ fullName }) {
     const favouriteBooks = [bookOne, bookTwo, bookThree].filter((book) => book.trim() !== "");
     
     if (favouriteBooks.length === 0) {
-      alert("Please select at least one book.");
+      alert("Please add three books to add to your profile.");
       return;
     }
 

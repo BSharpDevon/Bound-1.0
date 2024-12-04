@@ -245,7 +245,7 @@ Button:hover {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  margin-top: 2.5%;
+  margin-top: 2%;
   align-items: center;
   background-image: url('./assets/images/background.svg');
 }
