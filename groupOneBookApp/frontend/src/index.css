@@ -145,7 +145,7 @@ button {
   font-family: 'IMFellEnglish', serif;
   color: white;
   padding: 10px 40px;
-  border: solid white 1px;
+  border: solid grey 1px;
   text-align: center;
   border-radius: 412px;
   cursor: pointer;
@@ -155,6 +155,36 @@ button {
 Button:hover {
   background-color: #ffca0b;
   color: #091819;
+}
+
+.homepage-header {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: space-between;
+  position: relative;
+  height: 60px;
+  padding: 0 20px;
+}
+
+.homepage-logo {
+  flex: 0 0 auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.search-bar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
 }
 
 #signUpButton {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/images/logo.svg';
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -57,14 +58,16 @@ const handleAddToLibrary = (book) => {
 
   return (
     <div className="homepage">
+
+      <div className="homepage-header">
       {/* Logo Section */}
-      <div className="logo">
-        <img src="placeholder-logo.png" alt="Logo" width="150" height="150" />
+      <div className="homepage-logo">
+      <img id="logo" src={logo} alt="Bound Logo" />
       </div>
 
       {/* Search Bar Section */}
       <div className="search-bar">
-        <input
+        <input className='search-input'
           type="text"
           placeholder="What do you want to read?"
           value={searchQuery}
@@ -83,6 +86,9 @@ const handleAddToLibrary = (book) => {
             </div>
           ))}
         </div>
+
+      </div>
+
       </div>
 
       {/* User's Library Section */}
@@ -114,7 +120,7 @@ const handleAddToLibrary = (book) => {
 
       {/* Start New Bind Section */}
       <div className="start-bind">
-        <button onClick={startBind}>Start a New Bind</button>
+        <button id="signUpButton" onClick={startBind}>START NEW BIND</button>
       </div>
     </div>
   );
