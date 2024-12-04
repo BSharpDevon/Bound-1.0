@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import Carousel from "./imageCarousel";
+import React from "react";
 import axios from 'axios';
+import logo from '../assets/images/logo.svg';
+import group from '../assets/images/group2.svg';
 
 function AuthPage() {
   // State for Sign In
@@ -13,7 +17,7 @@ function AuthPage() {
   const [isChecked, setIsChecked] = useState(false);
 
   // SignIn Function
-  const signInBtn = (e) => {
+  const signInBtn = () => {
     if (!emailSignIn || !passwordSignIn) {
       console.log("Please enter both email and password");
       return;
@@ -39,13 +43,12 @@ function AuthPage() {
   };
 
   // SignUp Function
-  const signUpBtn = (e) => {
+  const signUpBtn = () => {
     if (!fullName || !emailSignUp || !passwordSignUp || !isChecked) {
       alert("Please fill in all fields and accept the privacy policy to continue");
       return;
     }
     console.log({ fullName, emailSignUp, passwordSignUp });
-    // Add code to handle sign up here (e.g., API call)
   };
 
   // Function to redirect to homepage after successful login
@@ -54,102 +57,113 @@ function AuthPage() {
   };
 
   return (
-    <div>
-      {/* Welcome and Instructions */}
-      <h1>Welcome to Bound</h1>
-      <p>Find books to read and share with friends.</p>
+    <div className="auth-page">
 
       {/* SignIn Section */}
-      <div>
-        <h2>Sign In</h2>
-        <form onSubmit={(e) => e.preventDefault()}>
+      <div className="login">
+        <img id="logo" src={logo} alt="Bound Logo" />
+        <form className="signin" onSubmit={(e) => e.preventDefault()}>
           <label>
-            Email:
             <input
               type="text"
               value={emailSignIn}
-              placeholder={"Enter your email address"}
+              placeholder={"Email address"}
               onChange={(e) => setEmailSignIn(e.target.value)}
             />
           </label>
           <br />
 
           <label>
-            Password:
             <input
               type="password"
               value={passwordSignIn}
-              placeholder={"Enter your password"}
+              placeholder={"Password"}
               onChange={(e) => setPasswordSignIn(e.target.value)}
             />
           </label>
           <br />
 
-          <input
+          <input id="signUpButton"
             name="Login"
             type="button"
-            value="Login"
+            value="LOGIN"
             onClick={signInBtn}
           />
         </form>
       </div>
 
-      <hr />
-
-      {/* SignUp Section */}
-      <div>
-        <h2>Sign Up</h2>
+      {/* Welcome and Instructions */}
+      <div class="header-section">
+      
+      <div id="girl-image"><img id="girl" src={group} alt="Woman reading a book" /></div>
+      
+      <div className="intro-section">
+        <div id="introMessage">
+          <h1>Let Your <span class="highlight">Friends</span> Find Your Next Best Book</h1>
+          <p>Bound searches millions of titles to match you and your friend’s unique tastes. Sign up for a free book recommendation.</p>
+          
+          
+          {/* SignUp Section */}
+      <div className="signup">
         <form onSubmit={(e) => e.preventDefault()}>
           <label>
-            Full Name:
             <input
               type="text"
               value={fullName}
-              placeholder={"Enter your full name"}
+              placeholder={"Full name"}
               onChange={(e) => setFullName(e.target.value)}
             />
           </label>
           <br />
 
           <label>
-            Email:
             <input
               type="text"
               value={emailSignUp}
-              placeholder={"Enter your email"}
+              placeholder={"Email address"}
               onChange={(e) => setEmailSignUp(e.target.value)}
             />
           </label>
           <br />
 
           <label>
-            Password:
             <input
               type="password"
               value={passwordSignUp}
-              placeholder={"Enter your password"}
+              placeholder={"Password"}
               onChange={(e) => setPasswordSignUp(e.target.value)}
             />
           </label>
           <br />
 
-          <label>
+          <label id="privacyPolicy">
             <input
               name="PrivacyCheckbox"
               type="checkbox"
               onChange={(e) => setIsChecked(e.target.checked)}
             />
-            By continuing, you accept our privacy policy
+            By signing up, you acknowledge that you have read our <b>Privacy Policy</b>.
           </label>
           <br />
 
           <input
             name="signUp"
             type="button"
-            value="Sign Up"
+            value="SIGN UP"
             onClick={signUpBtn}
+            id="signUpButton"
           />
         </form>
+      </div>
+
+        </div>
+      </div>
+
+      </div>
+
+      {/* Carousel Section at the Bottom */}
+      <div className="carousel-bottom">
+        <Carousel />
       </div>
     </div>
   );

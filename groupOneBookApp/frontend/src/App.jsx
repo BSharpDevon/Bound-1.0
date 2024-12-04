@@ -1,11 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthPage from './components/authPage';
-import FavouriteBooksPage from './components/favouriteBooks'; // Add this import
-import HomePage from './components/homepage'; // Add your homepage component
+import FavouriteBooksPage from './components/favouriteBooks';
+import HomePage from './components/homepage';
 import Bind from './components/bind';
 import './App.css';
 
-// function to nevigate through the pages of the website
 function App() {
   return (
     <Router>
@@ -21,4 +20,4 @@ function App() {
   );
 }
 
-export default App;     // Export the App component so it can be used in other files
+export default App;

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
+import logo from '../assets/images/logo.svg';
 
 function FavouriteBooksPage({ fullName }) {
   const [bookOne, setBookOne] = useState("");
@@ -55,7 +56,7 @@ function FavouriteBooksPage({ fullName }) {
     const favouriteBooks = [bookOne, bookTwo, bookThree].filter((book) => book.trim() !== "");
     
     if (favouriteBooks.length === 0) {
-      alert("Please select at least one book.");
+      alert("Please add three books to add to your profile.");
       return;
     }
 
@@ -74,18 +75,13 @@ function FavouriteBooksPage({ fullName }) {
   };
 
   return (
-    <div>
-      {/* Logo */}
-      <img
-        src="MINI LOGO IMG NAME"
-        alt="This is the mini Bound logo"
-        width="500"
-        height="600"
-      />
+    <div id="favouriteBooksContent">
+
+    <img id="logo" src={logo} alt="Bound Logo" />
 
       {/* Welcome Message */}
-      <p>WELCOME, {fullName}!</p>
-      <p>Search for your favourite books and add them to your library.</p>
+      <h2>WELCOME, {fullName}!</h2>
+      <p className="favouriteBooksMessage">There's nothing like a good book. Search for your three favourite reads and save them to your library.</p>
 
       {/* Counter */}
       <div className="counter-container">
@@ -97,7 +93,7 @@ function FavouriteBooksPage({ fullName }) {
         <input
           type="text"
           value={bookOne}
-          placeholder="Select your first book"
+          placeholder="Choose book"
           onChange={(e) => {
             handleBookOneChange(e);
             updateCounter();
@@ -110,7 +106,7 @@ function FavouriteBooksPage({ fullName }) {
         <input
           type="text"
           value={bookTwo}
-          placeholder="Select your second book"
+          placeholder="Choose book"
           onChange={(e) => {
             handleBookTwoChange(e);
             updateCounter();
@@ -123,7 +119,7 @@ function FavouriteBooksPage({ fullName }) {
         <input
           type="text"
           value={bookThree}
-          placeholder="Select your third book"
+          placeholder="Choose book"
           onChange={(e) => {
             handleBookThreeChange(e);
             updateCounter();
