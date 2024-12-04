@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import logo from '../assets/images/logo.svg';
-import Footer from './Footer.jsx';
+import Footer from './footer.jsx';
 
 function FavouriteBooksPage({ fullName }) {
   const [bookOne, setBookOne] = useState("");
@@ -82,7 +82,7 @@ function FavouriteBooksPage({ fullName }) {
 
       {/* Welcome Message */}
       <h2>WELCOME, {fullName}!</h2>
-      <p className="favouriteBooksMessage">There's nothing like a good book. Search for your three favourite reads and save them to your library.</p>
+      <p className="favouriteBooksMessage">There&aposs nothing like a good book. Search for your three favourite reads and save them to your library.</p>
 
       {/* Counter */}
       <div className="counter-container">
