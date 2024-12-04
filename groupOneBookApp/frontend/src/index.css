@@ -109,13 +109,11 @@ input {
 }
 
 input:focus {
-  background-color: #10282A;
-  /* Light blue background */
+  background-color: #fff4e3;
   border-color: #ffca0b;
-  /* Highlighted border color */
+  color: #10282A;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Removes default browser outline */
 }
 
 #girl {
