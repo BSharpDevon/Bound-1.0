@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.svg';
+import bindimage from '../assets/images/bind-image.svg';
 import Footer from './footer.jsx';
 
 function HomePage() {
@@ -98,7 +99,7 @@ const handleAddToLibrary = (book) => {
 
       {/* User's Library Section */}
       <div className="user-library">
-        <h2 id="homepage-subheadings">YOUR FRIENDS & BINDS</h2>
+        <h2 id="homepage-subheadings">Your Friends</h2>
         <div className="library-books">
           {userLibrary.map((book, index) => (
             <div key={index} className="library-book">
@@ -112,7 +113,8 @@ const handleAddToLibrary = (book) => {
 
       {/* User's Binds Section */}
       <div className="user-binds">
-        <h2 id="homepage-subheadings">BINDS</h2>
+        <h2 id="homepage-subheadings">Your Binds</h2>
+        <img src={bindimage}/>
         <div className="binds">
           {userBinds.map((bind, index) => (
             <div key={index} className="bind-item">
@@ -130,7 +132,7 @@ const handleAddToLibrary = (book) => {
       </div>
 
       <div class="central-panel">
-        <h2 id="homepage-subheadings">YOUR BOOKS</h2>
+        <h2 id="homepage-subheadings">Your Library</h2>
       </div>
 
       </div>
