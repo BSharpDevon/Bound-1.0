@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import logo from '../assets/images/logo.svg';
+import Footer from './Footer.jsx';
 
 function FavouriteBooksPage({ fullName }) {
   const [bookOne, setBookOne] = useState("");
@@ -137,6 +138,9 @@ function FavouriteBooksPage({ fullName }) {
 
       {/* "I'm Finished" Button */}
       <button onClick={finished}>I&apos;M FINISHED</button>
+
+      <Footer/>
+
     </div>
   );
 }
