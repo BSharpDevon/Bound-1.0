@@ -1,0 +1,208 @@
+:root {
+  color: #EEF4F8;
+  background-color: #091819;
+  background-image: url('./assets/images/background.svg');
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+  width: 100%;
+  background-image: url;
+  overflow-x: hidden;
+}
+
+@font-face {
+  font-family: 'IMFellEnglish';
+  src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
+}
+
+h1 {
+  font-family: 'IMFellEnglish', serif;
+  font-size: 3.7em;
+  line-height: 1.0;
+}
+
+p {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.0em;
+  max-width: 50%;
+  line-height: 1.1;
+}
+
+#text {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.0em;
+  max-width: 70%;
+  margin-right: 10px;
+  line-height: 1.1;
+}
+
+img {
+display: flex;
+  padding-left: 2vh;
+  width: 150px;
+}
+
+input {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.0em;
+  line-height: 1.1;
+  padding: 10px;
+  background-color: #10282A;
+  border: solid white 0.5px;
+  margin-top: 10px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+#girl {
+  width: 600px;
+  margin-left: 50px;
+}
+
+.header-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+}
+
+#signUpButton {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  margin-top: 20px;
+}
+
+#signUpButton:hover {
+  background-color: #091819;
+}
+
+.signup {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#privacyPolicy {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.8em;
+  color: grey;
+  gap: 3px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.button:hover {
+  background-color: #091819;
+}
+
+#logo {
+  margin-left: 20px;
+  display: block;
+}
+
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#logo {
+  margin-left: 0px;
+  margin-top: 10px
+}
+
+.signin {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin-right: 20px;
+  max-width: 550px;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.signup {
+  gap: 10px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+#introMessage {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.carousel-container {
+  width: 100%;
+  padding-bottom: 3vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('./assets/images/background.svg');
+}
+
+.carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.carousel img {
+  width: 225px;
+  height: 300px;
+  object-fit: cover;
+  margin: 0 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  scrollbar-width: none;
+}
+
+@media (prefers-color-scheme: light) {}

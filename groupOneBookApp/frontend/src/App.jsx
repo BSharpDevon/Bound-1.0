@@ -1,6 +1,9 @@
-import {useState} from 'react'; 
-import AuthPage from './components/authPage';  // Import the SignUp component
-import './App.css';                             // Import the CSS file
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthPage from './components/authPage';
+import FavouriteBooksPage from './components/favouriteBooks';
+import HomePage from './components/homepage';
+import Bind from './components/bind';
+import './App.css';
 
 function App() {
   return (
@@ -17,5 +20,4 @@ function App() {
   );
 }
 
-export default App;     // Export the App component so it can be used in other files
-
+export default App;
