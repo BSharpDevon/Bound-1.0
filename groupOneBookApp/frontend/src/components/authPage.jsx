@@ -4,6 +4,7 @@ import React from "react";
 import axios from 'axios';
 import logo from '../assets/images/logo.svg';
 import group from '../assets/images/group2.svg';
+import Footer from './Footer.jsx';
 
 function AuthPage() {
   // State for Sign In
@@ -165,6 +166,9 @@ function AuthPage() {
       <div className="carousel-bottom">
         <Carousel />
       </div>
+
+      <Footer/>
+
     </div>
   );
 }

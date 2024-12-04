@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer.jsx';
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,6 +117,9 @@ const handleAddToLibrary = (book) => {
       <div className="start-bind">
         <button onClick={startBind}>Start a New Bind</button>
       </div>
+
+      <Footer/>
+
     </div>
   );
 }
