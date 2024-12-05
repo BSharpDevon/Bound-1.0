@@ -1,8 +1,8 @@
 // Import required libraries
 import express from 'express';
 import dotenv from 'dotenv';
-import searchBookshelf from './searchBookshelf.js'; // Note: Use .js extension when importing local files
-import SigninApi from './SigninApi.js'; // Note: Use .js extension when importing local files
+import searchBookshelf from './searchBookshelf.js'; // Use .js extension for local file imports
+import SigninApi from './SigninApi.js'; // Use .js extension for local file imports
 
 // Load environment variables from .env
 dotenv.config();
@@ -10,12 +10,8 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Use the routes defined in searchBookshelf.js
-app.use('/api', searchBookshelf); // Prefix routes with '/api'
-app.use('/api', SigninApi); // Prefix routes with '/api'
+// Use the routes defined in searchBookshelf.js and SigninApi.js
+app.use('/api/search', searchBookshelf);  // Prefix routes with '/api/search' for searchBookshelf
+app.use('/api/signin', SigninApi);        // Prefix routes with '/api/signin' for SigninApi
 
-// Set up the server to listen on a specific port
-const PORT = process.env.PORT || 8000; // Default to port 8000 if not defined
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+

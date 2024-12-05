@@ -4,11 +4,11 @@ import express from 'express'; // For building the web server
 import bcrypt from 'bcrypt'; // For password hashing
 import cors from 'cors'; // For handling cross-origin requests
 import mysql from 'mysql2/promise'; // For promise-compatible database communication
+import dotenv from 'dotenv';
+// Load environment variables from .env
+dotenv.config();
 
-// Create an instance of Axios for API requests
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000", // Default base URL for the backend
-});
+
 
 // Initialise the Express application
 const SigninApi = express();
@@ -127,6 +127,12 @@ const testDatabaseConnection = async () => {
 
 // Call the database connection test
 testDatabaseConnection();
+
+// Set up the server to listen on a specific port
+const PORT = 8000;
+SigninApi.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
 
 // Export the app to be used elsewhere (like in `server.js`)
 export default SigninApi;
