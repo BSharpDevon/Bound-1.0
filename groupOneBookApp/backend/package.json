@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node api/test.js",
-    "dev": "node api/apiSigninApi.js"
+    "dev": "node api/SigninApi"
   },
   "keywords": [],
   "author": "",

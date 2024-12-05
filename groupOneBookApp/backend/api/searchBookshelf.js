@@ -9,6 +9,7 @@ const searchBookshelf = express.Router();
 searchBookshelf.get('/search', async (req, res) => {
   const { searchRequest } = req.query;
 
+
   // If the user didn't give us a search term, show an error message
   try {
     if (!searchRequest) {

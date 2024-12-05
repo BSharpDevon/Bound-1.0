@@ -6,18 +6,18 @@ import cors from 'cors'; // For handling cross-origin requests
 import mysql from 'mysql2/promise'; // For promise-compatible database communication
 
 // Create an instance of Axios for API requests
-export default axios.create({
+const axiosInstance = axios.create({
   baseURL: "http://localhost:8000", // Default base URL for the backend
 });
 
 // Initialise the Express application
-const sqlDBApi = express();
+const SigninApi = express();
 
 // Set up CORS middleware
-sqlDBApi.use(cors());
+SigninApi.use(cors());
 
 // Set up middleware to parse JSON requests
-sqlDBApi.use(express.json());
+SigninApi.use(express.json());
 
 // Configure the MySQL connection pool using promise-based API
 const pool = mysql.createPool({
@@ -31,7 +31,7 @@ const pool = mysql.createPool({
 });
 
 // Sign up endpoint
-sqlDBApi.post("/bound/signup", async (req, res) => {
+SigninApi.post("/bound/signup", async (req, res) => {
   const { email, fullName, password, privacyAccepted } = req.body;
 
   if (!email || !fullName || !password || !privacyAccepted) {
@@ -79,7 +79,7 @@ sqlDBApi.post("/bound/signup", async (req, res) => {
 });
 
 // Login endpoint
-sqlDBApi.post("/bound/login", async (req, res) => {
+SigninApi.post("/bound/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -129,4 +129,4 @@ const testDatabaseConnection = async () => {
 testDatabaseConnection();
 
 // Export the app to be used elsewhere (like in `server.js`)
-export default sqlDBApi;
+export default SigninApi;
