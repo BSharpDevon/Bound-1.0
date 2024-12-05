@@ -4,20 +4,20 @@ import express from 'express'; // For building the web server
 import bcrypt from 'bcrypt'; // For password hashing
 import cors from 'cors'; // For handling cross-origin requests
 import mysql from 'mysql2/promise'; // For promise-compatible database communication
+import dotenv from 'dotenv';
+// Load environment variables from .env
+dotenv.config();
 
-// Create an instance of Axios for API requests
-export default axios.create({
-  baseURL: "http://localhost:8000", // Default base URL for the backend
-});
+
 
 // Initialise the Express application
-const sqlDBApi = express();
+const SigninApi = express();
 
 // Set up CORS middleware
-sqlDBApi.use(cors());
+SigninApi.use(cors());
 
 // Set up middleware to parse JSON requests
-sqlDBApi.use(express.json());
+SigninApi.use(express.json());
 
 // Configure the MySQL connection pool using promise-based API
 const pool = mysql.createPool({
@@ -31,7 +31,7 @@ const pool = mysql.createPool({
 });
 
 // Sign up endpoint
-sqlDBApi.post("/bound/signup", async (req, res) => {
+SigninApi.post("/bound/signup", async (req, res) => {
   const { email, fullName, password, privacyAccepted } = req.body;
 
   if (!email || !fullName || !password || !privacyAccepted) {
@@ -79,7 +79,7 @@ sqlDBApi.post("/bound/signup", async (req, res) => {
 });
 
 // Login endpoint
-sqlDBApi.post("/bound/login", async (req, res) => {
+SigninApi.post("/bound/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -128,27 +128,11 @@ const testDatabaseConnection = async () => {
 // Call the database connection test
 testDatabaseConnection();
 
-// Export the app to be used elsewhere (like in `server.js`)
-export default sqlDBApi;
-
-// Import necessary modules
-const express = require('express');
-const { getReadBooks } = require('./readBooksController'); // Import the function you created for getting read books
-
-const router = express.Router();
-
-// Define the route for getting read books
-router.get('/api/read-books', async (req, res) => {
-    const result = await getReadBooks();
-
-    // Send the result to the frontend based on the status code
-    if (result.status === 200) {
-        res.status(200).json(result.data); // Send the books data if found
-    } else {
-        res.status(result.status).json({ message: result.message }); // Send an error message if no books found
-    }
+// Set up the server to listen on a specific port
+const PORT = 8000;
+SigninApi.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// Export the router to use in the main app
-module.exports = router;
-
+// Export the app to be used elsewhere (like in `server.js`)
+export default sqlDBApi;
