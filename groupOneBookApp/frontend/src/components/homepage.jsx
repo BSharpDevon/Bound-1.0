@@ -11,6 +11,7 @@ function HomePage() {
   const [userBinds, setUserBinds] = useState([]);  // Local state for user's binds
   const navigate = useNavigate();
 
+
   // Fetch books from API based on search query
   const searchBooks = async (query) => {
     if (query.length < 2) {
@@ -57,6 +58,30 @@ const handleAddToLibrary = (book) => {
     navigate("/start-bind", { state: { book: selectedBook } });
   };
 
+  //Function for searching users to  add a friend
+  function searchUsers() {
+    const [searchUserEmail, setSearchUserEmail] = useState("");
+
+    const handleInputChange = (e) => {
+      const searchUser=e.target.value;
+      setSearchUserEmail(searchUser)
+    }
+  }
+
+  const users = [
+    {firstName: "Jeveria", id:1, email:"jeveria@cfg.com"},
+    {firstName: "Beth", id:2, email: "beth@cfg.com"},
+    {firstName: "Steph", id:3, email: "steph@cfg.com"},
+    {firstName: "Jenni", id:4, email: "jenni@cfg.com"},
+    {firstName: "Lydia", id:5, email: "lydia@cfg.com"}
+
+  ]
+
+  
+
+
+  
+
   return (
     <div className="homepage">
 
@@ -92,6 +117,18 @@ const handleAddToLibrary = (book) => {
 
       </div>
 
+       {/* Search users Section */}
+
+       <div className="user-search-bar">
+        <input className="search-users"
+               type="email"
+               placeholder="Search for a new friend using an email"
+               value={searchUserEmail}
+               onChange={handleUserSearchChange}
+               />
+
+       </div>
+
       {/* User's Library Section */}
       <div className="user-library">
         <h2>Your Library</h2>
@@ -122,6 +159,17 @@ const handleAddToLibrary = (book) => {
       {/* Start New Bind Section */}
       <div className="start-bind">
         <button id="signUpButton" onClick={startBind}>START NEW BIND</button>
+      </div>
+
+      <div>
+        <input type="email"
+               value={searchUserEmail}
+               onChange={handleInputChange}
+               placeholder="Search user email to find more friends"
+        />
+        <ul>
+          {users.map(user=> <li key={user.email}>{user.firstName}</li>)}
+        </ul>
       </div>
 
       <Footer/>
