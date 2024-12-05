@@ -19,3 +19,17 @@ const PORT = process.env.PORT || 8000; // Default to port 8000 if not defined
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const bookRoutes = require('./routes'); // Import the routes where your GET endpoint is defined
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json()); // Middleware to parse JSON request body
+app.use(bookRoutes); // Use the routes for handling book-related requests
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

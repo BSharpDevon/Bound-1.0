@@ -130,3 +130,25 @@ testDatabaseConnection();
 
 // Export the app to be used elsewhere (like in `server.js`)
 export default sqlDBApi;
+
+// Import necessary modules
+const express = require('express');
+const { getReadBooks } = require('./readBooksController'); // Import the function you created for getting read books
+
+const router = express.Router();
+
+// Define the route for getting read books
+router.get('/api/read-books', async (req, res) => {
+    const result = await getReadBooks();
+
+    // Send the result to the frontend based on the status code
+    if (result.status === 200) {
+        res.status(200).json(result.data); // Send the books data if found
+    } else {
+        res.status(result.status).json({ message: result.message }); // Send an error message if no books found
+    }
+});
+
+// Export the router to use in the main app
+module.exports = router;
+
