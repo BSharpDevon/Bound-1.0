@@ -1,69 +1,307 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  color: #EEF4F8;
+  background-color: #091819;
+  background-image: url('./assets/images/background.svg');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #434242;
-
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+  width: 100%;
+  background-image: url;
+  overflow-x: hidden;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+@font-face {
+  font-family: 'IMFellEnglish';
+  src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'French';
+  src: url('./assets/fonts/french.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChicLovers';
+  src: url('./assets/fonts/ChicLovers.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-family: 'IMFellEnglish';
+  font-size: 3.7em;
+  line-height: 1.0;
+  margin: 65px 0px 15px;
+  padding: 0;
+}
+
+h2 {
+  font-family: 'IMFellEnglish';
+  font-size: 2.0em;
+  line-height: 1.0;
+  margin: 65px 0px 15px;
+  padding: 0;
+}
+
+.highlight {
+  color: #ffca0b;
+}
+
+#favouriteBooksContent {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  font-family: 'IMFellEnglish';
+  font-weight: 500;
+  max-width: 500px;
+  font-size: 1.2em;
+  line-height: 1.5;
+  padding: 0;
+}
+
+label {
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-size: 1.0em;
+  max-width: 50%;
   line-height: 1.1;
 }
 
-/* Old react css for reference */
-/* button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+#text {
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-size: 1.0em;
+  max-width: 70%;
+  margin-right: 10px;
+  line-height: 1.1;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-} */
 
-@media (prefers-color-scheme: light) {
-  /* :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  } */
+img {
+display: flex;
+  padding-left: 2vh;
+  width: 150px;
+  cursor: pointer;
 }
+
+input {
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-size: 1.0em;
+  line-height: 1.1;
+  padding: 10px;
+  background-color: #10282A;
+  border: solid grey 1px;
+  margin-top: 10px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: white;
+}
+
+input:focus {
+  background-color: #fff4e3;
+  border-color: #ffca0b;
+  color: #10282A;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#girl {
+  width: 600px;
+  margin-left: 100px;
+  padding: 0px;
+}
+
+.header-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.count-display {
+  font-family: 'IMFellEnglish', serif;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.favouriteBooksMessage {
+  font-family: 'IMFellEnglish', serif;
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+}
+
+button {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid grey 1px;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+Button:hover {
+  background-color: #ffca0b;
+  color: #091819;
+}
+
+.homepage-header {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: space-between;
+  position: relative;
+  height: 60px;
+  padding: 0 20px;
+}
+
+.homepage-logo {
+  flex: 0 0 auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.search-bar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#signUpButton {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  margin-top: 30px;
+}
+
+#signUpButton:hover {
+  background-color: #ffca0b;
+  color: #091819;
+}
+
+.signup {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#privacyPolicy {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.8em;
+  color: grey;
+  gap: 3px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.button:hover {
+  background-color: #091819;
+}
+
+#logo {
+  display: block;
+}
+
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#logo {
+  margin-left: 0px;
+  margin-top: 10px
+}
+
+.signin {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin-right: 5%;
+  max-width: 550px;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.signup {
+  gap: 10px;
+}
+
+.intro-section {
+  max-width: 1000px;
+  margin-bottom: 50px;
+}
+
+#introMessage {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.carousel-container {
+  width: 100%;
+  padding-bottom: 3vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  align-items: center;
+  background-image: url('./assets/images/background.svg');
+}
+
+.carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.carousel img {
+  width: 225px;
+  height: 300px;
+  object-fit: cover;
+  margin: 0 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  scrollbar-width: none;
+}
+
+@media (prefers-color-scheme: light) {}

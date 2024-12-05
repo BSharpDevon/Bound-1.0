@@ -135,4 +135,4 @@ SigninApi.listen(PORT, () => {
 });
 
 // Export the app to be used elsewhere (like in `server.js`)
-export default SigninApi;
+export default sqlDBApi;

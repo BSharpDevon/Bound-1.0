@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/images/logo.svg';
+import Footer from './footer.jsx';
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -7,6 +9,28 @@ function HomePage() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [userLibrary, setUserLibrary] = useState([]);  // Local state for user's library
   const [userBinds, setUserBinds] = useState([]);  // Local state for user's binds
+  const [searchUserEmail, setSearchUserEmail] = useState(""); //search users to add as friends
+
+  //for searching users to add as friend in a search bar
+  const handleInputChange = (e) => {
+    const searchUser=e.target.value;
+    setSearchUserEmail(searchUser)
+  };
+
+  const users = [ //just adding an array to check it works before we make an API. Will be deleted
+    {firstName: "Jeveria", id:1, email:"jeveria@cfg.com"},
+    {firstName: "Beth", id:2, email: "beth@cfg.com"},
+    {firstName: "Steph", id:3, email: "steph@cfg.com"},
+    {firstName: "Jenni", id:4, email: "jenni@cfg.com"},
+    {firstName: "Lydia", id:5, email: "lydia@cfg.com"}
+
+  ]
+//filtering through the search with the array
+  const filteredUsers= users.filter((user)=>
+    user.email.toLowerCase().includes(searchUserEmail.LowerCase())
+);
+
+
   const navigate = useNavigate();
 
   // Fetch books from API based on search query
@@ -57,14 +81,16 @@ const handleAddToLibrary = (book) => {
 
   return (
     <div className="homepage">
+
+      <div className="homepage-header">
       {/* Logo Section */}
-      <div className="logo">
-        <img src="placeholder-logo.png" alt="Logo" width="150" height="150" />
+      <div className="homepage-logo">
+      <img id="logo" src={logo} alt="Bound Logo" />
       </div>
 
       {/* Search Bar Section */}
       <div className="search-bar">
-        <input
+        <input className='search-input'
           type="text"
           placeholder="What do you want to read?"
           value={searchQuery}
@@ -83,7 +109,22 @@ const handleAddToLibrary = (book) => {
             </div>
           ))}
         </div>
+
       </div>
+
+      </div>
+
+       {/* Search users Section */}
+
+       <div className="user-search-bar">
+        <input className="search-users"
+               type="email"
+               placeholder="Search for a new friend using an email"
+               value={searchUserEmail}
+               onChange={handleUserSearchChange}
+               />
+
+       </div>
 
       {/* User's Library Section */}
       <div className="user-library">
@@ -114,8 +155,23 @@ const handleAddToLibrary = (book) => {
 
       {/* Start New Bind Section */}
       <div className="start-bind">
-        <button onClick={startBind}>Start a New Bind</button>
+        <button id="signUpButton" onClick={startBind}>START NEW BIND</button>
       </div>
+
+      <div>
+        <input type="email"
+               value={searchUserEmail}
+               onChange={handleInputChange}
+               placeholder="Search user email to find more friends"
+        />
+        <ul>
+          {filteredUsersusers.map((user)=> (
+          <li key={user.email}>{user.firstName}</li>))}
+        </ul>
+      </div>
+
+      <Footer/>
+
     </div>
   );
 }

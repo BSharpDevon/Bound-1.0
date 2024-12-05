@@ -10,8 +10,12 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Use the routes defined in searchBookshelf.js and SigninApi.js
-app.use('/api/search', searchBookshelf);  // Prefix routes with '/api/search' for searchBookshelf
-app.use('/api/signin', SigninApi);        // Prefix routes with '/api/signin' for SigninApi
+// Use the routes defined in searchBookshelf.js
+app.use('/api', searchBookshelf); // Prefix routes with '/api'
+app.use('/api', sqlDBApi); // Prefix routes with '/api'
 
-
+// Set up the server to listen on a specific port
+const PORT = process.env.PORT || 8000; // Default to port 8000 if not defined
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
