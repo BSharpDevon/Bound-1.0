@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthPage from './components/authPage';
 import FavouriteBooksPage from './components/favouriteBooks';
 import HomePage from './components/homepage';
+import SearchUsers from './components/homepage';
 import Bind from './components/bind';
 import './App.css';
 

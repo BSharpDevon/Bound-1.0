@@ -9,8 +9,29 @@ function HomePage() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [userLibrary, setUserLibrary] = useState([]);  // Local state for user's library
   const [userBinds, setUserBinds] = useState([]);  // Local state for user's binds
-  const navigate = useNavigate();
+  const [searchUserEmail, setSearchUserEmail] = useState(""); //search users to add as friends
 
+  //for searching users to add as friend in a search bar
+  const handleInputChange = (e) => {
+    const searchUser=e.target.value;
+    setSearchUserEmail(searchUser)
+  };
+
+  const users = [ //just adding an array to check it works before we make an API. Will be deleted
+    {firstName: "Jeveria", id:1, email:"jeveria@cfg.com"},
+    {firstName: "Beth", id:2, email: "beth@cfg.com"},
+    {firstName: "Steph", id:3, email: "steph@cfg.com"},
+    {firstName: "Jenni", id:4, email: "jenni@cfg.com"},
+    {firstName: "Lydia", id:5, email: "lydia@cfg.com"}
+
+  ]
+//filtering through the search with the array
+  const filteredUsers= users.filter((user)=>
+    user.email.toLowerCase().includes(searchUserEmail.LowerCase())
+);
+
+
+  const navigate = useNavigate();
 
   // Fetch books from API based on search query
   const searchBooks = async (query) => {
@@ -57,30 +78,6 @@ const handleAddToLibrary = (book) => {
     // Navigate to the start bind page with the selected book
     navigate("/start-bind", { state: { book: selectedBook } });
   };
-
-  //Function for searching users to  add a friend
-  function searchUsers() {
-    const [searchUserEmail, setSearchUserEmail] = useState("");
-
-    const handleInputChange = (e) => {
-      const searchUser=e.target.value;
-      setSearchUserEmail(searchUser)
-    }
-  }
-
-  const users = [
-    {firstName: "Jeveria", id:1, email:"jeveria@cfg.com"},
-    {firstName: "Beth", id:2, email: "beth@cfg.com"},
-    {firstName: "Steph", id:3, email: "steph@cfg.com"},
-    {firstName: "Jenni", id:4, email: "jenni@cfg.com"},
-    {firstName: "Lydia", id:5, email: "lydia@cfg.com"}
-
-  ]
-
-  
-
-
-  
 
   return (
     <div className="homepage">
@@ -168,7 +165,8 @@ const handleAddToLibrary = (book) => {
                placeholder="Search user email to find more friends"
         />
         <ul>
-          {users.map(user=> <li key={user.email}>{user.firstName}</li>)}
+          {filteredUsersusers.map((user)=> (
+          <li key={user.email}>{user.firstName}</li>))}
         </ul>
       </div>
 
