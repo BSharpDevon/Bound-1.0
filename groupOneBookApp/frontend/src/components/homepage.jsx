@@ -1,18 +1,76 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo.svg';
-import bindimage from '../assets/images/bind-image.svg';
-import Footer from './footer.jsx';
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo.svg";
+import bindimage from "../assets/images/bind-image.svg";
+import Footer from "./footer.jsx";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [userLibrary, setUserLibrary] = useState([]);  // Local state for user's library
-  const [userBinds, setUserBinds] = useState([]);  // Local state for user's binds
+  const [userLibrary, setUserLibrary] = useState([]); // User's library state
+  const [userBinds, setUserBinds] = useState([]); // User's binds state
+  const [searchUserEmail, setSearchUserEmail] = useState(""); // Friend search state
+
   const navigate = useNavigate();
 
-  // Fetch books from API based on search query
+  // Debounce function for search
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  const debouncedSearchBooks = useRef(
+    debounce((query) => searchBooks(query), 300)
+  );
+
+  // Dummy users
+  const users = [
+    { firstName: "Jeveria", id: 1, email: "jeveria@cfg.com" },
+    { firstName: "Beth", id: 2, email: "beth@cfg.com" },
+    { firstName: "Steph", id: 3, email: "steph@cfg.com" },
+    { firstName: "Jenni", id: 4, email: "jenni@cfg.com" },
+    { firstName: "Lydia", id: 5, email: "lydia@cfg.com" },
+  ];
+
+const books = [
+  {
+    title: "Fairy Tale",
+    author: "Stephen King",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1647789287i/60177373.jpg",
+  },
+  {
+    title: "Never After",
+    author: "Stephanie Garber",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011416i/59808071.jpg",
+  },
+  {
+    title: "Klara and the Sun",
+    author: "Kazuo Ishiguro",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603206535i/54120408.jpg",
+  },
+  {
+    title: "A Court of Mist and Fury",
+    author: "Sarah J. Maas",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1620325671i/50659468.jpg",
+  },
+  {
+    title: "Hamnet",
+    author: "Maggie O'Farrell",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574943819i/43890641.jpg",
+  },
+];
+
+
+  // Filter friends
+  const filteredUsers = users.filter((user) =>
+    user.email.toLowerCase().includes(searchUserEmail.toLowerCase())
+  );
+
+  // Simulated searchBooks function (replace with API if needed)
   const searchBooks = async (query) => {
     if (query.length < 2) {
       setSearchResults([]);
@@ -20,7 +78,9 @@ function HomePage() {
     }
 
     try {
-      const response = await fetch(`https://api.example.com/books?search=${query}`);
+      const response = await fetch(
+        `https://api.example.com/books?search=${query}`
+      );
       const data = await response.json();
       setSearchResults(data.results || []);
     } catch (error) {
@@ -28,117 +88,140 @@ function HomePage() {
     }
   };
 
-  // Handle the change in the search bar
+  // Event handlers
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    searchBooks(event.target.value);
+    debouncedSearchBooks.current(event.target.value);
   };
 
-// Function to handle adding book to library
-const handleAddToLibrary = (book) => {
-  setUserLibrary((prevLibrary) => {
-    // Check if the book is already in the library
-    if (prevLibrary.some((b) => b.id === book.id)) {
-      alert(`${book.title} is already in your library.`);
-      return prevLibrary;
-    }
-    // Add the book to the library
-    return [...prevLibrary, book];
-  });
-};
+  const handleInputChange = (e) => {
+    setSearchUserEmail(e.target.value);
+  };
 
-  // Function to navigate to the "Start Bind" page
+  const handleAddToLibrary = (book) => {
+    setUserLibrary((prevLibrary) => {
+      if (prevLibrary.some((b) => b.title === book.title)) {
+        alert(`${book.title} is already in your library.`);
+        return prevLibrary;
+      }
+      return [...prevLibrary, book];
+    });
+  };
+
+  const handleAddFriend = (user) => {
+    setUserBinds((prevBinds) => {
+      if (prevBinds.some((bind) => bind.email === user.email)) {
+        alert(`${user.firstName} is already your friend.`);
+        return prevBinds;
+      }
+      return [...prevBinds, user];
+    });
+  };
+
   const startBind = () => {
     if (!selectedBook) {
       alert("Please select a book to start a bind.");
       return;
     }
-
-    // Navigate to the start bind page with the selected book
     navigate("/start-bind", { state: { book: selectedBook } });
   };
 
   return (
     <div className="homepage">
-
+      {/* Header Section */}
       <div className="homepage-header">
-      {/* Logo Section */}
-      <div className="homepage-logo">
-      <img id="logo" src={logo} alt="Bound Logo" />
-      </div>
-
-      {/* Search Bar Section */}
-      <div className="search-bar">
-        <input className='search-input'
-          type="text"
-          placeholder="What do you want to read?"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <div className="search-results">
-          {searchResults.map((book, index) => (
-            <div
-              key={index}
-              className="search-result-item"
-              onClick={() => handleAddToLibrary(book)}  // Add to library on click
-            >
-              <img src={book.cover} alt={book.title} width="50" height="75" />
-              <p>{book.title}</p>
-              <p>{book.author}</p>
-            </div>
-          ))}
+        <div className="homepage-logo">
+          <img id="logo" src={logo} alt="Bound Logo" />
         </div>
 
-      </div>
-
-      </div>
-
-      <div class="homepage-content">
-
-      <div class="homepage-sidebar">
-
-      {/* User's Library Section */}
-      <div className="user-library">
-        <h2 id="homepage-subheadings">Your Friends</h2>
-        <div className="library-books">
-          {userLibrary.map((book, index) => (
-            <div key={index} className="library-book">
-              <img src={book.cover} alt={book.title} width="50" height="75" />
-              <p>{book.title}</p>
-              <p>{book.author}</p>
-            </div>
-          ))}
+        {/* Search Bar */}
+        <div className="search-bar">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search books..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <div className="search-results">
+            {searchResults.map((book, index) => (
+              <div
+                key={index}
+                className="search-result-item"
+                onClick={() => handleAddToLibrary(book)}
+              >
+                <img
+                  src={book.cover || "default-cover.png"}
+                  alt={book.title || "No Title"}
+                  width="50"
+                  height="75"
+                />
+                <p>{book.title || "Unknown Title"}</p>
+                <p>{book.author || "Unknown Author"}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* User's Binds Section */}
-      <div className="user-binds">
-        <h2 id="homepage-subheadings">Your Binds</h2>
-        <img src={bindimage}/>
-        <div className="binds">
-          {userBinds.map((bind, index) => (
-            <div key={index} className="bind-item">
-              <img src={bind.bookCover} alt={bind.bookTitle} width="50" height="75" />
-              <p>Bind with {bind.fullName}</p>
+      {/* Content Section */}
+      <div className="homepage-content">
+        {/* Sidebar Section */}
+        <div className="homepage-sidebar">
+          {/* Friends Section */}
+          <div className="user-friends">
+            <h2>Your Friends</h2>
+            <input
+              className="friend-search-input"
+              type="text"
+              placeholder="Search friends by email"
+              value={searchUserEmail}
+              onChange={handleInputChange}
+            />
+            <div className="search-results">
+              {filteredUsers.map((user) => (
+                <div className="name-add" key={user.id}>
+                  <p className="first-name">{user.firstName}</p>
+                  <button onClick={() => handleAddFriend(user)}>ADD</button>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Binds Section */}
+          <div className="user-binds">
+            <h2>Start New Bind</h2>
+            <img id="bind-image" src={bindimage} alt="Bind Illustration" />
+            <div className="binds">
+              {userBinds.map((bind, index) => (
+                <div key={index} className="bind-item">
+                </div>
+              ))}
+            </div>
+            <p style={{fontFamily: 'Josefin Sans', fontSize: '1.0em', color: 'grey', margin: 0}}>Ready for a personalised book recommendation with your bestie?</p>
+            <button id="signUpButtonHomepage" onClick={startBind}>
+              START
+            </button>
+          </div>
         </div>
 
-              <div className="start-bind">
-        <button id="signUpButton" onClick={startBind}>START NEW BIND</button>
+        {/* User's Library Section */}
+        <div className="user-library">
+          <h2>Your Library</h2>
+          <div className="grid-container">
+            {books.map((book, index) => (
+  <div className="book-card" key={index}>
+    <img src={book.cover} alt={`Cover of ${book.title}`} />
+    <h3 style={{fontFamily: 'IMFellEnglish', fontSize: '1.3em', color: 'white', margin: 5}}>{book.title}</h3>
+    <p style={{fontFamily: 'Josefin Sans', fontSize: '1.0em', color: 'grey', margin: 0}}>{book.author}</p>
+  </div>
+))}
+          </div>
+        </div>
       </div>
 
-      </div>
-      </div>
-
-      <div class="central-panel">
-        <h2 id="homepage-subheadings">Your Library</h2>
-      </div>
-
-      </div>
-
-      <Footer/>
-
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

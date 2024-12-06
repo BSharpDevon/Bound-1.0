@@ -22,20 +22,6 @@ body {
   src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'French';
-  src: url('./assets/fonts/french.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'ChicLovers';
-  src: url('./assets/fonts/ChicLovers.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 h1 {
   font-family: 'IMFellEnglish';
   font-size: 3.7em;
@@ -48,7 +34,7 @@ h2 {
   font-family: 'IMFellEnglish';
   font-size: 2.0em;
   line-height: 1.0;
-  margin: 65px 0px 15px;
+  margin: 20px 10px 20px;
   padding: 0;
 }
 
@@ -88,7 +74,7 @@ label {
 }
 
 img {
-display: flex;
+  display: flex;
   padding-left: 2vh;
   width: 150px;
   cursor: pointer;
@@ -135,9 +121,9 @@ input:focus {
 
 .favouriteBooksMessage {
   font-family: 'IMFellEnglish', serif;
-    font-size: 20px;
-    font-weight: 300;
-    text-align: center;
+  font-size: 20px;
+  font-weight: 300;
+  text-align: center;
 }
 
 button {
@@ -184,32 +170,52 @@ Button:hover {
   max-width: 350px;
 }
 
-.central-panel {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.059), #00000052);
-  height: 850px;
-  width: 1050px;
-  color: white;
-  margin-top: 40px;
-  margin-left: 40px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  padding: 20px;
-}
-
 .homepage-content {
   display: flex;
   flex-direction: row;
 }
 
 .user-library {
+  background-color: #ffffff07;
+  border-radius: 20px;
+  width: 1200px;
+  height: 950px;
+  color: white;
+  margin: 30px;
+  margin-top: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.name-add {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px;
+  background-color: rgba(0, 0, 0, 0.16);
+  margin: 10px 0px 10px 0px;
+  padding: 0px 0px 0px 20px;
+  border-radius: 10px;
+}
+
+.first-name {
+  font-family: 'Josefin Sans';
+  font-weight: 600;
+  max-width: 500px;
+  font-size: 1.0em;
+  margin-top: 25px;
+}
+
+.user-friends {
   background-color: #071D1C;
   border-radius: 20px;
   max-width: 350px;
-  height: 400px;
+  max-height: 400px;
+  overflow-y: auto;
   color: white;
-  margin-top: 40px;
+  margin-top: 50px;
   margin-left: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
@@ -218,7 +224,7 @@ Button:hover {
   color: white;
   border-radius: 20px;
   max-width: 350px;
-  height: 400px;
+  height: 450px;
   margin-top: 40px;
   margin-left: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -226,12 +232,12 @@ Button:hover {
 }
 
 #homepage-subheadings {
-font-family: 'IMFellEnglish';
+  font-family: 'IMFellEnglish';
   font-size: 1.5em;
   opacity: 80%;
   line-height: 1.0;
   padding: 0;
-  text-align: center;
+  text-align: left;
 }
 
 .search-bar {
@@ -240,12 +246,44 @@ font-family: 'IMFellEnglish';
   transform: translateX(-50%);
 }
 
+.friend-search-input {
+  width: 240px;
+  font-family: "Josefin Sans";
+}
+
 .search-bar input {
-  width: 300px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+  width: 450px;
+    font-family: "Josefin Sans";
+    padding: 5px, 5px, 5px, 5px;
+}
+
+#bind-image {
+  width: 250px;
+  font-family: "IMFellEnglish";
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: none;
+  width: 150px;
+  gap: 10px;
+}
+
+.book-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
 #signUpButton {
@@ -260,6 +298,21 @@ font-family: 'IMFellEnglish';
   cursor: pointer;
   max-height: 40px;
   margin-top: 30px;
+}
+
+#signUpButtonHomepage {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  align-items: center;
+  display: grid;
+  width: 210px;
 }
 
 #signUpButton:hover {
@@ -283,10 +336,6 @@ font-family: 'IMFellEnglish';
 
 .button:hover {
   background-color: #091819;
-}
-
-#logo {
-  display: block;
 }
 
 .login {

@@ -1,8 +1,8 @@
 // Import required libraries
 import express from 'express';
 import dotenv from 'dotenv';
-import searchBookshelf from './searchBookshelf.js'; // Note: Use .js extension when importing local files
-import sqlDBApi from './apiSigninApi.js'; // Note: Use .js extension when importing local files
+import searchBookshelf from './searchBookshelf.js'; // Use .js extension for local file imports
+import SigninApi from './SigninApi.js'; // Use .js extension for local file imports
 
 // Load environment variables from .env
 dotenv.config();
