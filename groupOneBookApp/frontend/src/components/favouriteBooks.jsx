@@ -84,7 +84,7 @@ function FavouriteBooksPage() {
 
       {/* Welcome Message */}
       <h2>WELCOME, {fullName}!</h2>
-      <p className="favouriteBooksMessage">There&aposs nothing like a good book. Search for your three favourite reads and save them to your library.</p>
+      <p className="favouriteBooksMessage">There&apos;s nothing like a good book. Search for your three favourite reads and save them to your library.</p>
 
       {/* Counter */}
       <div className="counter-container">
