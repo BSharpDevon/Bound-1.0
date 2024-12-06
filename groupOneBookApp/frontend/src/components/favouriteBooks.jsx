@@ -1,11 +1,13 @@
 // src/components/FavouriteBooksPage.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from '../assets/images/logo.svg';
 import Footer from './footer.jsx';
 
-function FavouriteBooksPage({ fullName }) {
+function FavouriteBooksPage() {
+  const location = useLocation();
+  const { fullName } = location.state || {}; // Accessing fullName passed via state
+
   const [bookOne, setBookOne] = useState("");
   const [bookTwo, setBookTwo] = useState("");
   const [bookThree, setBookThree] = useState("");
@@ -22,7 +24,7 @@ function FavouriteBooksPage({ fullName }) {
     }
 
     try {
-      const response = await fetch(`https://api.example.com/books?search=${query}`);
+      const response = await fetch(`http://localhost:8000/api/search-books?query=${query}`);
       const data = await response.json();
       setSearchResults(data.results || []);
     } catch (error) {
@@ -131,9 +133,21 @@ function FavouriteBooksPage({ fullName }) {
 
       {/* Suggested Search Results */}
       <div>
-        {searchResults.map((book, index) => (
-          <div key={index}>{book.title}</div>
-        ))}
+      {searchResults.length > 0 && (
+          <ul>
+            {searchResults.map((book, index) => {
+              const title = book.volumeInfo.title || "No title available";
+              const authors = book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : "No author available";
+              
+              return (
+                <li key={index}>
+                  <p><strong>{title}</strong></p>
+                  <p>{authors}</p>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
 
       {/* "I'm Finished" Button */}
@@ -144,9 +158,5 @@ function FavouriteBooksPage({ fullName }) {
     </div>
   );
 }
-
-FavouriteBooksPage.propTypes = {
-    fullName: PropTypes.string.isRequired, // Ensuring fullName is a string and required
-};
 
 export default FavouriteBooksPage;
