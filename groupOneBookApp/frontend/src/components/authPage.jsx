@@ -31,7 +31,7 @@ function AuthPage() {
     setIsSubmitting(true); // Disable submission during API call
 
     try {
-      const response = await axios.post("http://localhost:8000/bound/login", {
+      const response = await axios.post("http://localhost:8000/login", {
         email: emailSignIn,
         password: passwordSignIn,
       });
@@ -67,7 +67,7 @@ function AuthPage() {
     setIsSubmitting(true); // Disable submission during API call
   
     try {
-      const response = await axios.post("http://localhost:8000/bound/signup", {
+      const response = await axios.post("http://localhost:8000/signup", {
         fullName,
         email: emailSignUp,
         password: passwordSignUp,
