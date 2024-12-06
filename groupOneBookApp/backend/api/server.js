@@ -12,7 +12,7 @@ const app = express();
 
 // Use the routes defined in searchBookshelf.js
 app.use('/api', searchBookshelf); // Prefix routes with '/api'
-app.use('/api', sqlDBApi); // Prefix routes with '/api'
+app.use('/api', SigninApi); // Prefix routes with '/api'
 
 // Set up the server to listen on a specific port
 const PORT = process.env.PORT || 8000; // Default to port 8000 if not defined
