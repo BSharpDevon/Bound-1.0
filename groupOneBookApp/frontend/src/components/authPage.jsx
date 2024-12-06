@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Carousel from "./imageCarousel";
 import axios from 'axios';
 import logo from '../assets/images/logo.svg';
@@ -9,51 +10,84 @@ function AuthPage() {
   // State for Sign In
   const [emailSignIn, setEmailSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Prevent multiple submissions
 
   // State for Sign Up
   const [fullName, setFullName] = useState("");
   const [emailSignUp, setEmailSignUp] = useState("");
   const [passwordSignUp, setPasswordSignUp] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false); // set checkbox default to 
+
+ // useNavigate hook for programmatic navigation
+  const navigate = useNavigate();
 
   // SignIn Function
-  const signInBtn = () => {
+  const signInBtn = async () => {
     if (!emailSignIn || !passwordSignIn) {
       console.log("Please enter both email and password");
       return;
     }
 
-    axios
-      .post('http://localhost:8000/bound/login', {
+    setIsSubmitting(true); // Disable submission during API call
+
+    try {
+      const response = await axios.post("http://localhost:8000/bound/login", {
         email: emailSignIn,
         password: passwordSignIn,
-      })
-      .then((res) => {
-        const loginSuccessful = res.data.success;
-        if (loginSuccessful) {
-          console.log(`User: ${emailSignIn} found and logged in successfully`);
-          loadHomepage();
-        } else {
-          console.log(`Invalid email or password`);
-        }
-      })
-      .catch((error) => {
-        console.error(`Error during login:`, error);
       });
+
+      const { success } = response.data;
+      if (success) {
+        console.log(`User: ${emailSignIn} logged in successfully`);
+        navigate("/homepage"); // Redirect to homepage
+      } else {
+        console.log("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error during login:", error.message);
+    } finally {
+      setIsSubmitting(false); // Re-enable submission
+    }
   };
 
   // SignUp Function
-  const signUpBtn = () => {
+  const signUpBtn = async () => {
     if (!fullName || !emailSignUp || !passwordSignUp || !isChecked) {
       alert("Please fill in all fields and accept the privacy policy to continue");
       return;
     }
-    console.log({ fullName, emailSignUp, passwordSignUp });
-  };
+  
+ // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailSignUp)) {
+      alert("Please enter a valid email address.");
+      return;
+  }
 
-  // Function to redirect to homepage after successful login
-  const loadHomepage = () => {
-    window.location.href = "https://www.example.com"; // Update to the real homepage URL
+    setIsSubmitting(true); // Disable submission during API call
+  
+    try {
+      const response = await axios.post("http://localhost:8000/bound/signup", {
+        fullName,
+        email: emailSignUp,
+        password: passwordSignUp,
+        privacyAccepted: isChecked,
+      });
+  
+      const { success } = response.data;
+      if (success) {
+        console.log("User registered successfully!");
+        navigate("/favourite-books");
+      } else {
+        console.error("Signup failed: ", response.data.message || "Unknown error");
+        alert(response.data.message || "Signup failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error.message);
+      alert("An error occurred while signing up. Please try again.");
+    } finally {
+      setIsSubmitting(false); // Re-enable submission
+    }
   };
 
   return (
@@ -87,19 +121,19 @@ function AuthPage() {
             name="Login"
             type="button"
             value="LOGIN"
-            onClick={signInBtn}
+            onClick={signInBtn} disabled={isSubmitting}
           />
         </form>
       </div>
 
       {/* Welcome and Instructions */}
-      <div class="header-section">
+      <div className="header-section">
       
       <div id="girl-image"><img id="girl" src={group} alt="Woman reading a book" /></div>
       
       <div className="intro-section">
         <div id="introMessage">
-          <h1>Let Your <span class="highlight">Friends</span> Find Your Next Best Book</h1>
+          <h1>Let Your <span className="highlight">Friends</span> Find Your Next Best Book</h1>
           <p>Bound searches millions of titles to match you and your friend’s unique tastes. Sign up for a free book recommendation.</p>
           
           
@@ -110,7 +144,7 @@ function AuthPage() {
             <input
               type="text"
               value={fullName}
-              placeholder={"Full name"}
+              placeholder="Full name"
               onChange={(e) => setFullName(e.target.value)}
             />
           </label>
@@ -118,9 +152,9 @@ function AuthPage() {
 
           <label>
             <input
-              type="text"
+              type="email"
               value={emailSignUp}
-              placeholder={"Email address"}
+              placeholder="Email address"
               onChange={(e) => setEmailSignUp(e.target.value)}
             />
           </label>
@@ -130,7 +164,7 @@ function AuthPage() {
             <input
               type="password"
               value={passwordSignUp}
-              placeholder={"Password"}
+              placeholder="Password"
               onChange={(e) => setPasswordSignUp(e.target.value)}
             />
           </label>
@@ -152,6 +186,7 @@ function AuthPage() {
             value="SIGN UP"
             onClick={signUpBtn}
             id="signUpButton"
+            disabled={isSubmitting}
           />
         </form>
       </div>
