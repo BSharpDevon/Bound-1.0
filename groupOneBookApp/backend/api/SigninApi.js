@@ -8,10 +8,8 @@ import dotenv from 'dotenv';
 // Load environment variables from .env
 dotenv.config();
 
-
-
 // Initialise the Express application
-const SigninApi = express();
+const SigninApi = express.Router();
 
 // Set up CORS middleware
 SigninApi.use(cors());
@@ -31,7 +29,7 @@ const pool = mysql.createPool({
 });
 
 // Sign up endpoint
-SigninApi.post("/bound/signup", async (req, res) => {
+SigninApi.post("bound/signup", async (req, res) => {
   const { email, fullName, password, privacyAccepted } = req.body;
 
   if (!email || !fullName || !password || !privacyAccepted) {
@@ -125,14 +123,14 @@ const testDatabaseConnection = async () => {
     }
 };
 
+// SigninApi.get('getusers/', async(req,res) => {
+// const query= 'SELECT * FROM members'
+// console.log (pool.query(query))
+// });
+
 // Call the database connection test
 testDatabaseConnection();
 
-// Set up the server to listen on a specific port
-const PORT = 8000;
-SigninApi.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
 
 // Export the app to be used elsewhere (like in `server.js`)
 export default SigninApi;
