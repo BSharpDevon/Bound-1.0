@@ -77,7 +77,7 @@ function AuthPage() {
       const { success } = response.data;
       if (success) {
         console.log("User registered successfully!");
-        navigate("/favourite-books");
+        navigate("/favourite-books", { state: { fullName } });
       } else {
         console.error("Signup failed: ", response.data.message || "Unknown error");
         alert(response.data.message || "Signup failed. Please try again.");
@@ -101,7 +101,7 @@ function AuthPage() {
             <input
               type="text"
               value={emailSignIn}
-              placeholder={"Email address"}
+              placeholder="Email address"
               onChange={(e) => setEmailSignIn(e.target.value)}
             />
           </label>
@@ -111,13 +111,13 @@ function AuthPage() {
             <input
               type="password"
               value={passwordSignIn}
-              placeholder={"Password"}
+              placeholder="Password"
               onChange={(e) => setPasswordSignIn(e.target.value)}
             />
           </label>
           <br />
 
-          <input id="signUpButton"
+          <input id="signInButton"
             name="Login"
             type="button"
             value="LOGIN"
@@ -134,7 +134,7 @@ function AuthPage() {
       <div className="intro-section">
         <div id="introMessage">
           <h1>Let Your <span className="highlight">Friends</span> Find Your Next Best Book</h1>
-          <p>Bound searches millions of titles to match you and your friend’s unique tastes. Sign up for a free book recommendation.</p>
+          <p>Bound searches millions of titles to match you and your friend&apos;s unique tastes. Sign up for a free book recommendation.</p>
           
           
           {/* SignUp Section */}
