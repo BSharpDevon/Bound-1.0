@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/images/logo.svg";
@@ -10,10 +10,23 @@ const BookSearch = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [memberId, setMemberId] = useState(null); // State for memberId
   const navigate = useNavigate();
 
+  // Check localStorage for memberId
+  useEffect(() => {
+    const storedMemberId = localStorage.getItem("memberId");
+    if (storedMemberId) {
+      setMemberId(storedMemberId);
+    } else {
+      alert("No member ID found. Please log in again.");
+      navigate("/"); // Redirect to login page if no memberId
+    }
+  }, [navigate]);
+
   const handleInputChange = (e) => setSearchTerm(e.target.value);
+
+  console.log('Searching for books for member ID:', memberId);
 
   const handleSearch = async () => {
     if (!searchTerm) {
@@ -55,8 +68,14 @@ const BookSearch = () => {
       return;
     }
 
+    if (!memberId) {
+      alert("No member ID found. Please log in again.");
+      return;
+    }
+
     try {
       const response = await axios.post("http://localhost:8000/selectedBooks", {
+        memberId, // Send the memberId from localStorage
         id: selectedBook.id,
       });
 
