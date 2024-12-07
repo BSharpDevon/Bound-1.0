@@ -120,7 +120,7 @@ const books = [
 
   const startBind = () => {
     if (!selectedBook) {
-      alert("Please select a book to start a bind.");
+      alert("Please select a user to bind with!");
       return;
     }
     navigate("/start-bind", { state: { book: selectedBook } });
@@ -174,7 +174,7 @@ const books = [
             <input
               className="friend-search-input"
               type="text"
-              placeholder="Search friends by email"
+              placeholder="Search users by email"
               value={searchUserEmail}
               onChange={handleInputChange}
             />
