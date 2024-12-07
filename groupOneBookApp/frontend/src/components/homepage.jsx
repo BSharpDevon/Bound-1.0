@@ -198,22 +198,32 @@ const books = [
                 </div>
               ))}
             </div>
-            <p style={{fontFamily: 'Josefin Sans', fontSize: '1.0em', color: 'grey', margin: 0}}>Ready for a personalised book recommendation with your bestie?</p>
             <button id="signUpButtonHomepage" onClick={startBind}>
               START
             </button>
           </div>
         </div>
-
-        {/* User's Library Section */}
-        <div className="user-library">
-          <h2>Your Library</h2>
+        
+        <div className="user-library-binds">
+          <h2>Your Binds</h2>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
     <img src={book.cover} alt={`Cover of ${book.title}`} />
     <h3 style={{fontFamily: 'IMFellEnglish', fontSize: '1.3em', color: 'white', margin: 5}}>{book.title}</h3>
     <p style={{fontFamily: 'Josefin Sans', fontSize: '1.0em', color: 'grey', margin: 0}}>{book.author}</p>
+    
+  </div>
+))}
+          </div>
+          <h2>Your Binds</h2>
+          <div className="grid-container">
+            {books.map((book, index) => (
+  <div className="book-card" key={index}>
+    <img src={book.cover} alt={`Cover of ${book.title}`} />
+    <h3 style={{fontFamily: 'IMFellEnglish', fontSize: '1.3em', color: 'white', margin: 5}}>{book.title}</h3>
+    <p style={{fontFamily: 'Josefin Sans', fontSize: '1.0em', color: 'grey', margin: 0}}>{book.author}</p>
+    
   </div>
 ))}
           </div>

@@ -17,6 +17,10 @@ body {
   overflow-x: hidden;
 }
 
+footer {
+  padding: 20px;
+}
+
 @font-face {
   font-family: 'IMFellEnglish';
   src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
@@ -53,7 +57,8 @@ p {
   font-family: 'IMFellEnglish';
   font-weight: 500;
   max-width: 500px;
-  font-size: 1.2em;
+  font-size: 18px;
+  /* Fixed size */
   line-height: 1.5;
   padding: 0;
 }
@@ -141,6 +146,8 @@ button {
 Button:hover {
   background-color: #ffca0b;
   color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 
 .homepage-header {
@@ -176,6 +183,18 @@ Button:hover {
 }
 
 .user-library {
+  background-color: #ffffff07;
+  border-radius: 20px;
+  width: 1200px;
+  height: 950px;
+  color: white;
+  margin: 30px;
+  margin-top: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.user-library-binds {
   background-color: #ffffff07;
   border-radius: 20px;
   width: 1200px;
@@ -224,7 +243,7 @@ Button:hover {
   color: white;
   border-radius: 20px;
   max-width: 350px;
-  height: 450px;
+  height: 400px;
   margin-top: 40px;
   margin-left: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -257,9 +276,69 @@ Button:hover {
     padding: 5px, 5px, 5px, 5px;
 }
 
+.circle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 30px 10px 20px -50px;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IMFellEnglish', serif;
+  font-size: 1.5em;
+  color: white;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #336699;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.initials-circle {
+  background-color: #1fb7a9;
+}
+
+.plus-circle {
+  background-color: #555555;
+  position: absolute;
+  left: 70px;
+  z-index: 1;
+}
+
 #bind-image {
-  width: 250px;
+  width: 230px;
   font-family: "IMFellEnglish";
+}
+
+.bind-header {
+  font-family: 'IMFellEnglish';
+  font-size: 60px;
+  line-height: 1.0;
+  margin: 80px 40px 40px 30px;
+  width: 50%;
+  padding: 0;
+}
+
+.bind-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #ffffff14 0%, #00000060 100%);
+  border-radius: 20px;
+  font-size: 25px;
+  text-align: center;
+  height: 900px;
+  color: white;
+  margin: 50px;
+  margin-top: 50px;
+  padding: 20px;
+  margin-bottom: 30px;
 }
 
 .grid-container {
@@ -279,11 +358,49 @@ Button:hover {
   gap: 10px;
 }
 
+.book-cover {
+  display: flex;
+  width: 250px;
+  margin: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.book-container { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .book-card img {
   width: 100%;
   height: auto;
   object-fit: cover;
   border-radius: 15px;
+}
+
+.bind-header {
+  font-family: 'IMFellEnglish';
+  font-size: 60px;
+  line-height: 1.0;
+  margin: 60px 10px 20px;
+  padding: 0;
+}
+
+.bind-subtitle {
+  font-family: 'IMFellEnglish';
+  font-size: 30px;
+  line-height: 1.0;
+  margin: 0px 10px 20px;
+  padding: 0;
+}
+
+.book-title {
+  font-family: 'IMFellEnglish';
+  font-size: 30px;
+  line-height: 1.0;
+  margin: 20px 10px 20px;
+  padding: 0;
 }
 
 #signUpButton {
@@ -298,6 +415,27 @@ Button:hover {
   cursor: pointer;
   max-height: 40px;
   margin-top: 30px;
+}
+
+#signInButton {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  margin-top: 30px;
+}
+
+#signInButton:hover {
+  background-color: #ffca0b;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 
 #signUpButtonHomepage {
@@ -315,9 +453,18 @@ Button:hover {
   width: 210px;
 }
 
+#signUpButtonHomepage:hover {
+  background-color: #ffca0b;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+}
+
 #signUpButton:hover {
   background-color: #ffca0b;
   color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 
 .signup {
@@ -335,7 +482,10 @@ Button:hover {
 }
 
 .button:hover {
-  background-color: #091819;
+  background-color: #ffca0b;
+    color: #091819;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 
 .login {
@@ -415,3 +565,22 @@ Button:hover {
 }
 
 @media (prefers-color-scheme: light) {}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Optional: slight upward movement */
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation class for the second page */
+.fade-in {
+  animation: fadeIn 6s ease-in-out;
+  /* Adjust duration and timing function */
+}
