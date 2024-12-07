@@ -24,9 +24,9 @@ function FavouriteBooksPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/search-books?query=${query}`);
+      const response = await fetch(`http://localhost:8000/search?searchRequest=${query}`);
       const data = await response.json();
-      setSearchResults(data.results || []);
+      setSearchResults(data.books || []);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
