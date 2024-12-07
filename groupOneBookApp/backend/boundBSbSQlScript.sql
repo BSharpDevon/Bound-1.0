@@ -71,3 +71,13 @@ CREATE TABLE bind_books (
 );
 
 SELECT * FROM bind_books;
+
+CREATE TABLE bind_books (
+    member_id INT,           -- The member who owns the book
+    friend_id INT,           -- The friend with whom the book is bound
+    book_id INT,             -- The book that is being shared
+    FOREIGN KEY (member_id) REFERENCES members(member_id),   -- Links to members table
+    FOREIGN KEY (friend_id) REFERENCES members(member_id),   -- Links to another member (friend)
+    FOREIGN KEY (book_id) REFERENCES books(book_id),         -- Links to books table
+    PRIMARY KEY (member_id, friend_id, book_id)               -- Composite primary key for uniqueness
+);
