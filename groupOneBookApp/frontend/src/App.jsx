@@ -5,6 +5,7 @@ import HomePage from './components/homepage';
 import SearchUsers from './components/homepage';
 import Bind from './components/bind';
 import './App.css';
+import BookSearch from './components/testBookSearch';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/favourite-books" element={<FavouriteBooksPage />} /> {/* FavouriteBooksPage */}
           <Route path="/homepage" element={<HomePage />} /> {/* Homepage */}
           <Route path="/bind" element={<Bind />} /> {/* Bind page */}
+          <Route path="/testBookSearch" element={<BookSearch />} /> 
         </Routes>
       </div>
     </Router>

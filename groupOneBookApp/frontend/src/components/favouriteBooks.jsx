@@ -1,5 +1,5 @@
 // src/components/FavouriteBooksPage.jsx
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from '../assets/images/logo.svg';
 import Footer from './footer.jsx';
@@ -15,6 +15,7 @@ function FavouriteBooksPage() {
   const [counter, setCounter] = useState(0);
 
   const navigate = useNavigate();
+  const debounceTimeout = useRef(null); // Reference to hold the timeout ID
 
   // Function to handle API search
   const searchBooks = async (query) => {
@@ -32,20 +33,34 @@ function FavouriteBooksPage() {
     }
   };
 
-  // Handlers for input changes and search
+  // Debounce function to delay the API call
+  const debounceSearch = (query) => {
+    clearTimeout(debounceTimeout.current);  // Clear the previous timeout
+    debounceTimeout.current = setTimeout(() => {
+      searchBooks(query);  // Call the search after the debounce delay
+    }, 500);  // Delay of 500ms (adjust as necessary)
+  };
+
+  // UseEffect to automatically trigger search when the book input fields change
+  useEffect(() => {
+    // Search for books whenever any of the inputs change (bookOne, bookTwo, or bookThree)
+    if (bookOne || bookTwo || bookThree) {
+      const query = bookOne || bookTwo || bookThree;
+      debounceSearch(query);
+    }
+  }, [bookOne, bookTwo, bookThree]);  // Runs whenever bookOne, bookTwo, or bookThree changes
+
+  // Handlers for input changes
   const handleBookOneChange = (event) => {
     setBookOne(event.target.value);
-    searchBooks(event.target.value);
   };
 
   const handleBookTwoChange = (event) => {
     setBookTwo(event.target.value);
-    searchBooks(event.target.value);
   };
 
   const handleBookThreeChange = (event) => {
     setBookThree(event.target.value);
-    searchBooks(event.target.value);
   };
 
   // Counter logic
@@ -79,8 +94,7 @@ function FavouriteBooksPage() {
 
   return (
     <div id="favouriteBooksContent">
-
-    <img id="logo" src={logo} alt="Bound Logo" />
+      <img id="logo" src={logo} alt="Bound Logo" />
 
       {/* Welcome Message */}
       <h2>WELCOME, {fullName}!</h2>
@@ -133,7 +147,7 @@ function FavouriteBooksPage() {
 
       {/* Suggested Search Results */}
       <div>
-      {searchResults.length > 0 && (
+        {searchResults.length > 0 ? (
           <ul>
             {searchResults.map((book, index) => {
               const title = book.volumeInfo.title || "No title available";
@@ -147,14 +161,15 @@ function FavouriteBooksPage() {
               );
             })}
           </ul>
+        ) : (
+          <p>No books available.</p>  // Fallback if no results are found
         )}
       </div>
 
       {/* "I'm Finished" Button */}
       <button onClick={finished}>I&apos;M FINISHED</button>
 
-      <Footer/>
-
+      <Footer />
     </div>
   );
 }
