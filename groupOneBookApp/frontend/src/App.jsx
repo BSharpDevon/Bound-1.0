@@ -10,23 +10,49 @@ import "./App.css";
 
 function App() {
   const [memberId, setMemberId] = useState(null);
+  const [loading, setLoading] = useState(true);  // Loading state for waiting for memberId
 
   useEffect(() => {
-    // Check if memberId is in localStorage on app load
+    // Debugging: Log when the app is checking localStorage
+    console.log("Checking localStorage for memberId...");
+    
+    // Check if memberId exists in localStorage
     const storedMemberId = localStorage.getItem('memberId');
+    
     if (storedMemberId) {
-      setMemberId(storedMemberId);
+      console.log("Found memberId in localStorage:", storedMemberId);
+      setMemberId(storedMemberId);  // Set memberId from localStorage
+    } else {
+      console.log("No memberId found in localStorage.");
     }
+    
+    // After checking localStorage, set loading to false
+    setLoading(false);
   }, []);
+
+  // Debugging: Log the current memberId and loading state
+  console.log("App loading:", loading);
+  console.log("Current memberId:", memberId);
+
+  if (loading) {
+    return <div>Loading...</div>;  // Wait until loading is false
+  }
 
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* Route for AuthPage is available only if memberId is not set */}
-          <Route path="/" element={memberId ? <Navigate to="/homepage" /> : <AuthPage />} />
+          {/* Debugging: Log which route is being evaluated */}
+          <Route 
+            path="/" 
+            element={memberId ? (
+              <>
+                {console.log("Redirecting to /homepage")}
+                <Navigate to="/homepage" />
+              </>
+            ) : <AuthPage />} 
+          />
 
-          {/* Only allow access to pages that require memberId if it's found */}
           <Route
             path="/favourite-books"
             element={memberId ? <FavouriteBooksPage /> : <Navigate to="/" />}

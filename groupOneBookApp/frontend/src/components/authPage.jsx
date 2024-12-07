@@ -80,6 +80,7 @@ function AuthPage() {
       if (success) {
         // Save the member ID in localStorage
         localStorage.setItem('memberId', member_id);
+        console.log(localStorage.getItem('memberId')); // Ensure this prints the member ID correctly
         navigate('/favourite-books', { state: { fullName } }); // Redirect to favourite-books page
       } else {
         alert(response.data.message || 'Signup failed. Please try again.');
