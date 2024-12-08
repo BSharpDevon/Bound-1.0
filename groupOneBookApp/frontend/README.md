@@ -6,6 +6,8 @@ Bound is a web application that simplifies book selection for pairs of users by 
 
 Developed collaboratively using agile methodologies, React.js, Node.js, and APIs like Google Books, Bound integrates high-contrast design and accessibility.
 
+Documentation is included within the folder.
+
 ### Features
 
 To get started with Bound, follow these steps to explore its key features:
