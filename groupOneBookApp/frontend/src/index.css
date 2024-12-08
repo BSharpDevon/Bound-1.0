@@ -1,3 +1,4 @@
+/* ========== ROOT VARIABLES ========== */
 :root {
   color: #EEF4F8;
   background-color: #091819;
@@ -8,15 +9,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*  Fonts */
-
+/* ========== FONT DEFINITIONS ========== */
 @font-face {
   font-family: 'IMFellEnglish';
   src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
 }
 
-/*  Universal code */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&display=swap');
 
+/* ========== GLOBAL ELEMENTS ========== */
 body {
   margin: 0px;
   padding: 0px;
@@ -29,6 +30,11 @@ footer {
   padding: 20px;
 }
 
+a {
+  color: grey;
+}
+
+/* ========== TYPOGRAPHY ========== */
 p {
   font-family: 'IMFellEnglish';
   font-weight: 500;
@@ -50,7 +56,7 @@ h2 {
   font-family: 'IMFellEnglish';
   font-size: 2.0em;
   line-height: 1.0;
-  margin:40px 10px 20px;
+  margin: 40px 10px 20px;
   padding: 0;
 }
 
@@ -58,8 +64,7 @@ h2 {
   color: #ffca0b;
 }
 
-/*  Containers */
-
+/* ========== CONTAINERS ========== */
 .friends-buttons-container {
   display: flex;
   flex-direction: row;
@@ -75,8 +80,41 @@ h2 {
   text-align: center;
 }
 
-/*  Buttons */
+/* ========== IMAGES ========== */
+#girl {
+  width: 600px;
+  margin-left: 100px;
+  padding: 0px;
+}
 
+img {
+  display: flex;
+  padding-left: 2vh;
+  width: 150px;
+  cursor: pointer;
+}
+
+/* ========== BUTTONS ========== */
+button {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid grey 1px;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+button:hover {
+  background-color: #ffca0b;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Example: Specific Button Styling */
 #friends-buttons {
   background-color: #10282A;
   font-family: 'IMFellEnglish', serif;
@@ -89,33 +127,12 @@ h2 {
   margin: 7px;
 }
 
-#favouriteBooksContent {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+/* ========== FORM ELEMENTS ========== */
 label {
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
   font-size: 1.0em;
   max-width: 50%;
   line-height: 1.1;
-}
-
-#text {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  font-size: 1.0em;
-  max-width: 70%;
-  margin-right: 10px;
-  line-height: 1.1;
-}
-
-img {
-  display: flex;
-  padding-left: 2vh;
-  width: 150px;
-  cursor: pointer;
 }
 
 input {
@@ -140,47 +157,10 @@ input:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#girl {
-  width: 600px;
-  margin-left: 100px;
-  padding: 0px;
-}
-
+/* ========== PAGE STRUCTURE ========== */
 .header-section {
   display: flex;
   flex-direction: row;
-}
-
-.count-display {
-  font-family: 'IMFellEnglish', serif;
-  font-size: 25px;
-  font-weight: 800;
-}
-
-.favouriteBooksMessage {
-  font-family: 'IMFellEnglish', serif;
-  font-size: 20px;
-  font-weight: 300;
-  text-align: center;
-}
-
-button {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid grey 1px;
-  text-align: center;
-  border-radius: 412px;
-  cursor: pointer;
-  margin: 20px;
-}
-
-Button:hover {
-  background-color: #ffca0b;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 
 .homepage-header {
@@ -197,22 +177,11 @@ Button:hover {
   width: 100%;
 }
 
-.homepage-logo {
-  flex: 0 0 auto;
-  font-size: 20px;
-  font-weight: bold;
-}
-
 .homepage-sidebar {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   max-width: 350px;
-}
-
-.homepage-content {
-  display: flex;
-  flex-direction: row;
 }
 
 .user-library {
@@ -227,168 +196,7 @@ Button:hover {
   padding: 20px;
 }
 
-.user-library-binds {
-  background-color: #ffffff07;
-  border-radius: 20px;
-  width: 1200px;
-  height: 950px;
-  color: white;
-  margin: 30px;
-  margin-top: 50px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
-
-.name-add {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0px;
-  background-color: rgba(0, 0, 0, 0.16);
-  margin: 10px 0px 10px 0px;
-  padding: 0px 0px 0px 20px;
-  border-radius: 10px;
-}
-
-.first-name {
-  font-family: 'Josefin Sans';
-  font-weight: 600;
-  max-width: 500px;
-  font-size: 1.0em;
-  margin-top: 25px;
-}
-
-.user-friends {
-  background-color: #071D1C;
-  border-radius: 20px;
-  max-width: 350px;
-  max-height: 400px;
-  overflow-y: auto;
-  color: white;
-  margin-top: 50px;
-  margin-left: 30px;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
-
-.user-binds {
-  background-color: #071D1C;
-  color: white;
-  border-radius: 20px;
-  max-width: 350px;
-  height: 400px;
-  margin-top: 40px;
-  margin-left: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
-
-#homepage-subheadings {
-  font-family: 'IMFellEnglish';
-  font-size: 1.5em;
-  opacity: 80%;
-  line-height: 1.0;
-  padding: 0;
-  text-align: left;
-}
-
-.search-bar {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.friend-search-input {
-  width: 240px;
-  font-family: "Josefin Sans";
-}
-
-.search-bar input {
-  width: 450px;
-    font-family: "Josefin Sans";
-    padding: 5px, 5px, 5px, 5px;
-}
-
-.circle-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: 30px 10px 20px -50px;
-}
-
-.book-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: none;
-  width: 800px;
-  gap: 10px;
-  margin: 30px;
-}
-
-a {
-  color: grey;
-}
-
-.circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'IMFellEnglish', serif;
-  font-size: 1.5em;
-  color: white;
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  text-align: center;
-  background-color: #336699;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-}
-
-.initials-circle {
-  background-color: #1fb7a9;
-}
-
-.plus-circle {
-  background-color: #555555;
-  position: absolute;
-  left: 70px;
-  z-index: 1;
-}
-
-#bind-image {
-  width: 230px;
-  font-family: "IMFellEnglish";
-}
-
-.bind-header {
-  font-family: 'IMFellEnglish';
-  font-size: 60px;
-  line-height: 1.0;
-  margin: 80px 40px 40px 30px;
-  width: 50%;
-  padding: 0;
-}
-
-.bind-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(180deg, #ffffff14 0%, #00000060 100%);
-  border-radius: 20px;
-  font-size: 25px;
-  text-align: center;
-  height: 900px;
-  color: white;
-  margin: 50px;
-  margin-top: 50px;
-  padding: 20px;
-  margin-bottom: 30px;
-}
-
+/* ========== GRID AND DISPLAY ELEMENTS ========== */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -414,211 +222,11 @@ a {
   cursor: pointer;
 }
 
-.book-container { 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.book-card img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.bind-header {
-  font-family: 'IMFellEnglish';
-  font-size: 60px;
-  line-height: 1.0;
-  margin: 60px 10px 20px;
-  padding: 0;
-}
-
-.bind-subtitle {
-  font-family: 'IMFellEnglish';
-  font-size: 30px;
-  line-height: 1.0;
-  margin: 0px 10px 20px;
-  padding: 0;
-}
-
-.book-title {
-  font-family: 'IMFellEnglish';
-  font-size: 30px;
-  line-height: 1.0;
-  margin: 20px 10px 20px;
-  padding: 0;
-}
-
-#signUpButton {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid white 1px;
-  text-align: center;
-  font-weight: 900;
-  border-radius: 412px;
-  cursor: pointer;
-  max-height: 40px;
-  margin-top: 30px;
-}
-
-#signInButton {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid white 1px;
-  text-align: center;
-  font-weight: 900;
-  border-radius: 412px;
-  cursor: pointer;
-  max-height: 40px;
-  margin-top: 30px;
-}
-
-#signInButton:hover {
-  background-color: #ffca0b;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
-
-#signUpButtonHomepage {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid white 1px;
-  font-weight: 900;
-  border-radius: 412px;
-  cursor: pointer;
-  max-height: 40px;
-  align-items: center;
-  display: grid;
-  width: 210px;
-}
-
-#signUpButtonHomepage:hover {
-  background-color: #ffca0b;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
-
-#signUpButton:hover {
-  background-color: #ffca0b;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
-
-.signup {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-#privacyPolicy {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 0.8em;
-  color: grey;
-  gap: 3px;
-  max-width: 100%;
-  margin-bottom: 20px;
-}
-
-.button:hover {
-  background-color: #ffca0b;
-    color: #091819;
-    transform: scale(1.05);
-    box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
-
-.login {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-#logo {
-  margin-left: 0px;
-  margin-top: 10px
-}
-
-.signin {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-end;
-  margin-right: 5%;
-  max-width: 550px;
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.signup {
-  gap: 10px;
-}
-
-.intro-section {
-  max-width: 1000px;
-  margin-bottom: 50px;
-}
-
-#introMessage {
-  margin-left: 20%;
-  margin-right: 20%;
-}
-
-.carousel-container {
-  width: 100%;
-  padding-bottom: 3vw;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  margin-top: 2%;
-  align-items: center;
-  background-image: url('./assets/images/background.svg');
-}
-
-.carousel {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.carousel img {
-  width: 225px;
-  height: 300px;
-  object-fit: cover;
-  margin: 0 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.carousel::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel {
-  scrollbar-width: none;
-}
-
-@media (prefers-color-scheme: light) {}
-
+/* ========== ANIMATIONS ========== */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
-    /* Optional: slight upward movement */
   }
 
   to {
@@ -627,8 +235,6 @@ a {
   }
 }
 
-/* Animation class for the second page */
 .fade-in {
   animation: fadeIn 6s ease-in-out;
-  /* Adjust duration and timing function */
 }
