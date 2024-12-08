@@ -117,7 +117,7 @@ const BookSearch = () => {
             books.map((book) => (
               <div
                 key={book.id}
-                className={`book-card ${selectedBook?.id === book.id ? "selected" : ""}`}
+                className={`book-display ${selectedBook?.id === book.id ? "selected" : ""}`}
                 onClick={() => handleBookSelect(book)}
                 tabIndex={0}
                 role="button"
