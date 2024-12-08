@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "../assets/images/logo.svg";
 
 function BindPage() {
@@ -39,7 +39,7 @@ function BindPage() {
 
           <p className="bind-description">
             The book that binds you two together is <b>{bookTitle}</b> by <b>{bookAuthor}</b>.
-            And we’ve found the link just for you!
+            And we&apos;ve found the link just for you!
           </p>
           <button className="action-button">BUY ON BOOKSHOP.ORG</button>
         </div>
