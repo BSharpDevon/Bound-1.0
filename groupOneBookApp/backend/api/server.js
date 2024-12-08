@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import selectedBooksRouter from './selectedBooks.js'; // Correct import for selectedBooks router
+import searchBookshelf from './searchBookshelf.js';
 
 dotenv.config();
 
@@ -14,7 +15,13 @@ app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 // Use the selectedBooks route handler (assuming no prefix as per your request)
-app.use('/selectedBooks', selectedBooksRouter);
+app.use('/favouriteBooks', selectedBooksRouter);
+app.use('/search', searchBookshelf);
+
+// Root endpoint (optional)
+app.get('/', (req, res) => {
+  res.send("Welcome to the server's root URL.");
+});
 
 // Set up the server to listen on a specific port
 const PORT = process.env.PORT || 8000;

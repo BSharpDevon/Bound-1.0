@@ -4,7 +4,7 @@ import pool from './connection.js'; // Correct import for connection pool
 
 const router = express.Router(); // Define the route handler
 
-router.post("/", (req, res) => {
+router.post("/favouriteBooks", (req, res) => {
   const { googlebookId, memberId } = req.body;
 
   if (!googlebookId || !memberId) {
