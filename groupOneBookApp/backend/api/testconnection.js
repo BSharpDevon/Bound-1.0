@@ -64,7 +64,6 @@ app.post("/signup", (req, res) => {
                 }
                 return res.status(201).json({
                     success: true,
-                    member_id: result.insertId,
                     message: `New member added: ${email}`,
                     user: { fullName, email }, // Returning new members' details
                 });
@@ -112,14 +111,10 @@ app.post("/login", (req, res) => {
         console.log(`Login successful for email: ${email}`);
         return res.status(200).json({
             success: true,
-            member_id: user.member_id,
             message: "Login successful",
             user: { email: user.email, id: user.id },
         });
 
-        // After successful login (in your /login route handler)
-        localStorage.setItem('member_id', response.data.member_id); // Storing the member_id
-        
         });
 
     } catch (error) {
