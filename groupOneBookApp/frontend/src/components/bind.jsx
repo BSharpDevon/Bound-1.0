@@ -2,6 +2,22 @@ import { useState } from "react";
 import logo from "../assets/images/logo.svg";
 
 function BindPage() {
+// Filter friends
+  const setIsFriendSelected = users.filter(
+    if ()
+    (user) =>
+    user.name.toLowerCase().includes(searchUserName.toLowerCase())
+  );
+    const handleAddFriend = (user) => {
+    setUserBinds((prevBinds) => {
+      if (prevBinds.some((bind) => bind.email === user.email)) {
+        alert(`${user.firstName} is already your friend.`);
+        return prevBinds;
+      }
+      return [...prevBinds, user];
+    });
+  };
+
   // State to toggle between start and result pages
   const [isBindComplete, setIsBindComplete] = useState(false);
 
@@ -18,7 +34,6 @@ function BindPage() {
       <div className="homepage-logo">
         <img id="logo" src={logo} alt="Bound Logo" />
       </div>
-
       {/* Conditional Rendering */}
       {isBindComplete ? (
         <div className={`bind-content ${isBindComplete ? "fade-in" : ""}`}>
@@ -26,9 +41,7 @@ function BindPage() {
           <h1 className="bind-header">
             {userOneName} & {userTwoName}
           </h1>
-
           <h3 className="book-title">Your Next Chapter Awaits</h3>
-
           <div className="book-container">
             <img
               className="book-cover"
@@ -36,10 +49,9 @@ function BindPage() {
               alt="Book Cover"
             />
           </div>
-
           <p className="bind-description">
             The book that binds you two together is <b>{bookTitle}</b> by <b>{bookAuthor}</b>.
-            And we&apos;ve found the link just for you!
+            And we’ve found the link just for you!
           </p>
           <button className="action-button">BUY ON BOOKSHOP.ORG</button>
         </div>
@@ -51,12 +63,16 @@ function BindPage() {
             See how your literary taste matches, and get a book recommendation
             you can both dive into.
           </p>
-
           <div className="circle-container">
             <div className="circle initials-circle">{firstNameInitial}</div>
             <div className="circle plus-circle">+</div>
           </div>
-
+          <button
+            id="signUpButtonHomepage"
+            onClick={() => setIsFriendSelected(true)}
+          >
+            SELECT FRIEND
+          </button>
           <button
             id="signUpButtonHomepage"
             onClick={() => setIsBindComplete(true)}
