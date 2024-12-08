@@ -1,27 +1,36 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import selectedBooksRouter from './selectedBooks.js'; // Correct import for selectedBooks router
+import bodyParser from 'body-parser';
+import selectedBooks from './selectedBooks.js'; // Correct import for selectedBooks router
 import searchBookshelf from './searchBookshelf.js';
+import pool from './connection.js'; // Importing the connection SQL pool
 
-dotenv.config();
+dotenv.config(); // Load environment variables
 
+// Middleware to parse JSON request body
 const app = express();
-
-// Allow requests from any origin
+// app.use(express.json());
+app.use(bodyParser.json()); // Only one call to bodyParser is needed, express.json() already parses JSON
+// Allow requests from any origin (CORS)
 app.use(cors({ origin: '*' }));
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+// Routes setup
+app.use('/favouriteBooks', selectedBooks); // Handle requests to '/favouriteBooks'
+app.use('/', searchBookshelf);  // Search books route (make sure it's correct)
+app.use(selectedBooks);  // Optionally, you can use '/api' for favouriteBooks if needed
 
-// Use the selectedBooks route handler (assuming no prefix as per your request)
-app.use('/favouriteBooks', selectedBooksRouter);
-app.use('/search', searchBookshelf);
+// Test database connection
+const testDatabaseConnection = async () => {
+  try {
+    await pool.query('SELECT 1');  // This uses the promise-based query method
+    console.log('Connected to database.');
+  } catch (err) {
+    console.error('Database connection failed:', err.stack);
+  }
+};
 
-// Root endpoint (optional)
-app.get('/', (req, res) => {
-  res.send("Welcome to the server's root URL.");
-});
+testDatabaseConnection();  // Test the database connection when the server starts
 
 // Set up the server to listen on a specific port
 const PORT = process.env.PORT || 8000;
