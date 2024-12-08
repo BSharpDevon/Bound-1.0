@@ -46,6 +46,23 @@ h2 {
   color: #ffca0b;
 }
 
+.friends-buttons-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#friends-buttons {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid grey 1px;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+  margin: 7px;
+}
+
 #favouriteBooksContent {
   margin-top: 30px;
   display: flex;
