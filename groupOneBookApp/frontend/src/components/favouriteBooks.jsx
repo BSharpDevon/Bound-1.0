@@ -1,162 +1,148 @@
-// src/components/FavouriteBooksPage.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from '../assets/images/logo.svg';
-import Footer from './footer.jsx';
+import axios from "axios";
+import logo from "../assets/images/logo.svg";
+import Footer from "./footer.jsx";
 
-function FavouriteBooksPage() {
+const BookSearch = () => {
   const location = useLocation();
   const { fullName } = location.state || {}; // Accessing fullName passed via state
-
-  const [bookOne, setBookOne] = useState("");
-  const [bookTwo, setBookTwo] = useState("");
-  const [bookThree, setBookThree] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [counter, setCounter] = useState(0);
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [books, setBooks] = useState([]);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [memberId, setMemberId] = useState(null); // State for memberId
+  const [message, setMessage] = useState(""); // State for success message
   const navigate = useNavigate();
 
-  // Function to handle API search
-  const searchBooks = async (query) => {
-    if (query.length < 2) {
-      setSearchResults([]);
+  // Check localStorage for memberId
+  useEffect(() => {
+    const storedMemberId = localStorage.getItem("memberId");
+    if (storedMemberId) {
+      setMemberId(storedMemberId);
+    } else {
+      alert("No member ID found. Please log in again.");
+      navigate("/"); // Redirect to login page if no memberId
+    }
+  }, [navigate]);
+
+  const handleInputChange = (e) => setSearchTerm(e.target.value);
+  console.log('Searching for books for member ID:', memberId);
+
+  const handleSearch = async () => {
+    if (!searchTerm) {
+      alert("Please enter a book title.");
       return;
     }
-
+    setLoading(true);
+    setError("");
     try {
-      const response = await fetch(`http://localhost:8000/search?searchRequest=${query}`);
-      const data = await response.json();
-      setSearchResults(data.books || []);
-    } catch (error) {
-      console.error("Error fetching books:", error);
+      const response = await axios.get(
+        `http://localhost:8000/search?searchRequest=${encodeURIComponent(searchTerm)}`
+      );
+      const data = response.data;
+      if (data.success) {
+        setBooks(data.books);
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Failed to fetch books, please try again later.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Handlers for input changes and search
-  const handleBookOneChange = (event) => {
-    setBookOne(event.target.value);
-    searchBooks(event.target.value);
+  // Function to select a book
+  const handleBookSelect = (book) => {
+    setSelectedBook(book); // Update the selected book state
+    setSearchTerm(book.title); // Update the input field with the selected book's title
   };
 
-  const handleBookTwoChange = (event) => {
-    setBookTwo(event.target.value);
-    searchBooks(event.target.value);
-  };
-
-  const handleBookThreeChange = (event) => {
-    setBookThree(event.target.value);
-    searchBooks(event.target.value);
-  };
-
-  // Counter logic
-  const updateCounter = () => {
-    const selectedBooks = [bookOne, bookTwo, bookThree].filter((book) => book.trim() !== "");
-    setCounter(selectedBooks.length);
-  };
-
-  // Handler for the "I'm Finished" button
-  const finished = async () => {
-    const favouriteBooks = [bookOne, bookTwo, bookThree].filter((book) => book.trim() !== "");
-
-    if (favouriteBooks.length === 0) {
-      alert("Please add three books to add to your profile.");
+// Function to add the selected book to favourites and navigate to homepage
+  const handleSubmit = async () => {
+    if (!selectedBook) {
+      alert("Please select a book to continue.");
       return;
     }
-
+    if (!memberId) {
+      alert("No member ID found. Please log in again.");
+      return;
+    }
     try {
-        await fetch("https://localhost/bound/user/favourites", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ favouriteBooks: [bookOne, bookTwo, bookThree] }),
-          });
-      navigate("/homepage");
-    } catch (error) {
-      console.error("Error saving favourite books:", error);
+      const response = await axios.post("http://localhost:8000/favouriteBooks", {
+        memberId, // Send the memberId
+        googlebookId: selectedBook.id, // Send the googlebookId (from selected book)
+      });
+      console.log("hello");
+      if (response.data.success) {
+        console.log("Books selected!");
+        navigate("/homepage");
+      } else {
+        alert(response.data.message || "Submission failed. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error during selection:", err.message);
+      alert("An error occurred while submitting books. Please try again.");
     }
   };
 
   return (
     <div id="favouriteBooksContent">
-
-    <img id="logo" src={logo} alt="Bound Logo" />
-
-      {/* Welcome Message */}
-      <h2>WELCOME, {fullName}!</h2>
-      <p className="favouriteBooksMessage">There&apos;s nothing like a good book. Search for your three favourite reads and save them to your library.</p>
-
-      {/* Counter */}
-      <div className="counter-container">
-        <p className="count-display">{counter}/3</p>
+      <img id="logo" src={logo} alt="Bound Logo" />
+      <h2>WELCOME {fullName}!</h2>
+      <p className="favouriteBooksMessage">
+        There&apos;s nothing like a good book. Lets get started by adding a book to your library.
+      </p>
+      <div className="book-search-container">
+        <label>
+          <input
+            type="text"
+            placeholder="Choose book"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+          <button onClick={handleSearch}>SEARCH</button>
+          <br />
+          <button onClick={handleSubmit}>SUBMIT</button>
+        </label>
+        
+        {loading && <p>Loading...</p>}
+        {error && <p className="error">{error}</p>}
+        {message && <p className="success">{message}</p>} {/* Success message */}
+        <div className="book-results">
+          {books.length > 0 ? (
+            books.map((book) => (
+              <div
+                key={book.id}
+                className={`book-display ${selectedBook?.id === book.id ? "selected" : ""}`}
+                onClick={() => handleBookSelect(book)}
+                tabIndex={0}
+                role="button"
+                onKeyDown={(e) => e.key === "Enter" && handleBookSelect(book)}
+                style={{ cursor: "pointer", marginBottom: "10px" }}
+              >
+                <img src={book.thumbnail} alt={book.title} />
+                <h2>{book.title}</h2>
+                <p>
+                  <strong>Authors:</strong> {book.authors.join(", ")}
+                </p>
+                <p>{book.description}</p>
+                <a href={book.link} target="_blank" rel="noopener noreferrer">
+                  More info
+                </a>
+              </div>
+            ))
+          ) : (
+            !loading && <p>No searches yet</p>
+          )}
+        </div>
       </div>
-
-      {/* Book Search Inputs */}
-      <label>
-        <input
-          type="text"
-          value={bookOne}
-          placeholder="Choose book"
-          onChange={(e) => {
-            handleBookOneChange(e);
-            updateCounter();
-          }}
-        />
-      </label>
-      <br />
-
-      <label>
-        <input
-          type="text"
-          value={bookTwo}
-          placeholder="Choose book"
-          onChange={(e) => {
-            handleBookTwoChange(e);
-            updateCounter();
-          }}
-        />
-      </label>
-      <br />
-
-      <label>
-        <input
-          type="text"
-          value={bookThree}
-          placeholder="Choose book"
-          onChange={(e) => {
-            handleBookThreeChange(e);
-            updateCounter();
-          }}
-        />
-      </label>
-      <br />
-
-      {/* Suggested Search Results */}
-      <div>
-      {searchResults.length > 0 && (
-          <ul>
-            {searchResults.map((book, index) => {
-              const title = book.volumeInfo.title || "No title available";
-              const authors = book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : "No author available";
-
-              return (
-                <li key={index}>
-                  <p><strong>{title}</strong></p>
-                  <p>{authors}</p>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-
-      {/* "I'm Finished" Button */}
-      <button onClick={finished}>I&apos;M FINISHED</button>
-
-      <Footer/>
-
+      <Footer />
     </div>
   );
-}
+};
 
-export default FavouriteBooksPage;
+export default BookSearch;

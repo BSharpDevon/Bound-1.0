@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import bindimage from "../assets/images/bind-image.svg";
+import Logout from "./logout.jsx";
 import Footer from "./footer.jsx";
 
 function HomePage() {
@@ -33,6 +34,7 @@ function HomePage() {
     { firstName: "Beth", id: 2, email: "beth@cfg.com" },
     { firstName: "Steph", id: 3, email: "steph@cfg.com" },
     { firstName: "Jenni", id: 4, email: "jenni@cfg.com" },
+    { firstName: "Lydia", id: 5, email: "lydia@cfg.com" },
   ];
 
 const books = [
@@ -118,7 +120,7 @@ const books = [
   };
 
   const startBind = () => {
-    navigate("/start-bind", { state: { book: selectedBook } });
+    navigate("/bind", { state: { book: selectedBook } });
   };
 
   return (
@@ -157,6 +159,7 @@ const books = [
             ))}
           </div>
         </div>
+        <Logout />
       </div>
 
       {/* Content Section */}
