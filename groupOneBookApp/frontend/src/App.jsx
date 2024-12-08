@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import AuthPage from "./components/authPage";
-import FavouriteBooksPage from "./components/favouriteBooks";
+import BookSearch from "./components/favouriteBooks";
 import HomePage from "./components/homepage";
 import Bind from "./components/bind";
-import BookSearch from "./components/testBookSearch";
 
 import "./App.css";
 
@@ -55,7 +54,7 @@ function App() {
 
           <Route
             path="/favourite-books"
-            element={memberId ? <FavouriteBooksPage /> : <Navigate to="/" />}
+            element={memberId ? <BookSearch /> : <Navigate to="/" />}
           />
           <Route
             path="/homepage"
@@ -64,10 +63,6 @@ function App() {
           <Route
             path="/bind"
             element={memberId ? <Bind /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/test-book-search"
-            element={memberId ? <BookSearch /> : <Navigate to="/" />}
           />
         </Routes>
       </div>
