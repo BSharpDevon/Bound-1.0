@@ -49,6 +49,20 @@ h2 {
   margin:40px 10px 20px;
   padding: 0;
 }
+label {
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-size: 1.0em;
+  max-width: 50%;
+  line-height: 1.1;
+}
+
+#text {
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-size: 1.0em;
+  max-width: 70%;
+  margin-right: 10px;
+  line-height: 1.1;
+}
 .highlight {
   color: #FFCA0B;
 }
@@ -78,7 +92,19 @@ img {
   width: 150px;
   cursor: pointer;
 }
+.homepage-logo {
+  flex: 0 0 auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 /*  Buttons */
+.button:hover {
+  background-color: #FFCA0B;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+}
 button {
   background-color: #10282A;
   font-family: 'IMFellEnglish', serif;
@@ -107,25 +133,79 @@ button:hover {
   cursor: pointer;
   margin: 7px;
 }
+#signUpButton {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  margin-top: 30px;
+}
+
+#signInButton {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  margin-top: 30px;
+}
+
+#signInButton:hover {
+  background-color: #FFCA0B;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+}
+
+#signUpButtonHomepage {
+  background-color: #10282A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid white 1px;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  align-items: center;
+  display: grid;
+  width: 210px;
+}
+
+#signUpButtonHomepage:hover {
+  background-color: #FFCA0B;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+}
+
+#signUpButton:hover {
+  background-color: #FFCA0B;
+  color: #091819;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+}
+
+/*  Grid and Display Elements */
+
 #favouriteBooksContent {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-label {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  font-size: 1.0em;
-  max-width: 50%;
-  line-height: 1.1;
-}
-#text {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  font-size: 1.0em;
-  max-width: 70%;
-  margin-right: 10px;
-  line-height: 1.1;
-}
+
 input {
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
   font-size: 1.0em;
@@ -172,11 +252,6 @@ input:focus {
 }
 .homepage {
   width: 100%;
-}
-.homepage-logo {
-  flex: 0 0 auto;
-  font-size: 20px;
-  font-weight: bold;
 }
 .homepage-sidebar {
   display: flex;
@@ -397,64 +472,6 @@ a {
   margin: 20px 10px 20px;
   padding: 0;
 }
-#signUpButton {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid white 1px;
-  text-align: center;
-  font-weight: 900;
-  border-radius: 412px;
-  cursor: pointer;
-  max-height: 40px;
-  margin-top: 30px;
-}
-#signInButton {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid white 1px;
-  text-align: center;
-  font-weight: 900;
-  border-radius: 412px;
-  cursor: pointer;
-  max-height: 40px;
-  margin-top: 30px;
-}
-#signInButton:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
-#signUpButtonHomepage {
-  background-color: #10282A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
-  padding: 10px 40px;
-  border: solid white 1px;
-  font-weight: 900;
-  border-radius: 412px;
-  cursor: pointer;
-  max-height: 40px;
-  align-items: center;
-  display: grid;
-  width: 210px;
-}
-#signUpButtonHomepage:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
-#signUpButton:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
-}
 .signup {
   width: 100%;
   box-sizing: border-box;
@@ -466,12 +483,6 @@ a {
   gap: 3px;
   max-width: 100%;
   margin-bottom: 20px;
-}
-.button:hover {
-  background-color: #FFCA0B;
-    color: #091819;
-    transform: scale(1.05);
-    box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 .login {
   display: flex;
