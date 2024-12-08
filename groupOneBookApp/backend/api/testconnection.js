@@ -4,9 +4,12 @@ import "dotenv/config";
 import pool from "./connection.js";
 import bcrypt from 'bcrypt'
 import bodyParser from 'body-parser'
+
 var app = express();
+
 app.use(bodyParser.json())
 app.use(cors());
+
 app.get("/members", (req, res) => {
     const sql = "SELECT * FROM members";
     pool.query(sql, (err, results) => {
@@ -17,6 +20,7 @@ app.get("/members", (req, res) => {
         res.send(results)
     });
 });
+
 app.post("/signup", (req, res) => {
     const { email, fullName, password, privacyAccepted } = req.body
     if (!email || !fullName || !password || !privacyAccepted) {
@@ -71,6 +75,7 @@ app.post("/signup", (req, res) => {
         });
     }
 });
+
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     try {
@@ -111,6 +116,7 @@ app.post("/login", (req, res) => {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
   });
+
 //   // Test the database connection
 //   const testDatabaseConnection = async () => {
 //       try {
@@ -121,6 +127,7 @@ app.post("/login", (req, res) => {
 //           console.error('Database connection failed: ' + err.stack);
 //       }
 //   };
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}!`);

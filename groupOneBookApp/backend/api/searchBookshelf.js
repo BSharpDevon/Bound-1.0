@@ -8,7 +8,6 @@ dotenv.config();
 
 // Create an Express app
 const app = express();
-const PORT = 8000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -19,12 +18,10 @@ const searchBookshelf = express.Router();
 
 console.log(process.env.GOOGLE_BOOKS_API_KEY);
 
-searchBookshelf.get('/', (req, res)=>{
-  res.status(200);
-  res.send("Welcome to root URL of Server");
-});
-
-console.log("Line 27");
+// searchBookshelf.get('/', (req, res)=>{
+//   res.status(200);
+//   res.send("Welcome to root URL of Server");
+// });
 
 // search endpoint
 searchBookshelf.get('/search', async (req, res) => {
@@ -39,7 +36,6 @@ searchBookshelf.get('/search', async (req, res) => {
         message: "Please enter something in the search bar."
       });
     }
-    console.log("Line 42");
 
     // The URL to ask Google Books for the search results, returns top 10 results.
     const maxResults = 10;
@@ -48,7 +44,7 @@ searchBookshelf.get('/search', async (req, res) => {
 
     // Ask Google Books for the books that match the search term (using axios)
     const searchResult = await axios.get(searchGoogleBooks);
-    console.log("Line 39");
+
     // If no books were found, let the user know
     if (searchResult.data.totalItems === 0) {
       return res.status(404).json({
@@ -88,8 +84,4 @@ searchBookshelf.get('/search', async (req, res) => {
 // Use the router in the app
 app.use('/', searchBookshelf);
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
-
+export default searchBookshelf;  
