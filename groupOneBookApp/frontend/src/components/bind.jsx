@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../assets/images/logo.svg";
 
 function BindPage() {
-// Filter friends
+// Filter friends - code to be edited to input button function
   const setIsFriendSelected = users.filter(
     if ()
     (user) =>
