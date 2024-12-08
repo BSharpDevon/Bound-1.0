@@ -19,10 +19,10 @@ const searchBookshelf = express.Router();
 
 console.log(process.env.GOOGLE_BOOKS_API_KEY);
 
-searchBookshelf.get('/', (req, res)=>{
-  res.status(200);
-  res.send("Welcome to root URL of Server");
-});
+// searchBookshelf.get('/', (req, res)=>{
+//   res.status(200);
+//   res.send("Welcome to root URL of Server");
+// });
 
 console.log("Line 27");
 
@@ -88,8 +88,9 @@ searchBookshelf.get('/search', async (req, res) => {
 // Use the router in the app
 app.use('/', searchBookshelf);
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+// // Start the server
+// app.listen(PORT, () => {
+//   console.log(`Server is running at http://localhost:${PORT}`);
+// });
 
+export default searchBookshelf;  

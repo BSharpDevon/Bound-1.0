@@ -16,12 +16,12 @@ app.use(express.json());
 
 // Use the selectedBooks route handler (assuming no prefix as per your request)
 app.use('/favouriteBooks', selectedBooksRouter);
-app.use('/search', searchBookshelf);
+app.use('/', searchBookshelf);
 
-// Root endpoint (optional)
-app.get('/', (req, res) => {
-  res.send("Welcome to the server's root URL.");
-});
+// // Root endpoint (optional)
+// app.get('/', (req, res) => {
+//   res.send("Welcome to the server's root URL.");
+// });
 
 // Set up the server to listen on a specific port
 const PORT = process.env.PORT || 8000;
