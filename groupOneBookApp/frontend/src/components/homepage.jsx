@@ -119,10 +119,6 @@ const books = [
   };
 
   const startBind = () => {
-    if (!selectedBook) {
-      alert("Please select a user to bind with!");
-      return;
-    }
     navigate("/start-bind", { state: { book: selectedBook } });
   };
 
@@ -205,7 +201,7 @@ const books = [
         </div>
         
         <div className="user-library-binds">
-          <h2>Your Binds</h2>
+          <h2>Your library</h2>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
