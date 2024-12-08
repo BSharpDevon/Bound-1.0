@@ -118,7 +118,7 @@ const books = [
   };
 
   const startBind = () => {
-    navigate("/start-bind", { state: { book: selectedBook } });
+    navigate("/bind", { state: { book: selectedBook } });
   };
 
   return (
