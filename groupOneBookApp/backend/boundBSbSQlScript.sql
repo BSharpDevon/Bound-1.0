@@ -75,10 +75,8 @@ SELECT * FROM bind_books;
 
 --Table to keep friend pairs + add new friendships
 
-CREATE TABLE friends (
-    friend_id INT PRIMARY KEY AUTO_INCREMENT,
-    member_id INT,
-    member_name VARCHAR (250)
-    member_id INT,
-    member_name VARCHAR (250)
+CREATE TABLE friendships (
+friendship_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+friend1_email VARCHAR(250) NOT NULL UNIQUE,
+friend2_id VARCHAR(250) NOT NULL UNIQUE
 );
