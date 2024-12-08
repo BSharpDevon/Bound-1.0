@@ -104,10 +104,11 @@ const BookSearch = () => {
             value={searchTerm}
             onChange={handleInputChange}
           />
-          <button onClick={handleSearch}>Search</button>
+          <button onClick={handleSearch}>SEARCH</button>
           <br />
-          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleSubmit}>SUBMIT</button>
         </label>
+        
         {loading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>} {/* Success message */}
