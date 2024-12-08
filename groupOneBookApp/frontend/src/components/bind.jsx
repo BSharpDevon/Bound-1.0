@@ -7,8 +7,7 @@ function BindPage() {
   const navigate = useNavigate();
 
   // Select a friend to create a bind with
-  const selectFriend = (member) => {
-
+  const selectFriend = () => {
   };
 
   // State to toggle between start and result pages
@@ -21,10 +20,17 @@ function BindPage() {
   const bookTitle = "A Court of Thorns and Roses";
   const bookAuthor = "Sarah J. Maas";
 
+  const bookShop = () => {
+    // Navigate to Bookshop.org
+    window.location.href = 'https://bookshop.org/';  
+  };
+
+  // Navigate back to homepage
   const returnBtn = () => {
     navigate("/homepage");
   };
 
+  // HTML and styling
   return (
     <div>
       {/* Logo */}
@@ -54,7 +60,7 @@ function BindPage() {
             The book that binds you two together is <b>{bookTitle}</b> by <b>{bookAuthor}</b>.
             And we&apos;ve found the link just for you!
           </p>
-          <button className="action-button">BUY ON BOOKSHOP.ORG</button>
+          <button className="action-button" onClick={bookShop}>BUY ON BOOKSHOP.ORG</button>
           <button onClick={returnBtn}>BACK TO HOME</button>
         </div>
       ) : (
