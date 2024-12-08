@@ -33,6 +33,7 @@ function HomePage() {
     { firstName: "Beth", id: 2, email: "beth@cfg.com" },
     { firstName: "Steph", id: 3, email: "steph@cfg.com" },
     { firstName: "Jenni", id: 4, email: "jenni@cfg.com" },
+    { firstName: "Lydia", id: 5, email: "lydia@cfg.com" },
   ];
 
 const books = [
