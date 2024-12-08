@@ -35,6 +35,21 @@ View your unique book recommendation, tailored to both you and your friend’s t
 - Copy the database code into your SQL Workbench
 - Update the .env with your SQL workbench password
 
+### Servers
+
+For the backend server:
+
+To run the first page of our project, run:
+`npm run dev`
+
+To run the second page of our project, run:
+`node server.js`
+
+For the frontend server:
+
+To run the project, run:
+`npm run dev`
+
 ### For hashing passwords install bcrypt
 
 npm i bcrypt
