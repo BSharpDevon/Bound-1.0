@@ -88,9 +88,4 @@ searchBookshelf.get('/search', async (req, res) => {
 // Use the router in the app
 app.use('/', searchBookshelf);
 
-// // Start the server
-// app.listen(PORT, () => {
-//   console.log(`Server is running at http://localhost:${PORT}`);
-// });
-
 export default searchBookshelf;  
