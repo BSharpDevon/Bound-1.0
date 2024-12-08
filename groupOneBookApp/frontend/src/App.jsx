@@ -66,7 +66,7 @@ function App() {
             element={memberId ? <Bind /> : <Navigate to="/" />}
           />
           <Route
-            path="/testBookSearch"
+            path="/test-book-search"
             element={memberId ? <BookSearch /> : <Navigate to="/" />}
           />
         </Routes>
