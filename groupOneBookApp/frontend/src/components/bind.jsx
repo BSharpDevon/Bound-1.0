@@ -55,7 +55,7 @@ function BindPage() {
             And we&apos;ve found the link just for you!
           </p>
           <button className="action-button">BUY ON BOOKSHOP.ORG</button>
-          <button onClick={returnBtn}>Back to Home</button>
+          <button onClick={returnBtn}>BACK TO HOME</button>
         </div>
       ) : (
         <div className="bind-content">
