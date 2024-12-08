@@ -12,14 +12,13 @@ dotenv.config(); // Load environment variables
 const app = express();
 // app.use(express.json());
 app.use(bodyParser.json()); // Only one call to bodyParser is needed, express.json() already parses JSON
-
 // Allow requests from any origin (CORS)
 app.use(cors({ origin: '*' }));
 
 // Routes setup
 app.use('/favouriteBooks', selectedBooks); // Handle requests to '/favouriteBooks'
 app.use('/', searchBookshelf);  // Search books route (make sure it's correct)
-app.use( selectedBooks);  // Optionally, you can use '/api' for favouriteBooks if needed
+app.use(selectedBooks);  // Optionally, you can use '/api' for favouriteBooks if needed
 
 // Test database connection
 const testDatabaseConnection = async () => {
