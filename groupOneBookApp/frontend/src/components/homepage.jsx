@@ -33,7 +33,6 @@ function HomePage() {
     { firstName: "Beth", id: 2, email: "beth@cfg.com" },
     { firstName: "Steph", id: 3, email: "steph@cfg.com" },
     { firstName: "Jenni", id: 4, email: "jenni@cfg.com" },
-    { firstName: "Lydia", id: 5, email: "lydia@cfg.com" },
   ];
 
 const books = [
@@ -167,18 +166,24 @@ const books = [
           {/* Friends Section */}
           <div className="user-friends">
             <h2>Your Friends</h2>
+
             <input
               className="friend-search-input"
               type="text"
-              placeholder="Search users by email"
+              placeholder="Search users by name"
               value={searchUserEmail}
               onChange={handleInputChange}
             />
+
+            <div className="friends-buttons-container">
+              <button id="friends-buttons" onClick={() => handleAddFriend(user)}>SEARCH</button>
+              <button id="friends-buttons"onClick={() => handleAddFriend(user)}>ADD</button>
+            </div>
+            
             <div className="search-results">
               {filteredUsers.map((user) => (
                 <div className="name-add" key={user.id}>
                   <p className="first-name">{user.firstName}</p>
-                  <button onClick={() => handleAddFriend(user)}>ADD</button>
                 </div>
               ))}
             </div>
