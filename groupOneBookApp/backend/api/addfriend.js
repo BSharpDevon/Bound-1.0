@@ -1,4 +1,4 @@
-port express from "express";
+import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import pool from "./connection.js";
@@ -13,15 +13,40 @@ app.use(express.json());
 
 
 
-// app.post("/add-friend", (req,res) => {
+app.post("/add-friend", (req,res) => {
 
-//     const { email } = req.body; // Extract email from query parameters
-//     if (!email) {
-//         return res.status(400).json({ error: "we need an email" });
-//     }
-//     try {
-//         const sql = 
-//     }
+    const { friendEmail } = req.body; // Extract email from query parameters
+    if (!friendEmail) {
+        return res.status(400).json({ error: "we need an email" });
+    }
+
+    const checkMembersQuery = 
+    "SELECT email FROM  members where email IN (?,?)"
+     db.query(checkMemberQuery, [friendEmail], (err, results) => {
+            if (err) {
+                console.error ("error checking database", err);
+            return res.status(500).json({error: "database error"});
+        }
+            if (results.length<2) {
+                return res.status(404).json({ error: "one or both users not found"})
+            }
+
+            const insertFriendshipQuery = `
+            INSERT INTO friendships (user_id, friend_id) 
+            VALUES (?, ?), (?, ?)
+        `;
+        db.query(insertFriendshipQuery, [friend1_email, friend2_id,], err => {
+            if (err) {
+                console.error('Error inserting friendship:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            // Return both user details
+            res.json({ message: 'Friend added successfully', users: results });
+        });
+    });
+});
+
 
 
 
@@ -35,6 +60,8 @@ app.use(express.json());
 //         console.error('Database connection failed: ',err.stack);
 //     }
 // };
+
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

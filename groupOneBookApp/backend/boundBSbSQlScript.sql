@@ -77,6 +77,6 @@ SELECT * FROM bind_books;
 
 CREATE TABLE friendships (
 friendship_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-friend1_id INT NOT NULL,
-friend2_id INT NOT NULL
+friend1_email VARCHAR(250) NOT NULL UNIQUE,
+friend2_id VARCHAR(250) NOT NULL UNIQUE
 );
