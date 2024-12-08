@@ -142,5 +142,3 @@ app.post("/login", (req, res) => {
 app.listen(process.env.PORT, function (req, res) {
     console.log("Server Started!");
 });
-
-// test
