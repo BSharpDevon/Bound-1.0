@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import AuthPage from "./components/authPage";
 import FavouriteBooksPage from "./components/favouriteBooks";
@@ -66,7 +66,7 @@ function App() {
             element={memberId ? <Bind /> : <Navigate to="/" />}
           />
           <Route
-            path="/testBookSearch"
+            path="/test-book-search"
             element={memberId ? <BookSearch /> : <Navigate to="/" />}
           />
         </Routes>
