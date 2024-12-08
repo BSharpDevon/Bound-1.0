@@ -8,12 +8,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*  Fonts */
+
+@font-face {
+  font-family: 'IMFellEnglish';
+  src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
+}
+
+/*  Universal code */
+
 body {
   margin: 0px;
   padding: 0px;
   height: 100vh;
   width: 100%;
-  background-image: url;
   overflow-x: hidden;
 }
 
@@ -21,9 +29,13 @@ footer {
   padding: 20px;
 }
 
-@font-face {
+p {
   font-family: 'IMFellEnglish';
-  src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
+  font-weight: 500;
+  max-width: 500px;
+  font-size: 18px;
+  line-height: 1.5;
+  padding: 0;
 }
 
 h1 {
@@ -46,10 +58,24 @@ h2 {
   color: #ffca0b;
 }
 
+/*  Containers */
+
 .friends-buttons-container {
   display: flex;
   flex-direction: row;
 }
+
+.book-search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/*  Buttons */
 
 #friends-buttons {
   background-color: #10282A;
@@ -63,31 +89,11 @@ h2 {
   margin: 7px;
 }
 
-.book-search-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
 #favouriteBooksContent {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-p {
-  font-family: 'IMFellEnglish';
-  font-weight: 500;
-  max-width: 500px;
-  font-size: 18px;
-  /* Fixed size */
-  line-height: 1.5;
-  padding: 0;
 }
 
 label {
