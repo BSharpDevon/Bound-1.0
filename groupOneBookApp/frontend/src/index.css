@@ -317,6 +317,21 @@ Button:hover {
   margin: 30px 10px 20px -50px;
 }
 
+.book-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: none;
+  width: 800px;
+  gap: 10px;
+  margin: 30px;
+}
+
+a {
+  color: grey;
+}
+
 .circle {
   display: flex;
   align-items: center;

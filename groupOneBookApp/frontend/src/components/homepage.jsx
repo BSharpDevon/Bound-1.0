@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import bindimage from "../assets/images/bind-image.svg";
+import Logout from "./logout.jsx";
 import Footer from "./footer.jsx";
 
 function HomePage() {
@@ -119,7 +120,7 @@ const books = [
   };
 
   const startBind = () => {
-    navigate("/start-bind", { state: { book: selectedBook } });
+    navigate("/bind", { state: { book: selectedBook } });
   };
 
   return (
@@ -158,6 +159,7 @@ const books = [
             ))}
           </div>
         </div>
+        <Logout />
       </div>
 
       {/* Content Section */}
