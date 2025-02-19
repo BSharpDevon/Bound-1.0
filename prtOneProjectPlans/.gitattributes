@@ -1,4 +1,0 @@
-* text=auto
-# This tells Git to automatically normalize line endings:
-# files will be checked out with native line endings (CRLF on Windows, LF on macOS/Linux)
-#  but always committed with LF, ensuring cross-platform consistency.
