@@ -5,8 +5,13 @@ import axios from 'axios';
 import logo from '../assets/images/logo.svg';
 import group from '../assets/images/group2.svg';
 import Footer from './footer.jsx';
+import { useDispatch } from 'react-redux'; // Import useDispatch to dispatch actions to the Redux store
+import { setMemberId } from '../Redux/slices/userSlice'; // Ensure the name matches your Redux slice
 
-function AuthPage() {
+function AuthPage() { 
+  // Redux dispatch
+  const dispatch = useDispatch(); // Initialise Redux's dispatch function
+
   // State for Sign In
   const [emailSignIn, setEmailSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
@@ -31,15 +36,15 @@ function AuthPage() {
     setIsSubmitting(true); // Disable submission during API call
 
     try {
-      const response = await axios.post('http://localhost:8000/login', {
+      const response = await axios.post('http://localhost:8000/login-page/login', {
         email: emailSignIn,
         password: passwordSignIn,
       });
 
-      const { success, member_id } = response.data;
+      const { success, member_id, email } = response.data; // Adjusted to match backend response
       if (success) {
-        // Save the member ID in localStorage
-        localStorage.setItem('memberId', member_id);
+        dispatch(setMemberId({ member_id, email })); // sends details to Redux store
+        console.log("Redux store state after dispatch:", { member_id, email });
         navigate('/homepage'); // Redirect to homepage
       } else {
         alert('Invalid email or password.');
@@ -69,18 +74,21 @@ function AuthPage() {
     setIsSubmitting(true); // Disable submission during API call
 
     try {
-      const response = await axios.post('http://localhost:8000/signup', {
+      const response = await axios.post('http://localhost:8000/login-page/signup', {
         fullName,
         email: emailSignUp,
         password: passwordSignUp,
         privacyAccepted: isChecked,
       });
 
-      const { success, member_id } = response.data;
+      const { success, member_id, email } = response.data;
       if (success) {
-        // Save the member ID in localStorage
-        localStorage.setItem('memberId', member_id);
-        console.log(localStorage.getItem('memberId')); // Ensure this prints the member ID correctly
+        dispatch(setMemberId({ member_id, email })); // Sends details to Redux store
+        console.log("Redux store state:", member_id);
+        console.log("Redux store state after dispatch (signup):", {
+          member_id,
+          email,
+        });
         navigate('/favourite-books', { state: { fullName } }); // Redirect to favourite-books page
       } else {
         alert(response.data.message || 'Signup failed. Please try again.');

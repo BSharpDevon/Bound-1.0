@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node api/test.js",
-    "dev": "node api/testConnection.js"
+    "dev": "node api/server.js"
   },
   "keywords": [],
   "author": "",

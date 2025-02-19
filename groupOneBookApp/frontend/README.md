@@ -34,21 +34,10 @@ View your unique book recommendation, tailored to both you and your friend’s t
   - `npm install axios`
 - Copy the database code into your SQL Workbench
 - Update the .env with your SQL workbench password
-
-### Servers
-
-For the backend server:
-
-To run the first page of our project, run:
-`npm run dev`
-
-To run the second page of our project, run:
-`node server.js`
-
-For the frontend server:
-
-To run the project, run:
-`npm run dev`
+- [Installing Redux store](https://redux.js.org/tutorials/quick-start) for local storage.
+  - Add the Redux Toolkit and React-Redux packages to your project:
+  - Navigate to the frontend folder (the directory that's sibling to the package.json), and run:
+    - npm install @reduxjs/toolkit react-redux
 
 ### For hashing passwords install bcrypt
 

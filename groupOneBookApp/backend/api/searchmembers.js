@@ -4,13 +4,11 @@ import "dotenv/config";
 import pool from "./connection.js";
 import bodyParser from 'body-parser';
 
-
 //Initialise the Express application
 const app = express();
 app.use(bodyParser.json())
 app.use(cors());
 app.use(express.json());
-
 
 
 app.get("/search-members", (req,res) => {
@@ -30,16 +28,18 @@ app.get("/search-members", (req,res) => {
 });
 
 
-//   // Test the database connection
-//   const testDatabaseConnection = async () => {
-//     try {
-//         const connection = await pool.getConnection();
-//         console.log('Connected to database.');
-//         connection.release(); // Release the connection back to the pool.
-//     } catch (err) {
-//         console.error('Database connection failed: ',err.stack);
-//     }
-// };
+  // Test the database connection
+  const testDatabaseConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connected to database.');
+        connection.release(); // Release the connection back to the pool.
+    } catch (err) {
+        console.error('Database connection failed: ',err.stack);
+    }
+};
+
+testDatabaseConnection ();
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
