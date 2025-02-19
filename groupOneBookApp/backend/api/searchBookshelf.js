@@ -1,87 +1,136 @@
 // Import the libraries we need
 import express from 'express'; // For building the web server
 import axios from 'axios'; // For making HTTP requests
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
-dotenv.config();
+import bodyParser from 'body-parser'; // For parsing JSON request bodies
+import cors from 'cors'; // For handling CORS
+import dotenv from 'dotenv'; // For loading environment variables
+import connection from './connection.js'; // Import the connection from connections.js
+
+dotenv.config(); // Load environment variables from .env file
 
 // Create an Express app
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
-console.log("Line 16");
+
+// Configure CORS
+app.use(cors({
+  origin: "http://localhost:5173", // Replace with your frontend's URL
+  methods: ["GET", "POST"],
+  credentials: true,
+}));
+
+console.log("CORS and Body Parser Middleware Configured");
+
 // Create a router
 const searchBookshelf = express.Router();
 
-console.log(process.env.GOOGLE_BOOKS_API_KEY);
-
-// searchBookshelf.get('/', (req, res)=>{
-//   res.status(200);
-//   res.send("Welcome to root URL of Server");
-// });
-
-// search endpoint
-searchBookshelf.get('/search', async (req, res) => {
+// Search Endpoint
+searchBookshelf.get('/search', (req, res) => {
   const { searchRequest } = req.query;
-  console.log("Searching for request.");
-  console.log("Line 22")
-  // If the user didn't give us a search term, show an error message
-  try {
-    if (!searchRequest) {
-      return res.status(400).json({
-        success: false,
-        message: "Please enter something in the search bar."
-      });
-    }
+  console.log("Received search request:", searchRequest);
 
-    // The URL to ask Google Books for the search results, returns top 10 results.
-    const maxResults = 10;
-    const startIndex = req.query.startIndex || 0;
-    const searchGoogleBooks = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchRequest)}&key=${process.env.GOOGLE_BOOKS_API_KEY}&startIndex=${startIndex}&maxResults=${maxResults}`;
-
-    // Ask Google Books for the books that match the search term (using axios)
-    const searchResult = await axios.get(searchGoogleBooks);
-
-    // If no books were found, let the user know
-    if (searchResult.data.totalItems === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "We couldn't find your book. Try something else!",
-      });
-    }
-
-    // Simplify the data we got from Google Books into just the useful bits
-    const books = searchResult.data.items.map((item) => ({
-      id: item.id, // Each book has a unique ID
-      title: item.volumeInfo.title, // The title of the book
-      authors: item.volumeInfo.authors || ["Unknown Author"], // The book's authors (or "Unknown" if not listed)
-      description: item.volumeInfo.description || "No description available.", // A short description of the book
-      thumbnail:
-        item.volumeInfo.imageLinks?.thumbnail || "No image available.", // A picture of the book's cover
-      link: item.volumeInfo.infoLink, // A link to learn more about the book
-    }));
-
-    // Send the list of books back to the user
-    return res.status(200).json({
-      success: true,
-      books,
-    });
-
-  } catch (error) {
-    // If something goes wrong, show an error message
-    console.error("Error fetching books from Google Books API:", error);
-    return res.status(500).json({
+  // Validate searchRequest
+  if (!searchRequest || searchRequest.trim() === "") {
+    return res.status(400).json({
       success: false,
-      message: "Oops! Something went wrong while searching for books.",
-      error: error.message,
+      message: "Please enter a valid book title.",
     });
   }
+
+  // Define search parameters
+  const maxResults = 10;
+  const startIndex = req.query.startIndex || 0;
+
+  // Construct the Google Books API URL
+  const searchGoogleBooks = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchRequest)}&key=${process.env.GOOGLE_BOOKS_API_KEY}&startIndex=${startIndex}&maxResults=${maxResults}`;
+
+  console.log("Google Books API URL:", searchGoogleBooks);
+
+  // Make the request to Google Books API using axios
+  axios.get(searchGoogleBooks)
+    .then(searchResult => {
+      // Check if any books were found
+      if (searchResult.data.totalItems === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "No books found for your search. Try a different title!",
+        });
+      }
+
+      // Simplify the data received from Google Books
+      const books = searchResult.data.items.map((item) => ({
+        id: item.id, // Unique ID for each book
+        title: item.volumeInfo.title || "No Title Available",
+        authors: item.volumeInfo.authors || ["Unknown Author"],
+        description: item.volumeInfo.description || "No description available.",
+        thumbnail: item.volumeInfo.imageLinks?.thumbnail || "No image available.",
+        link: item.volumeInfo.infoLink || "#",
+      }));
+
+      // Respond with the simplified book data
+      return res.status(200).json({
+        success: true,
+        books,
+      });
+    })
+    .catch(error => {
+      // Log the error for debugging
+      console.error("Error fetching books from Google Books API:", error.message);
+
+      // Respond with a generic error message
+      return res.status(500).json({
+        success: false,
+        message: "An error occurred while searching for books. Please try again later.",
+      });
+    });
 });
 
-// Use the router in the app
-app.use('/', searchBookshelf);
+// FavouriteBooks Endpoint
+searchBookshelf.post('/favouriteBooks', (req, res) => {
+  const { googlebookId, member_id } = req.body;
+  console.log("Received favouriteBooks request for Google Book ID:", {googlebookId, member_id});
+
+  // Validate googlebookId
+  if (!googlebookId || googlebookId.trim() === "") {
+    return res.status(400).json({
+      success: false,
+      message: "Google Book ID is required to add a book to favourites.",
+    });
+  }
+
+  if (!member_id || typeof member_id !== 'number') {
+    return res.status(400).json({
+      success: false,
+      message: "User ID is required and must be a valid number.",
+    });
+  }
+
+  // SQL query to insert the book into the 'favourites' table
+  const insertQuery = "INSERT INTO favourite_books (googlebookId, member_id) VALUES (?, ?)";
+
+  // Execute the query using callback-based interface
+  connection.query(insertQuery, [googlebookId, member_id], (err, results) => {
+    if (err) {
+      console.error("Error adding book to favourites:", {
+        error: err.message,
+        googlebookId,
+        member_id,
+      });
+      return res.status(500).json({
+        success: false,
+        message: "An error occurred while adding the book to favourites. Please try again later.",
+      });
+    }
+
+    console.log("Book added to favourites with ID:", results.insertId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Book successfully added to your favourites!",
+    });
+  });
+});
 
 export default searchBookshelf;  

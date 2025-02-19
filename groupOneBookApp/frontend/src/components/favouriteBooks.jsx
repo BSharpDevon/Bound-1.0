@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/images/logo.svg";
 import Footer from "./footer.jsx";
+import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
 
 const BookSearch = () => {
   const location = useLocation();
@@ -12,44 +13,33 @@ const BookSearch = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [memberId, setMemberId] = useState(null); // State for memberId
   const [message, setMessage] = useState(""); // State for success message
   const navigate = useNavigate();
-
-  // Check localStorage for memberId
-  useEffect(() => {
-    const storedMemberId = localStorage.getItem("memberId");
-    if (storedMemberId) {
-      setMemberId(storedMemberId);
-    } else {
-      alert("No member ID found. Please log in again.");
-      navigate("/"); // Redirect to login page if no memberId
-    }
-  }, [navigate]);
+  const member_id = useSelector((state) => state.user.member_id); // Access the userId from Redux state
 
   const handleInputChange = (e) => setSearchTerm(e.target.value);
-  console.log('Searching for books for member ID:', memberId);
 
   const handleSearch = async () => {
-    if (!searchTerm) {
+    if (!searchTerm.trim()) {
       alert("Please enter a book title.");
       return;
     }
     setLoading(true);
     setError("");
+    setBooks([]); // Clear previous search results
     try {
-      const response = await axios.get(
-        `http://localhost:8000/search?searchRequest=${encodeURIComponent(searchTerm)}`
-      );
+      const response = await axios.get("http://localhost:8000/search-bookshelf/search", {
+        params: { searchRequest: searchTerm },
+      });
       const data = response.data;
       if (data.success) {
         setBooks(data.books);
       } else {
-        setError(data.message);
+        setError(data.message || "Search failed.");
       }
     } catch (err) {
-      setError("Failed to fetch books, please try again later.");
-      console.error(err);
+      setError("Failed to fetch books. Please try again later.");
+      console.error("Search Error:", err);
     } finally {
       setLoading(false);
     }
@@ -61,31 +51,36 @@ const BookSearch = () => {
     setSearchTerm(book.title); // Update the input field with the selected book's title
   };
 
-// Function to add the selected book to favourites and navigate to homepage
+  // Function to add the selected book to favourites and navigate to homepage
   const handleSubmit = async () => {
+    
+    // error message if person isn't logged on for some reason.
+    if (!member_id) {
+      alert("You must be logged in to add a book to your favourites.");
+      return;
+    }
+
     if (!selectedBook) {
       alert("Please select a book to continue.");
       return;
     }
-    if (!memberId) {
-      alert("No member ID found. Please log in again.");
-      return;
-    }
+
     try {
-      const response = await axios.post("http://localhost:8000/favouriteBooks", {
-        memberId, // Send the memberId
+      const response = await axios.post("http://localhost:8000/search-bookshelf/favouriteBooks", {
         googlebookId: selectedBook.id, // Send the googlebookId (from selected book)
+        member_id, // Retrieves user id from Redux store
       });
-      console.log("hello");
+      console.log("Submission Response:", response.data);
       if (response.data.success) {
-        console.log("Books selected!");
-        navigate("/homepage");
+        setMessage("Book successfully added to your favourites!");
+        // Optionally, you can navigate to the homepage after a short delay
+        setTimeout(() => navigate("/homepage"), 1500);
       } else {
-        alert(response.data.message || "Submission failed. Please try again.");
+        setError(response.data.message || "Submission failed. Please try again.");
       }
     } catch (err) {
-      console.error("Error during selection:", err.message);
-      alert("An error occurred while submitting books. Please try again.");
+      setError("An error occurred while submitting the book. Please try again.");
+      console.error("Submission Error:", err);
     }
   };
 
@@ -94,7 +89,7 @@ const BookSearch = () => {
       <img id="logo" src={logo} alt="Bound Logo" />
       <h2>WELCOME {fullName}!</h2>
       <p className="favouriteBooksMessage">
-        There&apos;s nothing like a good book. Lets get started by adding a book to your library.
+        There's nothing like a good book. Let's get started by adding a book to your library.
       </p>
       <div className="book-search-container">
         <label>
@@ -103,15 +98,23 @@ const BookSearch = () => {
             placeholder="Choose book"
             value={searchTerm}
             onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSearch();
+            }}
           />
-          <button onClick={handleSearch}>SEARCH</button>
+          <button onClick={handleSearch} disabled={loading}>
+            SEARCH
+          </button>
           <br />
-          <button onClick={handleSubmit}>SUBMIT</button>
+          <button onClick={handleSubmit} disabled={!selectedBook || loading}>
+            SUBMIT
+          </button>
         </label>
-        
+
         {loading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>} {/* Success message */}
+
         <div className="book-results">
           {books.length > 0 ? (
             books.map((book) => (
@@ -122,9 +125,15 @@ const BookSearch = () => {
                 tabIndex={0}
                 role="button"
                 onKeyDown={(e) => e.key === "Enter" && handleBookSelect(book)}
-                style={{ cursor: "pointer", marginBottom: "10px" }}
+                style={{
+                  cursor: "pointer",
+                  marginBottom: "10px",
+                  border: selectedBook?.id === book.id ? "2px solid blue" : "1px solid #ccc",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
               >
-                <img src={book.thumbnail} alt={book.title} />
+                <img src={book.thumbnail} alt={book.title} style={{ width: "100px" }} />
                 <h2>{book.title}</h2>
                 <p>
                   <strong>Authors:</strong> {book.authors.join(", ")}
@@ -136,7 +145,7 @@ const BookSearch = () => {
               </div>
             ))
           ) : (
-            !loading && <p>No searches yet</p>
+            !loading && <p>No searches yet.</p>
           )}
         </div>
       </div>
