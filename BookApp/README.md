@@ -1,10 +1,10 @@
-# Group One Project  
+# Bound Project  
 
 ## Project Introduction  
 
 ### What is the concept and what are we building?  
 
-Group One is building **Bound**, a collaborative decision-making app that provides book suggestions based on user input. The app’s key **‘bind’** feature allows two users to input their favourite books and receive a recommendation that merges their preferences.  
+We are building **Bound**, a collaborative decision-making app that provides book suggestions based on user input. The app’s key **‘bind’** feature allows two users to input their favourite books and receive a recommendation that merges their preferences.  
 
 ---
 
@@ -53,7 +53,7 @@ To tailor our app to the larger market, we decided to make it so that once it fi
 
 ### Backend:  
 - **Node.js** for the server-side APIs: we may want to use Google Books API, NYT Books API, and Amazon API.  
-- **Database**: To store book data (would SQL work here?).  
+- **Database**: SQL to store book data.  
 
 ### Security:  
 - To authorise users.  
