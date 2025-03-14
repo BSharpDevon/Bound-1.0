@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'; // Import useSelector to access Redux
 
 const BookSearch = () => {
   const location = useLocation();
-  const { fullName } = location.state || {}; // Accessing fullName passed via state
   const [searchTerm, setSearchTerm] = useState("");
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
@@ -15,7 +14,8 @@ const BookSearch = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState(""); // State for success message
   const navigate = useNavigate();
-  const member_id = useSelector((state) => state.user.member_id); // Access the userId from Redux state
+  const fullName = useSelector((state) => state.user.fullName);
+  const memberId = useSelector((state) => state.user.memberId); // Access the userId from Redux state
 
   const handleInputChange = (e) => setSearchTerm(e.target.value);
 
@@ -55,7 +55,7 @@ const BookSearch = () => {
   const handleSubmit = async () => {
     
     // error message if person isn't logged on for some reason.
-    if (!member_id) {
+    if (!memberId) {
       alert("You must be logged in to add a book to your favourites.");
       return;
     }
@@ -68,7 +68,7 @@ const BookSearch = () => {
     try {
       const response = await axios.post("http://localhost:8000/search-bookshelf/favouriteBooks", {
         googlebookId: selectedBook.id, // Send the googlebookId (from selected book)
-        member_id, // Retrieves user id from Redux store
+        memberId, // Retrieves user id from Redux store
       });
       console.log("Submission Response:", response.data);
       if (response.data.success) {

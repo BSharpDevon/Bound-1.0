@@ -42,7 +42,7 @@ function AuthPage() {
 
       const { success, memberId, email } = response.data;
       if (success) {
-        dispatch(setMemberId({ memberId, email })); // ✅ Fixed Redux dispatch
+        dispatch(setMemberId({ memberId, email }));
         console.log("Redux store state after dispatch:", { memberId, email });
         navigate('/homepage'); 
       } else {
@@ -81,7 +81,7 @@ function AuthPage() {
 
       const { success, memberId, email } = response.data;
       if (success) {
-        dispatch(setMemberId({ memberId, email })); // ✅ Fixed Redux dispatch
+        dispatch(setMemberId({ memberId, email })); 
         console.log("Redux store state after dispatch (signup):", { memberId, email });
         navigate('/favourite-books', { state: { fullName } });
       } else {
@@ -183,6 +183,11 @@ function AuthPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Carousel Section at the Bottom */}
+      <div className="carousel-bottom">
+        <Carousel />
       </div>
 
       <Footer />
