@@ -5,26 +5,25 @@ import axios from 'axios';
 import logo from '../assets/images/logo.svg';
 import group from '../assets/images/group2.svg';
 import Footer from './footer.jsx';
-import { useDispatch } from 'react-redux'; // Import useDispatch to dispatch actions to the Redux store
-import { setMemberId } from '../Redux/slices/userSlice'; // Ensure the name matches your Redux slice
+import { useDispatch } from 'react-redux'; 
+import { setMemberId } from '../Redux/slices/userSlice.js'; 
 
 function AuthPage() { 
-  // Redux dispatch
-  const dispatch = useDispatch(); // Initialise Redux's dispatch function
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate();
+
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   // State for Sign In
   const [emailSignIn, setEmailSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Prevent multiple submissions
 
   // State for Sign Up
+  const [localMemberId, setLocalMemberId] = useState('');
   const [fullName, setFullName] = useState('');
   const [emailSignUp, setEmailSignUp] = useState('');
   const [passwordSignUp, setPasswordSignUp] = useState('');
-  const [isChecked, setIsChecked] = useState(false); // Set checkbox default to false
-
-  // useNavigate hook for programmatic navigation
-  const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(false); 
 
   // Sign In Function
   const signInBtn = async () => {
@@ -33,7 +32,7 @@ function AuthPage() {
       return;
     }
 
-    setIsSubmitting(true); // Disable submission during API call
+    setIsSubmitting(true);
 
     try {
       const response = await axios.post('http://localhost:8000/login-page/login', {
@@ -41,11 +40,11 @@ function AuthPage() {
         password: passwordSignIn,
       });
 
-      const { success, member_id, email } = response.data; // Adjusted to match backend response
+      const { success, memberId, email } = response.data;
       if (success) {
-        dispatch(setMemberId({ member_id, email })); // sends details to Redux store
-        console.log("Redux store state after dispatch:", { member_id, email });
-        navigate('/homepage'); // Redirect to homepage
+        dispatch(setMemberId({ memberId, email })); // ✅ Fixed Redux dispatch
+        console.log("Redux store state after dispatch:", { memberId, email });
+        navigate('/homepage'); 
       } else {
         alert('Invalid email or password.');
       }
@@ -53,7 +52,7 @@ function AuthPage() {
       console.error('Error during login:', error.message);
       alert('An error occurred during login. Please try again.');
     } finally {
-      setIsSubmitting(false); // Re-enable submission
+      setIsSubmitting(false);
     }
   };
 
@@ -64,14 +63,13 @@ function AuthPage() {
       return;
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailSignUp)) {
       alert('Please enter a valid email address.');
       return;
     }
 
-    setIsSubmitting(true); // Disable submission during API call
+    setIsSubmitting(true);
 
     try {
       const response = await axios.post('http://localhost:8000/login-page/signup', {
@@ -81,15 +79,11 @@ function AuthPage() {
         privacyAccepted: isChecked,
       });
 
-      const { success, member_id, email } = response.data;
+      const { success, memberId, email } = response.data;
       if (success) {
-        dispatch(setMemberId({ member_id, email })); // Sends details to Redux store
-        console.log("Redux store state:", member_id);
-        console.log("Redux store state after dispatch (signup):", {
-          member_id,
-          email,
-        });
-        navigate('/favourite-books', { state: { fullName } }); // Redirect to favourite-books page
+        dispatch(setMemberId({ memberId, email })); // ✅ Fixed Redux dispatch
+        console.log("Redux store state after dispatch (signup):", { memberId, email });
+        navigate('/favourite-books', { state: { fullName } });
       } else {
         alert(response.data.message || 'Signup failed. Please try again.');
       }
@@ -97,7 +91,7 @@ function AuthPage() {
       console.error('Error during signup:', error.message);
       alert('An error occurred while signing up. Please try again.');
     } finally {
-      setIsSubmitting(false); // Re-enable submission
+      setIsSubmitting(false);
     }
   };
 
@@ -150,8 +144,8 @@ function AuthPage() {
               Let Your <span className="highlight">Friends</span> Find Your Next Best Book
             </h1>
             <p>
-              Bound searches millions of titles to match you and your friend&apos;s unique
-              tastes. Sign up for a free book recommendation.
+              Bound searches millions of titles to match you and your friend&apos;s unique tastes. 
+              Sign up for a free book recommendation.
             </p>
 
             {/* Sign Up Section */}
@@ -177,26 +171,6 @@ function AuthPage() {
                 </label>
                 <br />
 
-                <label>
-                  <input
-                    type="password"
-                    value={passwordSignUp}
-                    placeholder="Password"
-                    onChange={(e) => setPasswordSignUp(e.target.value)}
-                  />
-                </label>
-                <br />
-
-                <label id="privacyPolicy">
-                  <input
-                    name="PrivacyCheckbox"
-                    type="checkbox"
-                    onChange={(e) => setIsChecked(e.target.checked)}
-                  />
-                  By signing up, you acknowledge that you have read our <b>Privacy Policy</b>.
-                </label>
-                <br />
-
                 <input
                   name="signUp"
                   type="button"
@@ -209,11 +183,6 @@ function AuthPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Carousel Section at the Bottom */}
-      <div className="carousel-bottom">
-        <Carousel />
       </div>
 
       <Footer />

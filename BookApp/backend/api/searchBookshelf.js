@@ -26,7 +26,7 @@ console.log("CORS and Body Parser Middleware Configured");
 // Create a router
 const searchBookshelf = express.Router();
 
-// Search Endpoint
+// Search Endpoint: http://localhost:8000/search-bookshelf/search
 searchBookshelf.get('/search', (req, res) => {
   const { searchRequest } = req.query;
   console.log("Received search request:", searchRequest);
