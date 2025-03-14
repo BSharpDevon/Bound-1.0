@@ -19,7 +19,6 @@ function AuthPage() {
   const [passwordSignIn, setPasswordSignIn] = useState('');
 
   // State for Sign Up
-  const [localMemberId, setLocalMemberId] = useState('');
   const [fullName, setFullName] = useState('');
   const [emailSignUp, setEmailSignUp] = useState('');
   const [passwordSignUp, setPasswordSignUp] = useState('');
@@ -40,11 +39,11 @@ function AuthPage() {
         password: passwordSignIn,
       });
 
-      const { success, memberId, email } = response.data;
+      const { success, memberId, email, fullName } = response.data;  
       if (success) {
-        dispatch(setMemberId({ memberId, email })); // ✅ Fixed Redux dispatch
-        console.log("Redux store state after dispatch:", { memberId, email });
-        navigate('/homepage'); 
+          dispatch(setMemberId({ memberId, email, fullName }));
+          console.log("Redux store state after dispatch:", { memberId, email, fullName });
+          navigate('/homepage'); 
       } else {
         alert('Invalid email or password.');
       }
@@ -79,10 +78,10 @@ function AuthPage() {
         privacyAccepted: isChecked,
       });
 
-      const { success, memberId, email } = response.data;
+      const { success, memberId, email, fullName } = response.data; 
       if (success) {
-        dispatch(setMemberId({ memberId, email })); // ✅ Fixed Redux dispatch
-        console.log("Redux store state after dispatch (signup):", { memberId, email });
+        dispatch(setMemberId({ memberId, email, fullName }));  
+        console.log("Redux store state after dispatch (signup):", { memberId, email, fullName });
         navigate('/favourite-books', { state: { fullName } });
       } else {
         alert(response.data.message || 'Signup failed. Please try again.');
@@ -148,8 +147,8 @@ function AuthPage() {
               Sign up for a free book recommendation.
             </p>
 
-            {/* Sign Up Section */}
-            <div className="signup">
+              {/* Sign Up Section */}
+              <div className="signup">
               <form onSubmit={(e) => e.preventDefault()}>
                 <label>
                   <input
@@ -171,6 +170,26 @@ function AuthPage() {
                 </label>
                 <br />
 
+                <label>
+                  <input
+                    type="password"
+                    value={passwordSignUp}
+                    placeholder="Password"
+                    onChange={(e) => setPasswordSignUp(e.target.value)}
+                  />
+                </label>
+                <br />
+
+                <label id="privacyPolicy">
+                  <input
+                    name="isChecked"
+                    type="checkbox"
+                    onChange={(e) => setIsChecked(e.target.checked)}
+                  />
+                  By signing up, you acknowledge that you have read our <b>Privacy Policy</b>.
+                </label>
+                <br />
+
                 <input
                   name="signUp"
                   type="button"
@@ -183,6 +202,11 @@ function AuthPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Carousel Section at the Bottom */}
+      <div className="carousel-bottom">
+        <Carousel />
       </div>
 
       <Footer />
