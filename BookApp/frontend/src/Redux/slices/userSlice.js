@@ -13,7 +13,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         // Action to set the member's ID and email when they log in or sign up
-        setUser(state, action) {  
+        setMemberId(state, action) {  
             state.memberId = action.payload.memberId; 
             state.email = action.payload.email; 
             state.isLoggedIn = true;
@@ -28,7 +28,7 @@ const userSlice = createSlice({
 });
 
 // Export actions to be used in components
-export const { setUser, logoutUser } = userSlice.actions;
+export const { setMemberId, logoutUser } = userSlice.actions;
 
 // Export the reducer to be used in the store
 export default userSlice.reducer;
