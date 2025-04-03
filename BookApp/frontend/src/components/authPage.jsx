@@ -10,19 +10,20 @@ import { setMemberId } from '../Redux/slices/userSlice.js';
 
 function AuthPage() { 
   const dispatch = useDispatch(); 
-  const navigate = useNavigate();
-
-  const [isSubmitting, setIsSubmitting] = useState(false); 
-
+  
   // State for Sign In
   const [emailSignIn, setEmailSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false); // Prevent multiple submissions
 
   // State for Sign Up
   const [fullName, setFullName] = useState('');
   const [emailSignUp, setEmailSignUp] = useState('');
   const [passwordSignUp, setPasswordSignUp] = useState('');
   const [isChecked, setIsChecked] = useState(false); 
+
+  // useNavigate hook for programmatic navigation
+  const navigate = useNavigate();
 
   // Sign In Function
   const signInBtn = async () => {
@@ -182,7 +183,7 @@ function AuthPage() {
 
                 <label id="privacyPolicy">
                   <input
-                    name="isChecked"
+                    name="PrivacyCheckbox"
                     type="checkbox"
                     onChange={(e) => setIsChecked(e.target.checked)}
                   />
