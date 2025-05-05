@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 // Initial state for the user slice
 const initialState = {
     memberId: null,  
-    email: null,    
+    email: null,  
+    fullName: "",  
     isLoggedIn: false,  
 };
 
@@ -16,12 +17,14 @@ const userSlice = createSlice({
         setMemberId(state, action) {  
             state.memberId = action.payload.memberId; 
             state.email = action.payload.email; 
+            state.fullName = action.payload.fullName;
             state.isLoggedIn = true;
         },
         // Action to clear user data when they log out
         logoutUser(state) { 
             state.memberId = null;
             state.email = null;
+            state.fullName = "";
             state.isLoggedIn = false;
         },
     },
