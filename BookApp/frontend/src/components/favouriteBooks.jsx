@@ -149,6 +149,7 @@ const BookSearch = () => {
           )}
         </div>
       </div>
+      
       <Footer />
     </div>
   );
