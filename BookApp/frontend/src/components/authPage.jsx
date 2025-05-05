@@ -5,30 +5,28 @@ import axios from 'axios';
 import logo from '../assets/images/logo.svg';
 import group from '../assets/images/group2.svg';
 import Footer from './footer.jsx';
-import { useDispatch } from 'react-redux'; 
-import { setMemberId } from '../Redux/slices/userSlice.js'; 
+import { useDispatch } from 'react-redux';
+import { setMemberId } from '../Redux/slices/userSlice.js';
 
-function AuthPage() { 
-  const dispatch = useDispatch(); 
-  
-  // State for Sign In
+function AuthPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // State to keep track of Sign In inputs
   const [emailSignIn, setEmailSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Prevent multiple submissions
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // State for Sign Up
   const [fullName, setFullName] = useState('');
   const [emailSignUp, setEmailSignUp] = useState('');
   const [passwordSignUp, setPasswordSignUp] = useState('');
-  const [isChecked, setIsChecked] = useState(false); 
+  const [isChecked, setIsChecked] = useState(false);
 
-  // useNavigate hook for programmatic navigation
-  const navigate = useNavigate();
-
-  // Sign In Function
+  // 👋 Function to sign the user in like a bouncer checking the guest list
   const signInBtn = async () => {
     if (!emailSignIn || !passwordSignIn) {
-      alert('Please enter both email and password.');
+      alert('Oi! Email and password, please.');
       return;
     }
 
@@ -40,32 +38,34 @@ function AuthPage() {
         password: passwordSignIn,
       });
 
-      const { success, memberId, email, fullName } = response.data;  
+      console.log('Login response:', response.data);
+
+      const { success, memberId, email } = response.data;
+
       if (success) {
-          dispatch(setMemberId({ memberId, email, fullName }));
-          console.log("Redux store state after dispatch:", { memberId, email, fullName });
-          navigate('/homepage'); 
+        dispatch(setMemberId({ memberId, email, fullName: "User" })); // fullName not sent from login, so default for now
+        navigate('/homepage');
       } else {
-        alert('Invalid email or password.');
+        alert('Invalid email or password. Try again!');
       }
     } catch (error) {
       console.error('Error during login:', error.message);
-      alert('An error occurred during login. Please try again.');
+      alert('Login borked. Try again later.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Sign Up Function
+  // ✨ Function to sign the user up and send them on their bookish way
   const signUpBtn = async () => {
     if (!fullName || !emailSignUp || !passwordSignUp || !isChecked) {
-      alert('Please fill in all fields and accept the privacy policy to continue.');
+      alert('All fields please! And don’t forget the Privacy checkbox — it’s needy.');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailSignUp)) {
-      alert('Please enter a valid email address.');
+      alert('That email doesn’t look quite right...');
       return;
     }
 
@@ -79,17 +79,20 @@ function AuthPage() {
         privacyAccepted: isChecked,
       });
 
-      const { success, memberId, email, fullName } = response.data; 
-      if (success) {
-        dispatch(setMemberId({ memberId, email, fullName }));  
-        console.log("Redux store state after dispatch (signup):", { memberId, email, fullName });
+      console.log('Signup response:', response.data);
+
+      const { success, memberId, user } = response.data;
+
+      if (success && user) {
+        const { email, fullName } = user;
+        dispatch(setMemberId({ memberId, email, fullName }));
         navigate('/favourite-books', { state: { fullName } });
       } else {
-        alert(response.data.message || 'Signup failed. Please try again.');
+        alert(response.data.message || 'Signup failed — gremlins in the system.');
       }
     } catch (error) {
       console.error('Error during signup:', error.message);
-      alert('An error occurred while signing up. Please try again.');
+      alert('Sign up failed. Please yell into the void (or try again).');
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +100,7 @@ function AuthPage() {
 
   return (
     <div className="auth-page">
-      {/* Sign In Section */}
+      {/* Sign In Panel — for returning heroes */}
       <div className="login">
         <img id="logo" src={logo} alt="Bound Logo" />
         <form className="signin" onSubmit={(e) => e.preventDefault()}>
@@ -110,7 +113,6 @@ function AuthPage() {
             />
           </label>
           <br />
-
           <label>
             <input
               type="password"
@@ -120,10 +122,8 @@ function AuthPage() {
             />
           </label>
           <br />
-
           <input
             id="signInButton"
-            name="Login"
             type="button"
             value="LOGIN"
             onClick={signInBtn}
@@ -132,7 +132,7 @@ function AuthPage() {
         </form>
       </div>
 
-      {/* Welcome and Instructions */}
+      {/* Fun Book Vibes and Signup Panel */}
       <div className="header-section">
         <div id="girl-image">
           <img id="girl" src={group} alt="Woman reading a book" />
@@ -144,12 +144,11 @@ function AuthPage() {
               Let Your <span className="highlight">Friends</span> Find Your Next Best Book
             </h1>
             <p>
-              Bound searches millions of titles to match you and your friend&apos;s unique tastes. 
-              Sign up for a free book recommendation.
+              Bound searches millions of titles to match your excellent (and probably chaotic) tastes.
+              Sign up to get your first rec!
             </p>
 
-              {/* Sign Up Section */}
-              <div className="signup">
+            <div className="signup">
               <form onSubmit={(e) => e.preventDefault()}>
                 <label>
                   <input
@@ -160,7 +159,6 @@ function AuthPage() {
                   />
                 </label>
                 <br />
-
                 <label>
                   <input
                     type="email"
@@ -170,7 +168,6 @@ function AuthPage() {
                   />
                 </label>
                 <br />
-
                 <label>
                   <input
                     type="password"
@@ -180,23 +177,19 @@ function AuthPage() {
                   />
                 </label>
                 <br />
-
                 <label id="privacyPolicy">
                   <input
-                    name="PrivacyCheckbox"
                     type="checkbox"
                     onChange={(e) => setIsChecked(e.target.checked)}
                   />
-                  By signing up, you acknowledge that you have read our <b>Privacy Policy</b>.
+                  I solemnly swear I’ve read the <b>Privacy Policy</b>. Pinky promise.
                 </label>
                 <br />
-
                 <input
-                  name="signUp"
+                  id="signUpButton"
                   type="button"
                   value="SIGN UP"
                   onClick={signUpBtn}
-                  id="signUpButton"
                   disabled={isSubmitting}
                 />
               </form>
@@ -205,7 +198,7 @@ function AuthPage() {
         </div>
       </div>
 
-      {/* Carousel Section at the Bottom */}
+      {/* Carousel of dreams */}
       <div className="carousel-bottom">
         <Carousel />
       </div>
