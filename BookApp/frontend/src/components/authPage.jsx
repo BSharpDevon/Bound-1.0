@@ -50,7 +50,7 @@ function AuthPage() {
       }
     } catch (error) {
       console.error('Error during login:', error.message);
-      alert('Login borked. Try again later.');
+      alert('Login failed. Try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -59,13 +59,13 @@ function AuthPage() {
   // ✨ Function to sign the user up and send them on their bookish way
   const signUpBtn = async () => {
     if (!fullName || !emailSignUp || !passwordSignUp || !isChecked) {
-      alert('All fields please! And don’t forget the Privacy checkbox — it’s needy.');
+      alert('All fields please! And don’t forget the Privacy checkbox.');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailSignUp)) {
-      alert('That email doesn’t look quite right...');
+      alert('Please enter a valid email.');
       return;
     }
 
@@ -88,11 +88,11 @@ function AuthPage() {
         dispatch(setMemberId({ memberId, email, fullName }));
         navigate('/favourite-books', { state: { fullName } });
       } else {
-        alert(response.data.message || 'Signup failed — gremlins in the system.');
+        alert(response.data.message || 'Sign up failed. Please try again.');
       }
     } catch (error) {
       console.error('Error during signup:', error.message);
-      alert('Sign up failed. Please yell into the void (or try again).');
+      alert('Sign up failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -145,7 +145,7 @@ function AuthPage() {
             </h1>
             <p>
               Bound searches millions of titles to match your excellent (and probably chaotic) tastes.
-              Sign up to get your first rec!
+              Sign up to get your first recommendation!
             </p>
 
             <div className="signup">
