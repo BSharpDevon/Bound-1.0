@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/images/logo.svg";
-import Footer from "./footer.jsx";
+import logo from "./assets/images/logo.svg";
+import Footer from "./src/components/footer.jsx";
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
 
 const BookSearch = () => {
