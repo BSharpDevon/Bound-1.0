@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/images/logo.svg";
 import Footer from "./footer.jsx";
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
+import readingRoomAudio from '../assets/images/reading-room.mp3';
+
 
 const BookSearch = () => {
   const location = useLocation();
@@ -17,7 +19,51 @@ const BookSearch = () => {
   const fullName = useSelector((state) => state.user.fullName);
   const memberId = useSelector((state) => state.user.memberId); // Access the userId from Redux state
 
-  const handleInputChange = (e) => setSearchTerm(e.target.value);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+const toggleSound = () => {
+  const audio = document.getElementById("ambientAudio");
+  if (isPlaying) {
+    audio.pause();
+  } else {
+    audio.play();
+  }
+  setIsPlaying(!isPlaying);
+};
+
+const Typewriter = ({ text, speed = 100 }) => {
+  const [displayedText, setDisplayedText] = useState('');
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayedText((prev) => prev + text[index]);
+      index++;
+      if (index === text.length) clearInterval(interval);
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return <p>{displayedText}</p>;
+};
+
+useEffect(() => {
+  const audio = document.getElementById("ambientAudio");
+  if (audio) audio.volume = 0.25;
+}, []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+  
+    // Convert to Title Case
+    const titleCased = value
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  
+    setSearchTerm(titleCased);
+  };
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
@@ -86,10 +132,11 @@ const BookSearch = () => {
 
   return (
     <div id="favouriteBooksContent">
+
       <img id="logo" src={logo} alt="Bound Logo" />
-      <h2>WELCOME {fullName}!</h2>
+      <h2>Your bookshelf looks empty!</h2>
       <p className="favouriteBooksMessage">
-        There's nothing like a good book. Let's get started by adding a book to your library.
+        Add your favourite three books to your online library – these will be used to compare with friends.
       </p>
       <div className="book-search-container">
         <label>
@@ -103,11 +150,11 @@ const BookSearch = () => {
             }}
           />
           <button onClick={handleSearch} disabled={loading}>
-            SEARCH
+            Search
           </button>
           <br />
           <button onClick={handleSubmit} disabled={!selectedBook || loading}>
-            SUBMIT
+            Submit
           </button>
         </label>
 
@@ -145,10 +192,19 @@ const BookSearch = () => {
               </div>
             ))
           ) : (
-            !loading && <p>No searches yet.</p>
+            !loading && <p>Make your first search to see books!</p>
           )}
+
+<audio id="ambientAudio" loop>
+  <source src={readingRoomAudio} type="audio/mpeg" />
+</audio>
+<button onClick={toggleSound} className="sound-toggle">
+  {isPlaying ? "🔊 Ambient On" : "🔈 Ambient Off"}
+</button>
         </div>
+        
       </div>
+      
       
       <Footer />
     </div>
