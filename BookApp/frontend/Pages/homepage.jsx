@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "./assets/images/logo.svg";
-import bindimage from "./assets/images/bind-image.svg";
-import Logout from "./src/components/logout.jsx";
-import Footer from "./src/components/footer.jsx";
+import logo from "../src/assets/images/logo.svg";
+import bindimage from "../src/assets/images/bind-image.svg";
+import Logout from "../src/components/logout.jsx";
+import Footer from "../src/components/footer.jsx";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");

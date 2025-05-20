@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import AuthPage from "./pages/authPage";
-import BookSearch from "./pages/favouriteBooks";
-import HomePage from "./pages/homepage";
-import Bind from "./pages/bind";
+import AuthPage from "../Pages/authPage";
+import BookSearch from "../Pages/favouriteBooks";
+import HomePage from "../Pages/homepage";
+import Bind from "../Pages/bind";
 
 import "./App.css";
 

@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../src/components/imageCarousel.jsx';
 import axios from 'axios';
-import logo from './assets/images/logo.svg';
-import group from './assets/images/group2.svg';
-import Footer from './src/components/footer.jsx';
+import logo from '../src/assets/images/logo.svg';
+import group from '../src/assets/images/group2.svg';
+import Footer from '../src/components/footer.jsx';
 import { useDispatch } from 'react-redux';
-import { setMemberId } from './src/Redux/slices/userSlice.js';
+import { setMemberId } from '../src/Redux/slices/userSlice.js';
 
 function AuthPage() {
   const dispatch = useDispatch();
