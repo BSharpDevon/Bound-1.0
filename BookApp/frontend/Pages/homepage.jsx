@@ -123,6 +123,10 @@ const books = [
     navigate("/bind", { state: { book: selectedBook } });
   };
 
+  const addBooks = () => {
+    navigate("/favourite-books");
+  };
+
   return (
     <div className="homepage">
       {/* Header Section */}
@@ -209,7 +213,12 @@ const books = [
         </div>
         
         <div className="user-library-binds">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <h2>Your library</h2>
+          <button id="signUpButtonHomepage" onClick={addBooks}>
+              Add books
+            </button>
+        </div>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
