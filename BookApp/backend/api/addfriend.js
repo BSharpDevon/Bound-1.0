@@ -5,7 +5,7 @@ import pool from './connection.js'; // Importing the connection SQL pool
 // Create a router for API endpoints
 const router = express.Router();
 
-// --- Endpoint: Add a friend ---
+// Endpoint: Add a friend 
 router.post('/addFriend', async (req, res) => {
   // Extract the friend's email sent over from frontend
   const { friendsEmail } = req.body;
@@ -40,20 +40,21 @@ router.post('/addFriend', async (req, res) => {
         message: `No user found with email ${friendsEmail}`,
       });
     }
-    // Pull out the actual ID value
+    // Get friend's Id
     const friendId = memberRows[0].member_id;
 
-    // 3. Insert the friendship record into the friends table
+    // 3. Add friend into SQL table
     await pool.query(
       'INSERT INTO friends (friends_email, friend_id) VALUES (?, ?)',
       [friendsEmail, friendId]
     );
 
-    // Respond with success
+    // Sucess message for friend
     return res.status(201).json({
       success: true,
       message: `${friendsEmail} is now your friend!`,
     });
+    // error message if friend couldn't be added
   } catch (err) {
     console.error('Error in /addFriend:', err);
     return res.status(500).json({
@@ -63,18 +64,19 @@ router.post('/addFriend', async (req, res) => {
   }
 });
 
-// --- Endpoint: Get friends list ---
+// Endpoint: Get friends list 
 router.get('/friends', async (req, res) => {
   try {
-    // Fetch all friends; adjust query to include user-specific filtering if needed
+    // Fetch all friends
     const [rows] = await pool.query(
       'SELECT friend_id, friends_email FROM friends'
     );
-
+// success message 
     return res.json({
       success: true,
       friends: rows
     });
+// error message if no friends can be found
   } catch (err) {
     console.error('Error in /friends:', err);
     return res.status(500).json({
