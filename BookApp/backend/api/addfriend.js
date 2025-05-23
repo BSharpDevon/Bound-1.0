@@ -1,70 +1,87 @@
-// import express from "express";
-// import cors from "cors";
-// import "dotenv/config";
-// import pool from "./connection.js";
-// import bodyParser from 'body-parser';
+// Import the libraries we need
+import express from 'express'; // For defining API routes
+import pool from './connection.js'; // Importing the connection SQL pool
 
+// Create a router for API endpoints
+const router = express.Router();
 
-// //Initialise the Express application
-// const app = express();
-// app.use(bodyParser.json())
-// app.use(cors());
-// app.use(express.json());
+// --- Endpoint: Add a friend ---
+router.post('/addFriend', async (req, res) => {
+  // Extract the friend's email sent over from frontend
+  const { friendsEmail } = req.body;
 
+  // Check if the email was provided
+  if (!friendsEmail) {
+    return res.status(400).json({ error: "Please enter your friend's email address" });
+  }
 
+  try {
+    // 1. Check if already added as a friend
+    const [existing] = await pool.query(
+      'SELECT 1 FROM friends WHERE friends_email = ?',
+      [friendsEmail]
+    );
+    if (existing.length > 0) {
+      return res.status(409).json({
+        success: false,
+        message: `${friendsEmail} is already your friend`,
+      });
+    }
 
-// app.post("/add-friend", (req,res) => {
+    // 2. Look up the member_id for that email
+    const [memberRows] = await pool.query(
+      'SELECT member_id FROM members WHERE email = ?',
+      [friendsEmail]
+    );
+    // If no matching member, return 404
+    if (memberRows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: `No user found with email ${friendsEmail}`,
+      });
+    }
+    // Pull out the actual ID value
+    const friendId = memberRows[0].member_id;
 
-//     const { friendEmail } = req.body; // Extract email from query parameters
-//     if (!friendEmail) {
-//         return res.status(400).json({ error: "we need an email" });
-//     }
+    // 3. Insert the friendship record into the friends table
+    await pool.query(
+      'INSERT INTO friends (friends_email, friend_id) VALUES (?, ?)',
+      [friendsEmail, friendId]
+    );
 
-//     const checkMembersQuery = 
-//     "SELECT email FROM  members where email IN (?,?)"
-//      db.query(checkMemberQuery, [friendEmail], (err, results) => {
-//             if (err) {
-//                 console.error ("error checking database", err);
-//             return res.status(500).json({error: "database error"});
-//         }
-//             if (results.length<2) {
-//                 return res.status(404).json({ error: "one or both users not found"})
-//             }
+    // Respond with success
+    return res.status(201).json({
+      success: true,
+      message: `${friendsEmail} is now your friend!`,
+    });
+  } catch (err) {
+    console.error('Error in /addFriend:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'An error occurred while adding friend. Please try again.',
+    });
+  }
+});
 
-//             const insertFriendshipQuery = `
-//             INSERT INTO friendships (user_id, friend_id) 
-//             VALUES (?, ?), (?, ?)
-//         `;
-//         db.query(insertFriendshipQuery, [friend1_email, friend2_id,], err => {
-//             if (err) {
-//                 console.error('Error inserting friendship:', err);
-//                 return res.status(500).json({ error: 'Database error' });
-//             }
+// --- Endpoint: Get friends list ---
+router.get('/friends', async (req, res) => {
+  try {
+    // Fetch all friends; adjust query to include user-specific filtering if needed
+    const [rows] = await pool.query(
+      'SELECT friend_id, friends_email FROM friends'
+    );
 
-//             // Return both user details
-//             res.json({ message: 'Friend added successfully', users: results });
-//         });
-//     });
-// });
+    return res.json({
+      success: true,
+      friends: rows
+    });
+  } catch (err) {
+    console.error('Error in /friends:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Could not fetch friends. Please try again.'
+    });
+  }
+});
 
-
-
-
-// //   // Test the database connection
-// //   const testDatabaseConnection = async () => {
-// //     try {
-// //         const connection = await pool.getConnection();
-// //         console.log('Connected to database.');
-// //         connection.release(); // Release the connection back to the pool.
-// //     } catch (err) {
-// //         console.error('Database connection failed: ',err.stack);
-// //     }
-// // };
-
-
-
-// const PORT = process.env.PORT || 8000;
-// app.listen(PORT, () => {
-//     console.log(`Server started on port ${PORT}!`);
-
-// }); 
+export default router;
