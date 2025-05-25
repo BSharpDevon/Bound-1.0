@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
-import bindimage from "../src/assets/images/bind-image.svg";
 import Logout from "../src/components/logout.jsx";
 import Footer from "../src/components/footer.jsx";
 
@@ -168,11 +167,13 @@ const books = [
 
       {/* Content Section */}
       <div className="homepage-content">
+        
         {/* Sidebar Section */}
+        
         <div className="homepage-sidebar">
           {/* Friends Section */}
           <div className="user-friends">
-            <h2>Your Friends</h2>
+            <h3>Friends</h3>
 
             <input
               className="friend-search-input"
@@ -198,8 +199,6 @@ const books = [
 
           {/* Binds Section */}
           <div className="user-binds">
-            <h2>Start New Bind</h2>
-            <img id="bind-image" src={bindimage} alt="Bind Illustration" />
             <div className="binds">
               {userBinds.map((bind, index) => (
                 <div key={index} className="bind-item">
@@ -207,18 +206,13 @@ const books = [
               ))}
             </div>
             <button id="signUpButtonHomepage" onClick={startBind}>
-              START
+              START NEW BIND
             </button>
           </div>
         </div>
         
-        <div className="user-library-binds">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <h2>Your library</h2>
-          <button id="signUpButtonHomepage" onClick={addBooks}>
-              Add books
-            </button>
-        </div>
+                <div className="user-library-binds">
+          <h2>Top 10 UK Romance Books</h2>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
@@ -229,7 +223,7 @@ const books = [
   </div>
 ))}
           </div>
-          <h2>Your Binds</h2>
+          <h2>Top 10 UK Classics Books</h2>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>

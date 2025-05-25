@@ -1,7 +1,7 @@
 :root {
   color: #EEF4F8;
   background-color: #091819;
-  background-image: url('./assets/images/background.svg');
+  background-image: url('./assets/images/starlight.jpg');
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -22,7 +22,7 @@ body {
   padding: 0px;
   height: 100vh;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 footer {
   padding: 20px;
@@ -49,6 +49,12 @@ h2 {
   margin:40px 10px 20px;
   padding: 0;
 }
+
+h3 {
+  font-family: 'IMFellEnglish';
+  font-size: 1.5em;
+}
+
 label {
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
   font-size: 1.0em;
@@ -64,7 +70,7 @@ label {
   line-height: 1.1;
 }
 .highlight {
-  color: #FFCA0B;
+  color: #DEA262;
 }
 /*  Containers */
 .friends-buttons-container {
@@ -82,7 +88,8 @@ label {
 }
 /*  Images */
 #girl {
-  width: 600px;
+  width: 800px;
+  margin-top: 50px;
   margin-left: 100px;
   padding: 0px;
 }
@@ -106,7 +113,7 @@ img {
   box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 button {
-  background-color: #10282A;
+  background-color: #070F2A;
   font-family: 'IMFellEnglish', serif;
   color: white;
   padding: 10px 40px;
@@ -117,28 +124,28 @@ button {
   margin: 20px;
 }
 button:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+  background-color: #070F2A;
+  color: #DEA262;
+  transform: scale(1.02);
 }
+
 #friends-buttons {
-  background-color: #10282A;
+  background-color: #070F2A;
   font-family: 'IMFellEnglish', serif;
   color: white;
   padding: 10px 40px;
-  border: solid grey 1px;
+  border: solid #DEA262 1px;
   text-align: center;
   border-radius: 412px;
   cursor: pointer;
   margin: 7px;
 }
 #signUpButton {
-  background-color: #10282A;
+  background-color: #070F2A;
   font-family: 'IMFellEnglish', serif;
-  color: white;
+  color: #DEA262;
   padding: 10px 40px;
-  border: solid white 1px;
+  border: solid #DEA262 1px;
   text-align: center;
   font-weight: 900;
   border-radius: 412px;
@@ -148,11 +155,11 @@ button:hover {
 }
 
 #signInButton {
-  background-color: #10282A;
+  background-color: #070F2A;
   font-family: 'IMFellEnglish', serif;
-  color: white;
+  color: #DEA262;
   padding: 10px 40px;
-  border: solid white 1px;
+  border: solid #DEA262 1px;
   text-align: center;
   font-weight: 900;
   border-radius: 412px;
@@ -162,18 +169,17 @@ button:hover {
 }
 
 #signInButton:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+  background-color: #070F2A;
+  color: #DEA262;
+  transform: scale(1.02);
 }
 
 #signUpButtonHomepage {
-  background-color: #10282A;
+  background-color: #070F2A;
   font-family: 'IMFellEnglish', serif;
-  color: white;
+  color: #white;
   padding: 10px 40px;
-  border: solid white 1px;
+  border: solid #DEA262 1px;
   font-weight: 900;
   border-radius: 412px;
   cursor: pointer;
@@ -184,17 +190,15 @@ button:hover {
 }
 
 #signUpButtonHomepage:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+  background-color: #070F2A;
+  color: #DEA262;
+  transform: scale(1.02);
 }
 
 #signUpButton:hover {
-  background-color: #FFCA0B;
-  color: #091819;
-  transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+  background-color: #070F2A;
+  color: #DEA262;
+  transform: scale(1.02);
 }
 
 /*  Grid and Display Elements */
@@ -211,18 +215,18 @@ input {
   font-size: 1.0em;
   line-height: 1.1;
   padding: 10px;
-  background-color: #10282A;
-  border: solid grey 1px;
+  background-color: #070F2A;
+  border: solid #DEA262 1px;
   margin-top: 10px;
   padding-right: 20px;
   margin-bottom: 10px;
   border-radius: 10px;
-  color: white;
+  color: #DEA262;
 }
 input:focus {
-  background-color: #FFF4E3;
-  border-color: #FFCA0B;
-  color: #10282A;
+  background-color: #070F2A;
+  border-color: #DEA262;
+  color: #DEA262;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -303,7 +307,7 @@ input:focus {
   margin-top: 25px;
 }
 .user-friends {
-  background-color: #071D1C;
+  background-color: #09151d;
   border-radius: 20px;
   max-width: 350px;
   max-height: 400px;
@@ -315,16 +319,16 @@ input:focus {
   padding: 20px;
 }
 .user-binds {
-  background-color: #071D1C;
+  background-color: #09151d;
   color: white;
   border-radius: 20px;
   max-width: 350px;
-  height: 400px;
-  margin-top: 40px;
+  height: 90px;
+  margin-top: 20px;
   margin-left: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
 }
+
 #homepage-subheadings {
   font-family: 'IMFellEnglish';
   font-size: 1.5em;
@@ -391,10 +395,7 @@ a {
   left: 70px;
   z-index: 1;
 }
-#bind-image {
-  width: 230px;
-  font-family: "IMFellEnglish";
-}
+
 .bind-header {
   font-family: 'IMFellEnglish';
   font-size: 60px;
