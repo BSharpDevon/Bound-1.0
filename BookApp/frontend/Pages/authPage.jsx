@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Carousel from '../src/components/imageCarousel.jsx';
 import axios from 'axios';
 import logo from '../src/assets/images/logo.svg';
-import group from '../src/assets/images/group2.svg';
+import group from '../src/assets/images/silhouettes.png';
 import Footer from '../src/components/footer.jsx';
 import { useDispatch } from 'react-redux';
 import { setMemberId } from '../src/Redux/slices/userSlice.js';
@@ -141,11 +140,10 @@ function AuthPage() {
         <div className="intro-section">
           <div id="introMessage">
             <h1>
-              Let Your <span className="highlight">Friends</span> Find Your Next Best Book
+              Discover The One Book You'll <span className="highlight">Both</span> Love
             </h1>
             <p>
-              Bound searches millions of titles to match your excellent (and probably chaotic) tastes.
-              Sign up to get your first recommendation!
+              Reading with your partner? Book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> titles to find a book you'll both love. And, it's free!
             </p>
 
             <div className="signup">
@@ -196,11 +194,6 @@ function AuthPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Carousel of dreams */}
-      <div className="carousel-bottom">
-        <Carousel />
       </div>
 
       <Footer />
