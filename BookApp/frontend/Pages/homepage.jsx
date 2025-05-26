@@ -277,8 +277,6 @@ onChange={handleSearchChange}
 </div>
 
           <h3>Most popular picks. Take a look at what's hot right now.</h3>
-                <div className="user-library-binds">
-          <h2>Top 10 UK Romance Books</h2>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
