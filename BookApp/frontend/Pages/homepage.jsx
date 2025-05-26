@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
-import Logout from "../src/components/logout.jsx";
-import Footer from "../src/components/footer.jsx";
+import stack from "../src/assets/images/book-stack.png";
+import Modal from "../src/components/modal.jsx";
+import 'boxicons/css/boxicons.min.css';
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [userLibrary, setUserLibrary] = useState([]); // User's library state
   const [userBinds, setUserBinds] = useState([]); // User's binds state
+  const [activeNav, setActiveNav] = useState("home");
   const [searchUserEmail, setSearchUserEmail] = useState(""); // Friend search state
 
   const navigate = useNavigate();
@@ -62,7 +65,21 @@ const books = [
     author: "Maggie O'Farrell",
     cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574943819i/43890641.jpg",
   },
+
+    {
+    title: "Never After",
+    author: "Stephanie Garber",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011416i/59808071.jpg",
+  },
+
+    {
+    title: "Hamnet",
+    author: "Maggie O'Farrell",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574943819i/43890641.jpg",
+  },
 ];
+
+
 
 
   // Filter friends
@@ -128,89 +145,138 @@ const books = [
 
   return (
     <div className="homepage">
-      {/* Header Section */}
-      <div className="homepage-header">
-        <div className="homepage-logo">
-          <img id="logo" src={logo} alt="Bound Logo" />
-        </div>
 
-        {/* Search Bar */}
-        <div className="search-bar">
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search books..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          <div className="search-results">
-            {searchResults.map((book, index) => (
-              <div
-                key={index}
-                className="search-result-item"
-                onClick={() => handleAddToLibrary(book)}
-              >
-                <img
-                  src={book.cover || "default-cover.png"}
-                  alt={book.title || "No Title"}
-                  width="50"
-                  height="75"
-                />
-                <p>{book.title || "Unknown Title"}</p>
-                <p>{book.author || "Unknown Author"}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <Logout />
-      </div>
-
-      {/* Content Section */}
-      <div className="homepage-content">
-        
-        {/* Sidebar Section */}
-        
-        <div className="homepage-sidebar">
-          {/* Friends Section */}
-          <div className="user-friends">
-            <h3>Friends</h3>
-
-            <input
+      {isModalOpen && (
+  <Modal onClose={() => setIsModalOpen(false)}>
+    <h2>Friends</h2>
+    <input
               className="friend-search-input"
               type="text"
               placeholder="Search users by name"
               value={searchUserEmail}
               onChange={handleInputChange}
             />
+    <div className="friends-buttons-container">
+    <button id="friends-buttons" onClick={() => handleAddFriend(user)}>< i class='bx  bx-user-search'  ></i> SEARCH</button>
+    <button id="friends-buttons"onClick={() => handleAddFriend(user)}>< i class='bx  bx-user-plus'  ></i>  ADD</button>
+    </div>
 
-            <div className="friends-buttons-container">
-              <button id="friends-buttons" onClick={() => handleAddFriend(user)}>SEARCH</button>
-              <button id="friends-buttons"onClick={() => handleAddFriend(user)}>ADD</button>
-            </div>
-            
-            <div className="search-results">
+    <div className="search-results">
               {filteredUsers.map((user) => (
                 <div className="name-add" key={user.id}>
                   <p className="first-name">{user.firstName}</p>
                 </div>
               ))}
             </div>
-          </div>
+  </Modal>
+)}
 
-          {/* Binds Section */}
-          <div className="user-binds">
-            <div className="binds">
-              {userBinds.map((bind, index) => (
-                <div key={index} className="bind-item">
-                </div>
-              ))}
-            </div>
-            <button id="signUpButtonHomepage" onClick={startBind}>
-              START NEW BIND
-            </button>
-          </div>
-        </div>
+      {/* Header Section */}
+      <div className="homepage-header">
+
         
+      </div>
+
+      {/* Content Section */}
+      <div className="homepage-content">
+        
+      {/* Sidebar Section */}
+
+        <aside>
+          <img id="logo" src={logo} alt="Bound Logo" />
+          <nav>
+            <ul>
+      <li>
+        <a
+          href="#home"
+          className={activeNav === "home" ? "active" : ""}
+          onClick={() => setActiveNav("home")}
+        >
+          <i className="bx bx-home" />
+          <span>Home</span>
+        </a>
+      </li>
+                    <li>
+        <button
+          className={`nav-link ${activeNav === "friends" ? "active" : ""}`}
+          onClick={() => {
+            setActiveNav("friends");
+            setIsModalOpen(true);
+          }}
+        >
+          <i className="bx bx-group" />
+          <span>Friends</span>
+        </button>
+      </li>
+<li>
+        <a
+          href="#binds"
+          className={activeNav === "binds" ? "active" : ""}
+          onClick={() => setActiveNav("binds")}
+        >
+          <i className="bx bx-link" />
+          <span>Binds</span>
+        </a>
+      </li>
+              <li>
+        <a
+          href="#bookshelf"
+          className={activeNav === "bookshelf" ? "active" : ""}
+          onClick={() => setActiveNav("bookshelf")}
+        >
+          < i class='bx  bx-book-alt'  ></i> 
+          <span>Bookshelf</span>
+        </a>
+      </li>
+
+                                  <li>
+        <a
+          href="#about"
+          className={activeNav === "about" ? "active" : ""}
+          onClick={() => setActiveNav("about")}
+        >
+          < i class='bx  bx-donate-heart'  ></i> 
+          <span>About</span>
+        </a>
+      </li>
+
+                    <li className="nav-search">
+<div className="search-input-wrapper">
+<i className="bx bx-search" />
+<input
+className="search-input"
+type="text"
+placeholder="Search"
+value={searchQuery}
+onChange={handleSearchChange}
+/>
+</div>
+</li>
+
+                    <li>
+                <a href="#logout">
+                < i class='bx  bx-door-open'  ></i> 
+                <span>Log Out</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+        </aside>
+        
+        <div className="user-library-binds">
+<div className="homepage-hero">
+<div className="homepage-hero-copy">
+          <h2>“How lucky I am to have something that makes saying goodbye so hard.”</h2>
+<p>Looking for something uniquely you? Start a Bind with a friend and reveal your genre-matched book recommendation.</p>
+<button>START BIND</button>
+</div>
+<div className="homepage-hero-image">
+<img id="stack" src={stack} alt="A stack of books" />
+</div>
+</div>
+
+          <h3>Most popular picks. Take a look at what's hot right now.</h3>
                 <div className="user-library-binds">
           <h2>Top 10 UK Romance Books</h2>
           <div className="grid-container">
@@ -223,7 +289,7 @@ const books = [
   </div>
 ))}
           </div>
-          <h2>Top 10 UK Classics Books</h2>
+          <h3>Daily selections. Perfectly selected to your tastes.</h3>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
@@ -237,8 +303,6 @@ const books = [
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
