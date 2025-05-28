@@ -123,10 +123,7 @@ function BindPage() {
       {/* Main content */}
         {isBindComplete ? (
           <div className={`bind-content ${isBindComplete ? "fade-in" : ""}`}>
-            <h1 className="bind-header">
-              {userOneName} & {userTwoName}
-            </h1>
-            <h3 className="book-title">Your Next Chapter Awaits</h3>
+          <div className="bind-copy"></div>
             <div className="book-container">
               <img
                 className="book-cover"
@@ -134,21 +131,25 @@ function BindPage() {
                 alt="Book Cover"
               />
             </div>
-            <p className="bind-description">
+            <div className="metaData">
+              <h1 className="bind-header">
+              {userOneName} & {userTwoName}
+            </h1>
+              <p className="bind-description">
               The book that binds you two together is <b>{bookTitle}</b> by <b>{bookAuthor}</b>. And we've found the link just for you!
             </p>
             <button className="action-button" onClick={bookShop}>
               BUY ON BOOKSHOP.ORG
             </button>
-            <button onClick={returnBtn}>BACK TO HOME</button>
+          </div>
           </div>
         ) : (
           <div className="bind-content">
             <h2 className="bind-header">
-              Get ready for a story as unique as the two of you
+              Discover Your Next Shared Story
             </h2>
             <p>
-              See how your literary taste matches, and get a book recommendation you can both dive into.
+              Connect with a friend. See where your tastes overlap. Find the book you’ll both fall in love with.
             </p>
             <div className="circle-container">
               <div className="circle initials-circle">{firstNameInitial}</div>

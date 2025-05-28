@@ -249,7 +249,11 @@ const books = [
         <a
           href="#bookshelf"
           className={activeNav === "bookshelf" ? "active" : ""}
-          onClick={() => setActiveNav("bookshelf")}
+          onClick={e => { 
+            e.preventDefault ();
+            setActiveNav("bookshelf");
+            navigate("/favourite-books");
+          }}
         >
           < i class='bx  bx-book-alt'  ></i> 
           <span>Bookshelf</span>
