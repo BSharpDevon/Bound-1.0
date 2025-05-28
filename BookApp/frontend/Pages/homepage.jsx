@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
 import stack from "../src/assets/images/book-stack.png";
-import Modal from "../src/components/modal.jsx";
+import Modal from "../src/components/Modal.jsx";
 import 'boxicons/css/boxicons.min.css';
 
 function HomePage() {
@@ -10,10 +10,10 @@ function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [userLibrary, setUserLibrary] = useState([]); // User's library state
-  const [userBinds, setUserBinds] = useState([]); // User's binds state
+  const [userLibrary, setUserLibrary] = useState([]);
+  const [userBinds, setUserBinds] = useState([]); 
   const [activeNav, setActiveNav] = useState("home");
-  const [searchUserEmail, setSearchUserEmail] = useState(""); // Friend search state
+  const [searchUserEmail, setSearchUserEmail] = useState("");
 
   const navigate = useNavigate();
 
@@ -148,26 +148,49 @@ const books = [
 
       {isModalOpen && (
   <Modal onClose={() => setIsModalOpen(false)}>
-    <h2>Friends</h2>
-    <input
-              className="friend-search-input"
-              type="text"
-              placeholder="Search users by name"
-              value={searchUserEmail}
-              onChange={handleInputChange}
-            />
-    <div className="friends-buttons-container">
-    <button id="friends-buttons" onClick={() => handleAddFriend(user)}>< i class='bx  bx-user-search'  ></i> SEARCH</button>
-    <button id="friends-buttons"onClick={() => handleAddFriend(user)}>< i class='bx  bx-user-plus'  ></i>  ADD</button>
-    </div>
-
-    <div className="search-results">
-              {filteredUsers.map((user) => (
-                <div className="name-add" key={user.id}>
-                  <p className="first-name">{user.firstName}</p>
-                </div>
-              ))}
+    {activeNav === "friends" ? (
+      <>
+        <h2>Friends</h2>
+        <input
+          className="friend-search-input"
+          type="text"
+          placeholder="Search users by name"
+          value={searchUserEmail}
+          onChange={handleInputChange}
+        />
+        <div className="friends-buttons-container">
+          <button
+            id="friends-buttons"
+            onClick={() => handleAddFriend(/* … */)}
+          >
+            <i className='bx bx-user-search'></i> SEARCH
+          </button>
+          <button
+            id="friends-buttons"
+            onClick={() => handleAddFriend(/* … */)}
+          >
+            <i className='bx bx-user-plus'></i> ADD
+          </button>
+        </div>
+        <div className="search-results">
+          {filteredUsers.map((user) => (
+            <div className="name-add" key={user.id}>
+              <p className="first-name">{user.firstName}</p>
             </div>
+          ))}
+        </div>
+      </>
+    ) : activeNav === "about" ? (
+      <>
+        <h2>About Bound</h2>
+        <p>
+          Bound is brought to you by an independent & female-led software engineering team, based in England. 
+        </p>
+        <a href="https://www.linkedin.com/in/jennifer-rose-scott/">Jennifer Scott < i class='bx  bx-caret-right'  ></i> </a>
+        <a href="https://www.linkedin.com/in/beth-sharp/">Beth Sharp < i class='bx  bx-caret-right'  ></i> </a>
+        <a href="https://www.linkedin.com/in/lydia-ibrahim2024/">Lydia Ibrahim < i class='bx  bx-caret-right'  ></i> </a>
+      </>
+    ) : null}
   </Modal>
 )}
 
@@ -196,7 +219,7 @@ const books = [
           <span>Home</span>
         </a>
       </li>
-                    <li>
+      <li>
         <button
           className={`nav-link ${activeNav === "friends" ? "active" : ""}`}
           onClick={() => {
@@ -210,10 +233,14 @@ const books = [
       </li>
 <li>
         <a
-          href="#binds"
-          className={activeNav === "binds" ? "active" : ""}
-          onClick={() => setActiveNav("binds")}
-        >
+        href="/bind"
+        className={activeNav === "binds" ? "active" : ""}
+        onClick={e => {
+          e.preventDefault();
+          setActiveNav("binds");
+          navigate("/bind");
+        }}
+      >
           <i className="bx bx-link" />
           <span>Binds</span>
         </a>
@@ -229,16 +256,21 @@ const books = [
         </a>
       </li>
 
-                                  <li>
-        <a
-          href="#about"
-          className={activeNav === "about" ? "active" : ""}
-          onClick={() => setActiveNav("about")}
+{/* About Link + Modal */}
+      <li>
+        <button
+          className={`nav-link ${activeNav ===
+          "about" ? "active" :""}`}
+          onClick={() => {
+            setActiveNav("about");
+            setIsModalOpen(true);
+          }}
         >
           < i class='bx  bx-donate-heart'  ></i> 
           <span>About</span>
-        </a>
+        </button>
       </li>
+
 
                     <li className="nav-search">
 <div className="search-input-wrapper">

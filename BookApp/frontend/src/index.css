@@ -67,6 +67,15 @@ p {
   line-height: 1.5;
   padding: 0;
 }
+
+.homepage {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 220px 2000px;
+  height: 100vh;
+  overflow: hidden;
+}
+
 h1 {
   font-family: 'IMFellEnglish';
   font-size: 3.9em;
@@ -83,13 +92,13 @@ h2 {
 }
 
 h3 {
-  font-family: 'IMFellEnglish';
-  font-size: 1.5em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.2em;
 }
 
 label {
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  font-size: 1.0em;
+  font-size: 14px;
   max-width: 50%;
   line-height: 1.1;
 }
@@ -307,6 +316,7 @@ input:focus {
       grid-template-columns: 220px 2fr;
       /* fixed-width sidebar | fluid content */
       height: 100vh;
+      overflow: hidden;
 }
 
 .homepage-hero {
@@ -332,7 +342,7 @@ input:focus {
 .homepage-content {
   display: flex;
   flex-direction: row;
-margin-top: 60px;
+  margin-top: 60px;
 }
 .user-library {
   background-color: #ffffff07;
@@ -435,7 +445,7 @@ margin-top: 60px;
   margin: 30px;
 }
 a {
-  color: grey;
+  color: #DEA262;
 }
 .circle {
   display: flex;
@@ -477,14 +487,16 @@ a {
   background: linear-gradient(180deg, #ffffff14 0%, #00000060 100%);
   border-radius: 20px;
   font-size: 25px;
+  width: 1300px;
   text-align: center;
   height: 900px;
   color: white;
+  margin-left: 250px !important;
   margin: 50px;
-  margin-top: 50px;
   padding: 20px;
-  margin-bottom: 30px;
+  overflow: hidden;
 }
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -655,13 +667,16 @@ nav {
 
 nav ul {
   display: flex;
+  justify-content: space-bet;
   padding: 10px;
-  justify-content: center;
   list-style: none;
   height: 100%;
-  display: flex;
   flex-flow: column;
   gap: 0.25rem;
+}
+
+nav li {
+margin: 7px;
 }
 
 nav a,
@@ -681,6 +696,8 @@ nav button.nav-link {
     color 0.5s ease-in-out;
   cursor: pointer;
   margin: 0;
+    font-size: 1.0rem;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 nav a.active,
@@ -696,11 +713,13 @@ nav button.nav-link:focus-visible {
   margin: 0;
   gap: 0.625rem;
   padding: 0.625rem 0.875rem;
+    font-size: 1.0rem;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 nav a span {
   font-size: 1.0rem;
-    font-family: 'IMFellEnglish';
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       line-height: 1.1;
 }
 
@@ -725,7 +744,6 @@ nav li:last-child {
 
 .modal-content {
   background: #09151d;
-  /* your dark card color */
   padding: 2rem;
   border-radius: 12px;
   position: relative;
