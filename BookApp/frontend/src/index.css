@@ -1,3 +1,77 @@
+.book-shelf {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 16px 0 24px;
+  overflow-x: auto;
+}
+
+.book {
+  flex: 1 1 180px;
+  aspect-ratio: 2/3;
+  min-width: 220px;
+  max-width: 340px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+  height: auto;
+}
+
+.book:hover {
+  transform: translateY(-4px);
+}
+
+.add-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background:#070F2A;
+  color: #DEA262;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.book-results .book-shelf {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  /* pick one of these: */
+  /* -- simple color shelf -- */
+  background-color: #33220B;
+  border-bottom: 8px solid #8B4513;
+  /* -- or real plank image -- */
+  /* background: url('/images/wood.jpg') repeat-x bottom; */
+  padding: 16px 0 24px;
+  /* extra bottom padding so books don’t overlap the border */
+}
+
+.book:hover .add-button {
+  opacity: 1;
+}
+
+.book-label {
+  position: absolute;
+  bottom: 17.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #EEF4F8;
+  padding: 14px 14px;
+  border-radius: 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
 :root {
   color: #EEF4F8;
   background-color: #091819;
@@ -263,6 +337,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 input {
@@ -514,7 +589,7 @@ a {
 }
 .book-cover {
   display: flex;
-  width: 250px;
+  width: 360px;
   margin: 30px;
   border-radius: 15px;
   cursor: pointer;
@@ -544,7 +619,8 @@ a {
   margin: 0px 10px 20px;
   padding: 0;
 }
-.book-title {
+
+.book-title .bind-subtitle {
   font-family: 'IMFellEnglish';
   font-size: 30px;
   line-height: 1.0;
@@ -598,36 +674,8 @@ a {
   margin-left: 20%;
   margin-right: 20%;
 }
-.carousel-container {
-  width: 100%;
-  padding-bottom: 3vw;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  margin-top: 2%;
-  align-items: center;
-  background-image: url('./assets/images/background.svg');
-}
-.carousel {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.carousel img {
-  width: 225px;
-  height: 300px;
-  object-fit: cover;
-  margin: 0 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.carousel::-webkit-scrollbar {
-  display: none;
-}
-.carousel {
-  scrollbar-width: none;
-}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
