@@ -1,15 +1,50 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../src/assets/images/logo.svg';
-import group from '../src/assets/images/silhouettes.png';
+import group from '../src/assets/images/authPage-image.png';
 import Footer from '../src/components/footer.jsx';
 import { useDispatch } from 'react-redux';
 import { setMemberId } from '../src/Redux/slices/userSlice.js';
+import { motion, AnimatePresence } from 'framer-motion';
+
+function RotatingText({ messages, interval = 3000 }) {
+  const [current, setCurrent] = useState(0);
+
+useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(i => (i + 1) % messages.length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [messages.length, interval]);
+
+    return (
+    <div style={{ position: 'relative', height: '1.5em'}}>
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          style={{ position: 'absolute', width: '100%' }}
+        >
+          {messages[current]}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 function AuthPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const demoLines = [
+  "Beth and Lydia were recommended The Great Gatsby.",
+  "Alicia and Jenni are now reading The Little Prince.",
+  "Eve and Frank found The Hobbit together."
+];
 
   // State to keep track of Sign In inputs
   const [emailSignIn, setEmailSignIn] = useState('');
@@ -133,17 +168,22 @@ function AuthPage() {
 
       {/* Fun Book Vibes and Signup Panel */}
       <div className="header-section">
-        <div id="girl-image">
-          <img id="girl" src={group} alt="Woman reading a book" />
+        <div id="hero-image-container">
+          <img id="hero-image" src={group} alt="Woman reading a book" />
+          <div className="my-rotator-wrapper">
+  <RotatingText messages={demoLines} interval={3000} />
+</div>
+
         </div>
+
 
         <div className="intro-section">
           <div id="introMessage">
             <h1>
-              Discover The One Book You'll <span className="highlight">Both</span> Love
+              <span className="highlight">Bound.</span> The best way to find books you'll both love.
             </h1>
             <p>
-              Reading with your partner? Book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> titles to find a book you'll both love. And, it's free!
+              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you'll both love!
             </p>
 
             <div className="signup">
