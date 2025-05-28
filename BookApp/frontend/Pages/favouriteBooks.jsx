@@ -114,9 +114,6 @@ const BookSearch = () => {
           <button onClick={handleSearch} disabled={loading}>
             SEARCH
           </button>
-          <button onClick={handleSubmit} disabled={!selectedBook || loading}>
-            CONTINUE
-          </button>
         </div>
 
         {loading && <p>Loading...</p>}
@@ -161,6 +158,7 @@ const BookSearch = () => {
                     </div>
                   )}
                 </div>
+                
               );
             })}
           </div>
