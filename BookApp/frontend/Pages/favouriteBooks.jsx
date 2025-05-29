@@ -1,119 +1,119 @@
 /* BookSearch.jsx */
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import logo from "../src/assets/images/logo.svg";
-import Footer from "../src/components/footer.jsx";
 
 const BookSearch = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const fullName = useSelector((state) => state.user.fullName);
   const memberId = useSelector((state) => state.user.memberId);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [results, setResults] = useState([]);
+  const [shelfBooks, setShelfBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const wrapperRef = useRef(null);
 
-  // Search for books via backend
-  const handleSearch = async () => {
-    if (!searchTerm.trim()) {
-      alert("Please enter a book title.");
-      return;
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setResults([]);
+      }
     }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) return;
     setLoading(true);
     setError("");
-    setBooks([]);
     try {
-      const { data } = await axios.get(
-        "http://localhost:8000/search-bookshelf/search",
-        { params: { searchRequest: searchTerm } }
+      const response = await axios.get(
+        "https://www.googleapis.com/books/v1/volumes",
+        {
+          params: {
+            q: searchTerm,
+            maxResults: 20,
+          },
+        }
       );
-      if (data.success) setBooks(data.books);
-      else setError(data.message || "Search failed.");
+      const books = response.data.items.map((item) => ({
+        id: item.id,
+        title: item.volumeInfo.title,
+        imageLinks: item.volumeInfo.imageLinks || {},
+      }));
+      setResults(books);
     } catch (err) {
       console.error(err);
-      setError("Failed to fetch books. Please try again later.");
+      setError("Search failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Construct best available thumbnail URL (or fallback to content endpoint)
-  const getThumbnailUrl = (book) => {
-    const link =
-      book.imageLinks?.extraLarge ??
-      book.imageLinks?.large ??
-      book.imageLinks?.medium ??
-      book.imageLinks?.thumbnail ??
-      null;
-    if (link) return link;
-    return `https://books.google.com/books/content?id=${book.id}&printsec=frontcover&img=1&zoom=2&source=gbs_api`;
-  };
-
-  const handleBookSelect = (book) => {
-    setSelectedBook(book);
-    setSearchTerm(book.title);
-  };
-
-  const handleSubmit = async () => {
+  const handleAdd = async (book) => {
     if (!memberId) {
-      alert("You must be logged in to add a book to your favourites.");
-      return;
-    }
-    if (!selectedBook) {
-      alert("Please select a book to continue.");
+      alert("Please log in to add books.");
       return;
     }
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "http://localhost:8000/search-bookshelf/favouriteBooks",
-        {
-          googlebookId: selectedBook.id,
-          memberId,
-        }
+        { googlebookId: book.id, memberId }
       );
-      if (data.success) {
-        setMessage("Book successfully added to your favourites!");
-        setTimeout(() => navigate("/homepage"), 1500);
-      } else {
-        setError(data.message || "Submission failed. Please try again.");
-      }
+      setShelfBooks((prev) => [...prev, book]);
+      setMessage(`Added \"${book.title}\" to your shelf.`);
+      setResults([]);
+      setSearchTerm("");
     } catch (err) {
       console.error(err);
-      setError("An error occurred while submitting. Please try again.");
+      setError("Failed to add book. Please try again.");
     }
   };
+
+  const getThumbnail = (book) =>
+    book.imageLinks.thumbnail ||
+    `https://books.google.com/books/content?id=${book.id}&printsec=frontcover&img=1&zoom=2`;
 
   return (
     <div id="favouriteBooksContent">
       <h2>Build Your Bookshelf</h2>
       <p className="favouriteBooksMessage">
-        Search for a book and start filling your shelf.
+        Search and add books to your shelf.
       </p>
 
-      <div className="book-search-container">
+      <div className="book-search-container" ref={wrapperRef}>
         <div className="search-input-wrapper">
           <input
             type="text"
             placeholder="Title, Author, ISBN..."
             value={searchTerm}
-            onChange={(e) =>
-              setSearchTerm(
-                e.target.value
-                  .toLowerCase()
-                  .replace(/\b\w/g, (c) => c.toUpperCase())
-              )
-            }
+            onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
           <button onClick={handleSearch} disabled={loading}>
             SEARCH
           </button>
+
+          {results.length > 0 && (
+            <ul className="search-dropdown">
+              {results.map((book) => (
+                <li key={book.id} className="dropdown-item">
+                  <img src={getThumbnail(book)} alt={book.title} />
+                  <span className="title">{book.title}</span>
+                  <button
+                    onClick={() => handleAdd(book)}
+                    className="add-btn"
+                  >
+                    + Add
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {loading && <p>Loading...</p>}
@@ -122,46 +122,19 @@ const BookSearch = () => {
 
         <div className="book-results">
           <div className="book-shelf">
-            {books.map((book) => {
-              const thumbnailUrl = getThumbnailUrl(book);
-              return (
-                <div
-                  key={book.id}
-                  className={`book${
-                    selectedBook?.id === book.id ? " selected" : ""
-                  }`}
-                  style={{ backgroundImage: `url(${thumbnailUrl})` }}
-                  onClick={() => handleBookSelect(book)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && handleBookSelect(book)
-                  }
-                >
-                  <div
-                    className="add-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedBook(book);
-                      handleSubmit();
-                    }}
-                  >
-                    <i className='bx bx-book-add'></i>
-                  </div>
-
-                  {selectedBook?.id === book.id && (
-                    <div className="book-label">
-
-                    </div>
-                  )}
-                </div>
-                
-              );
-            })}
+            {shelfBooks.map((book) => (
+              <div
+                key={book.id}
+                className="book"
+                style={{ backgroundImage: `url(${getThumbnail(book)})` }}
+              />
+            ))}
+            {shelfBooks.length === 0 && (
+              <p className="empty-message">Your shelf is empty.</p>
+            )}
           </div>
         </div>
       </div>
-
     </div>
   );
 };
