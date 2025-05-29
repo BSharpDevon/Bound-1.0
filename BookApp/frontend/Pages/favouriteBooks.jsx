@@ -151,10 +151,7 @@ const BookSearch = () => {
 
                   {selectedBook?.id === book.id && (
                     <div className="book-label">
-                      <strong className="book-title">{book.title}</strong>
-                      <span className="book-author">
-                        {book.authors.join(", ")}
-                      </span>
+
                     </div>
                   )}
                 </div>

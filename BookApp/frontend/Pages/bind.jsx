@@ -141,6 +141,12 @@ function BindPage() {
             <button className="action-button" onClick={bookShop}>
               BUY ON BOOKSHOP.ORG
             </button>
+            <button className="action-button" onClick={bookShop}>
+              < i class='bx  bx-share'  ></i> SHARE
+            </button>
+            <div className="subtext">
+          To support Bound, consider purchasing books through our affiliate links.
+        </div>
           </div>
           </div>
         ) : (

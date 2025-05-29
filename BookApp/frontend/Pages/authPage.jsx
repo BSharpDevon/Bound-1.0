@@ -41,7 +41,7 @@ function AuthPage() {
   const navigate = useNavigate();
 
   const demoLines = [
-  "Beth and Lydia were recommended The Great Gatsby.",
+  "Beth and Jake were recommended The Great Gatsby.",
   "Alicia and Jenni are now reading The Little Prince.",
   "Eve and Frank found The Hobbit together."
 ];
