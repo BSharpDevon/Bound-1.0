@@ -47,17 +47,16 @@
 .book-results .book-shelf {
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   margin-top: 40px;
   gap: 16px;
-  /* pick one of these: */
-  /* -- simple color shelf -- */
+  width: 1500px;
+  height: 200px;
+  max-width: none;
   background-color: #33220B;
   border-bottom: 8px solid #8B4513;
-  /* -- or real plank image -- */
-  /* background: url('/images/wood.jpg') repeat-x bottom; */
   padding: 16px 0 24px;
-  /* extra bottom padding so books don’t overlap the border */
 }
 
 .book:hover .add-button {
@@ -72,17 +71,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/*  Fonts */
+
 @font-face {
   font-family: 'IMFellEnglish';
   src: url('./assets/fonts/IMFellEnglish.ttf') format('truetype');
   @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&display=swap');
 }
-/*  Links */
+
 a {
   color: grey;
 }
-/*  Universal code */
+
 body {
   margin: 0px;
   padding: 0px;
@@ -96,27 +95,22 @@ margin: 20px;
 
 .search-input-wrapper {
   position: relative;
-  width: 100%;
+  width: 50%;
 }
 
 .search-input-wrapper .bx-search {
   position: absolute;
   left: 12px;
-  /* adjust for your padding */
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2em;
-  /* or whatever looks good */
   color: #DEA262;
-  /* match your nav/gold accent */
   pointer-events: none;
-  /* clicks go through to the input */
 }
 
 .search-input-wrapper input {
   width: 60%;
   padding: 8px 12px 8px 36px;
-  /* left-pad to make room for the icon */
   border: 1px solid #DEA262;
   border-radius: 8px;
   background: #070F2A;
@@ -189,7 +183,6 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 600px;
   margin: 0 auto;
   text-align: center;
 }
@@ -324,7 +317,7 @@ button:hover {
 
 /*  Grid and Display Elements */
 
-#favouriteBooksContent {
+#favouriteBooksContent, .book-search-container {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -381,7 +374,6 @@ input:focus {
   width: 100%;
     display: grid;
       grid-template-columns: 220px 2fr;
-      /* fixed-width sidebar | fluid content */
       height: 100vh;
       overflow: hidden;
 }
@@ -816,4 +808,94 @@ nav li:last-child {
   font-size: 1.5rem;
   color: #EEF4F8;
   cursor: pointer;
+}
+
+.search-input-wrapper { position: relative; }
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 1000px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: #070F2A;
+  border: 1px solid #DEA262;
+  border-radius: 8px;
+  margin-top: 4px;
+  z-index: 1000;
+}
+.dropdown-item { display: flex; align-items: center; padding: 8px 12px; }
+.dropdown-item img { width: 40px; height: 60px; object-fit: cover; margin-right: 12px; }
+.dropdown-item .title { flex: 1; color: #EEF4F8; font-family: 'IMFellEnglish'; }
+.dropdown-item .add-btn {
+  background: #336699;
+  color: #EEF4F8;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'IMFellEnglish';
+}
+.dropdown-item .add-btn:hover { background: #264d73; }
+.empty-message {
+  color: #EEF4F8;
+  font-family: 'IMFellEnglish';
+  padding: 16px;
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: #070F2A;
+  border: 1px solid #DEA262;
+  border-radius: 8px;
+  margin-top: 4px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.dropdown-item img {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.dropdown-item .title {
+  flex: 1;
+  color: #EEF4F8;
+  font-family: 'IMFellEnglish';
+}
+
+.dropdown-item .add-btn {
+  background: #336699;
+  color: #EEF4F8;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'IMFellEnglish';
+}
+
+.dropdown-item .add-btn:hover {
+  background: #DEA262;
+}
+
+.empty-message {
+  color: #EEF4F8;
+  font-family: 'IMFellEnglish';
+  padding: 16px;
 }
