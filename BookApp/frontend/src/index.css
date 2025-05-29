@@ -64,19 +64,6 @@
   opacity: 1;
 }
 
-.book-label {
-  position: absolute;
-  bottom: 17.5em;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: #EEF4F8;
-  padding: 14px 14px;
-  border-radius: 4px;
-  text-align: center;
-  white-space: nowrap;
-}
-
 :root {
   color: #EEF4F8;
   background-color: #091819;
@@ -552,6 +539,11 @@ a {
   z-index: 1;
 }
 
+.subtext {
+  font-size: 12px;
+  margin-top: 12px;
+}
+
 .bind-header {
   font-family: 'IMFellEnglish';
   font-size: 60px;
@@ -559,9 +551,19 @@ a {
   margin: 80px 40px 40px 30px;
   padding: 0;
 }
+
+.modalCopy {
+  font-size: 16px;
+}
+
+.modalHeading {
+  font-size: 30px;
+}
+
+
 .bind-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   background: linear-gradient(180deg, #ffffff14 0%, #00000060 100%);
   border-radius: 20px;
@@ -808,7 +810,7 @@ nav li:last-child {
 .modal-close {
   position: absolute;
   top: 8px;
-  right: 12px;
+  right: 6px;
   background: transparent;
   border: none;
   font-size: 1.5rem;

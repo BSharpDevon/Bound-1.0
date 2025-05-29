@@ -182,13 +182,17 @@ const books = [
       </>
     ) : activeNav === "about" ? (
       <>
-        <h2>About Bound</h2>
-        <p>
+        <h2 className="modalHeading">About Bound</h2>
+        <p className="modalCopy">
           Bound is brought to you by an independent & female-led software engineering team, based in England. 
         </p>
         <a href="https://www.linkedin.com/in/jennifer-rose-scott/">Jennifer Scott < i class='bx  bx-caret-right'  ></i> </a>
         <a href="https://www.linkedin.com/in/beth-sharp/">Beth Sharp < i class='bx  bx-caret-right'  ></i> </a>
         <a href="https://www.linkedin.com/in/lydia-ibrahim2024/">Lydia Ibrahim < i class='bx  bx-caret-right'  ></i> </a>
+
+        <div className="subtext">
+          To support us, consider purchasing books through affiliate links.
+        </div>
       </>
     ) : null}
   </Modal>
@@ -228,7 +232,7 @@ const books = [
           }}
         >
           <i className="bx bx-group" />
-          <span>Friends</span>
+          <span >Friends</span>
         </button>
       </li>
 <li>
@@ -323,7 +327,7 @@ onChange={handleSearchChange}
   </div>
 ))}
           </div>
-          <h3>Daily selections. Perfectly selected to your tastes.</h3>
+          <h3>Recommended genre-picked reads for you</h3>
           <div className="grid-container">
             {books.map((book, index) => (
   <div className="book-card" key={index}>
