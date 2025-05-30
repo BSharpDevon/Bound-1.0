@@ -52,7 +52,7 @@
   margin-top: 40px;
   gap: 16px;
   width: 1500px;
-  height: 200px;
+  height: 300px;
   max-width: none;
   background-color: #33220B;
   border-bottom: 8px solid #8B4513;
@@ -95,7 +95,11 @@ margin: 20px;
 
 .search-input-wrapper {
   position: relative;
-  width: 50%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .search-input-wrapper .bx-search {
@@ -109,10 +113,11 @@ margin: 20px;
 }
 
 .search-input-wrapper input {
-  width: 60%;
+  width: 100% !important;
+  box-sizing: border-box;
   padding: 8px 12px 8px 36px;
   border: 1px solid #DEA262;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #070F2A;
   font-size: 1.0rem;
     font-family: 'IMFellEnglish';
@@ -269,6 +274,19 @@ button:hover {
   cursor: pointer;
   margin: 7px;
 }
+
+#homeButton {
+  background-color: #070F2A;
+  font-family: 'IMFellEnglish', serif;
+  color: white;
+  padding: 10px 40px;
+  border: solid grey 1px;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+  margin: 20px;
+}
+
 #signUpButton {
   background-color: #070F2A;
   font-family: 'IMFellEnglish', serif;
@@ -318,6 +336,15 @@ button:hover {
 /*  Grid and Display Elements */
 
 #favouriteBooksContent, .book-search-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden
+}
+
+#favouriteBooksContent,
+.book-search-container {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -815,13 +842,12 @@ nav li:last-child {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 1000px;
+  width: 100%;
   max-height: 300px;
   overflow-y: auto;
   background: #070F2A;
   border: 1px solid #DEA262;
   border-radius: 8px;
-  margin-top: 4px;
   z-index: 1000;
 }
 .dropdown-item { display: flex; align-items: center; padding: 8px 12px; }
@@ -844,6 +870,7 @@ nav li:last-child {
 }
 
 .search-input-wrapper {
+  margin: 0px;
   position: relative;
 }
 
@@ -851,11 +878,11 @@ nav li:last-child {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  max-width: 480px;
   max-height: 300px;
   overflow-y: auto;
   background: #070F2A;
-  border: 1px solid #DEA262;
+  border: 2px solid #DEA262;
   border-radius: 8px;
   margin-top: 4px;
   z-index: 1000;
@@ -868,10 +895,10 @@ nav li:last-child {
 }
 
 .dropdown-item img {
-  width: 40px;
-  height: 60px;
+  width: 70px;
+  height: 100px;
   object-fit: cover;
-  margin-right: 12px;
+  margin-right: 10px;
 }
 
 .dropdown-item .title {
