@@ -80,7 +80,6 @@ const BookSearch = () => {
 
   return (
     <div id="favouriteBooksContent">
-      <div
       <button ClassName="homeButton">
             < i class='bx  bx-home-alt'  ></i> HOME
           </button>
