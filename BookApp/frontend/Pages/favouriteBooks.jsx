@@ -1,5 +1,5 @@
 /* BookSearch.jsx */
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -16,6 +16,10 @@ const BookSearch = () => {
   const [message, setMessage] = useState("");
   const wrapperRef = useRef(null);
 
+  // AbortController ref to cancel in-flight requests
+  const abortCtrlRef = useRef(null);
+
+  // Click-outside clears dropdown
   useEffect(() => {
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -26,53 +30,81 @@ const BookSearch = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = async () => {
-    if (!searchTerm.trim()) return;
-    setLoading(true);
-    setError("");
-    try {
-      const response = await axios.get(
-        "https://www.googleapis.com/books/v1/volumes",
-        {
-          params: {
-            q: searchTerm,
-            maxResults: 20,
-          },
-        }
-      );
-      const books = response.data.items.map((item) => ({
-        id: item.id,
-        title: item.volumeInfo.title,
-        imageLinks: item.volumeInfo.imageLinks || {},
-      }));
-      setResults(books);
-    } catch (err) {
-      console.error(err);
-      setError("Search failed. Please try again.");
-    } finally {
+  // Debounced search effect
+  useEffect(() => {
+    // Clear results if input empty
+    if (!searchTerm.trim()) {
+      setResults([]);
+      setError("");
       setLoading(false);
-    }
-  };
-
-  const handleAdd = async (book) => {
-    if (!memberId) {
-      alert("Please log in to add books.");
       return;
     }
-    try {
-      await axios.post(
-        "http://localhost:8000/search-bookshelf/favouriteBooks",
-        { googlebookId: book.id, memberId }
-      );
-      setShelfBooks((prev) => [...prev, book]);
-      setMessage(`Added \"${book.title}\" to your shelf.`);
-      setResults([]);
-      setSearchTerm("");
-    } catch (err) {
-      console.error(err);
-      setError("Failed to add book. Please try again.");
+
+    setLoading(true);
+    setError("");
+
+    // Cancel previous request
+    if (abortCtrlRef.current) {
+      abortCtrlRef.current.abort();
     }
-  };
+    const controller = new AbortController();
+    abortCtrlRef.current = controller;
+
+    const timeoutId = setTimeout(async () => {
+      try {
+        const response = await axios.get(
+          "https://www.googleapis.com/books/v1/volumes",
+          {
+            params: { q: searchTerm, maxResults: 20 },
+            signal: controller.signal,
+          }
+        );
+        const books = (response.data.items || []).map((item) => ({
+          id: item.id,
+          title: item.volumeInfo.title,
+          imageLinks: item.volumeInfo.imageLinks || {},
+        }));
+        setResults(books);
+      } catch (err) {
+        if (axios.isCancel(err)) {
+          // request was aborted — no need to set error
+        } else {
+          console.error(err);
+          setError("Search failed. Please try again.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    }, 300); // 300ms debounce
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [searchTerm]);
+
+  const handleAdd = useCallback(
+    async (book) => {
+      if (!memberId) {
+        alert("Please log in to add books.");
+        return;
+      }
+      try {
+        await axios.post(
+          "http://localhost:8000/search-bookshelf/favouriteBooks",
+          { googlebookId: book.id, memberId }
+        );
+        setShelfBooks((prev) => [...prev, book]);
+        setMessage(`Added "${book.title}" to your shelf.`);
+        setResults([]);
+        setSearchTerm("");
+      } catch (err) {
+        console.error(err);
+        setError("Failed to add book. Please try again.");
+      }
+    },
+    [memberId]
+  );
 
   const getThumbnail = (book) =>
     book.imageLinks.thumbnail ||
@@ -80,9 +112,9 @@ const BookSearch = () => {
 
   return (
     <div id="favouriteBooksContent">
-      <button ClassName="homeButton">
-            < i class='bx  bx-home-alt'  ></i> HOME
-          </button>
+      <button className="homeButton">
+        <i className="bx bx-home-alt"></i> HOME
+      </button>
       <h2>Build Your Bookshelf</h2>
       <p className="favouriteBooksMessage">
         Search and add books to your shelf.
@@ -95,11 +127,8 @@ const BookSearch = () => {
             placeholder="Title, Author, ISBN..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            // no more Enter key trigger
           />
-          <button onClick={handleSearch} disabled={loading}>
-            SEARCH
-          </button>
 
           {results.length > 0 && (
             <ul className="search-dropdown">
@@ -119,7 +148,6 @@ const BookSearch = () => {
           )}
         </div>
 
-        {loading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
 
