@@ -80,6 +80,9 @@ const BookSearch = () => {
 
   return (
     <div id="favouriteBooksContent">
+      <button ClassName="homeButton">
+            < i class='bx  bx-home-alt'  ></i> HOME
+          </button>
       <h2>Build Your Bookshelf</h2>
       <p className="favouriteBooksMessage">
         Search and add books to your shelf.
