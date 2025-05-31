@@ -142,7 +142,7 @@ const BookSearch = () => {
                     onClick={() => handleAdd(book)}
                     className="add-btn"
                   >
-                    + Add
+                    + ADD
                   </button>
                 </li>
               ))}

@@ -14,14 +14,63 @@ function BindPage() {
   // Bind state
   const [isBindComplete, setIsBindComplete] = useState(false);
 
-  // Mock user data
+  // Dummy users (not yet used in this snippet, but kept here for context)
+  const users = [
+    { firstName: "Jeveria", id: 1, email: "jeveria@cfg.com" },
+    { firstName: "Beth", id: 2, email: "beth@cfg.com" },
+    { firstName: "Steph", id: 3, email: "steph@cfg.com" },
+    { firstName: "Jenni", id: 4, email: "jenni@cfg.com" },
+    { firstName: "Lydia", id: 5, email: "lydia@cfg.com" },
+  ];
+
+  // Your list of “bind” books
+  const books = [
+    {
+      title: "Fairy Tale",
+      author: "Stephen King",
+      cover:
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1647789287i/60177373.jpg",
+    },
+    {
+      title: "Never After",
+      author: "Stephanie Garber",
+      cover:
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011416i/59808071.jpg",
+    },
+    {
+      title: "Klara and the Sun",
+      author: "Kazuo Ishiguro",
+      cover:
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603206535i/54120408.jpg",
+    },
+    {
+      title: "A Court of Mist and Fury",
+      author: "Sarah J. Maas",
+      cover:
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1620325671i/50659468.jpg",
+    },
+    {
+      title: "Hamnet",
+      author: "Maggie O'Farrell",
+      cover:
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574943819i/43890641.jpg",
+    },
+    {
+      title: "Never After",
+      author: "Stephanie Garber",
+      cover:
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011416i/59808071.jpg",
+    },
+  ];
+
+  // Mock user data (used when bind completes)
   const firstNameInitial = "L";
   const userOneName = "Name1";
   const userTwoName = "Name2";
   const bookTitle = "A Court of Thorns and Roses";
   const bookAuthor = "Sarah J. Maas";
 
-  // Select a friend (stub)
+  // Stub for selecting a friend
   const selectFriend = () => {};
 
   // Handlers
@@ -56,7 +105,9 @@ function BindPage() {
             </li>
             <li>
               <button
-                className={`nav-link ${activeNav === "friends" ? "active" : ""}`}
+                className={`nav-link ${
+                  activeNav === "friends" ? "active" : ""
+                }`}
                 onClick={() => {
                   setActiveNav("friends");
                   setIsModalOpen(true);
@@ -88,7 +139,9 @@ function BindPage() {
             </li>
             <li>
               <button
-                className={`nav-link ${activeNav === "about" ? "active" : ""}`}
+                className={`nav-link ${
+                  activeNav === "about" ? "active" : ""
+                }`}
                 onClick={() => {
                   setActiveNav("about");
                   setIsModalOpen(true);
@@ -121,56 +174,86 @@ function BindPage() {
       </aside>
 
       {/* Main content */}
-        {isBindComplete ? (
-          <div className={`bind-content ${isBindComplete ? "fade-in" : ""}`}>
+      {isBindComplete ? (
+        <div className={`bind-content ${isBindComplete ? "fade-in" : ""}`}>
           <div className="bind-copy"></div>
-            <div className="book-container">
-              <img
-                className="book-cover"
-                src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1620324329i/50659467.jpg"
-                alt="Book Cover"
-              />
-            </div>
-            <div className="metaData">
-              <h1 className="bind-header">
+          <div className="book-container">
+            <img
+              className="book-cover"
+              src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1620324329i/50659467.jpg"
+              alt="Book Cover"
+            />
+          </div>
+          <div className="metaData">
+            <h1 className="bind-header">
               {userOneName} & {userTwoName}
             </h1>
-              <p className="bind-description">
-              The book that binds you two together is <b>{bookTitle}</b> by <b>{bookAuthor}</b>. And we've found the link just for you!
+            <p className="bind-description">
+              The book that binds you two together is <b>{bookTitle}</b> by{" "}
+              <b>{bookAuthor}</b>. And we've found the link just for you!
             </p>
             <button className="action-button" onClick={bookShop}>
               BUY ON BOOKSHOP.ORG
             </button>
             <button className="action-button" onClick={bookShop}>
-              < i class='bx  bx-share'  ></i> SHARE
+              <i className="bx bx-share" /> SHARE
             </button>
             <div className="subtext">
-          To support Bound, consider purchasing books through our affiliate links.
-        </div>
-          </div>
-          </div>
-        ) : (
-          <div className="bind-content">
-            <h2 className="bind-header">
-              Discover Your Next Shared Story
-            </h2>
-            <p>
-              Connect with a friend. See where your tastes overlap. Find the book you’ll both fall in love with.
-            </p>
-            <div className="circle-container">
-              <div className="circle initials-circle">{firstNameInitial}</div>
-              <div className="circle plus-circle">+</div>
+              To support Bound, consider purchasing books through our affiliate
+              links.
             </div>
-            <div className="bind-buttons">
-            <button id="signUpButtonHomepage" onClick={() => selectFriend(true)}>
+          </div>
+        </div>
+      ) : (
+        <div className="bind-content">
+          <h2 className="bind-header">Your Binds</h2>
+
+          {/* GRID OF BOOK CARDS */}
+          <div className="grid-container" >
+            {books.map((book, index) => (
+              <div className="book-card" key={index}>
+                <img
+                  src={book.cover}
+                  alt={`Cover of ${book.title}`}
+                  className="book-cover-image"
+                />
+                <p
+                  style={{
+                    color: "white",
+                    margin: 5,
+                  }}
+                >
+                  {book.title}
+                </p>
+                <p
+                  style={{
+                    color: "#DEA262",
+                    margin: 0,
+                  }}
+                >
+                  {book.author}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* ACTION BUTTONS (outside the map) */}
+          <div className="bind-buttons">
+            <button
+              id="signUpButtonHomepage"
+              onClick={() => selectFriend(true)}
+            >
               SELECT FRIEND
             </button>
-            <button id="signUpButtonHomepage" onClick={() => setIsBindComplete(true)}>
+            <button
+              id="signUpButtonHomepage"
+              onClick={() => setIsBindComplete(true)}
+            >
               START BIND
             </button>
-            </div>
           </div>
-        )}
+        </div>
+      )}
 
       {/* Modal using original component */}
       {isModalOpen && (

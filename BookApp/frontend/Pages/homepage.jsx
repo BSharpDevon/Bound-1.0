@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
-import stack from "../src/assets/images/writer-spotlight.png";
 import Modal from "../src/components/Modal.jsx";
 import "boxicons/css/boxicons.min.css";
+import HeroCarousel from "../src/components/HeroCarousel.jsx";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +16,12 @@ function HomePage() {
   const [searchUserEmail, setSearchUserEmail] = useState("");
 
   const navigate = useNavigate();
+
+    const [flickerOn, setFlickerOn] = useState(false);
+
+  const handleToggle = () => {
+    setFlickerOn((prev) => !prev);
+  };
 
   // Debounce function for search
   const debounce = (func, delay) => {
@@ -64,12 +70,7 @@ function HomePage() {
       cover:
         "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1620325671i/50659468.jpg",
     },
-    {
-      title: "Hamnet",
-      author: "Maggie O'Farrell",
-      cover:
-        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574943819i/43890641.jpg",
-    },
+  
     {
       title: "Never After",
       author: "Stephanie Garber",
@@ -157,49 +158,45 @@ function HomePage() {
 
   return (
     <div className="homepage">
-      {/* ==== BOOK DETAILS MODAL ==== */}
-{isModalOpen && selectedBook && (
-  <Modal onClose={closeBookModal}>
-    <div
-      className="book-modal-content"
-      style={{ textAlign: "center", position: "relative" }}
-    >
-      {/* YOUR “×” BUTTON, since the built‐in one is now hidden */}
-      <button
-        onClick={closeBookModal}
-        style={{
-          position: "absolute",
-          top: 8,
-          right: 12,
-          background: "transparent",
-          border: "none",
-          fontSize: "1.5rem",
-          cursor: "pointer",
-        }}
-      >
-        &times;
-      </button>
+      {isModalOpen && selectedBook && (
+        <Modal onClose={closeBookModal}>
+          <div
+            className="book-modal-content"
+            style={{ textAlign: "center", position: "relative" }}
+          >
 
-      <img
-        src={selectedBook.cover}
-        alt={`Cover of ${selectedBook.title}`}
-        style={{
-          maxWidth: "200px",
-          maxHeight: "300px",
-          marginBottom: "1rem",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-          borderRadius: "4px",
-        }}
-      />
-      <h2 style={{ margin: "0.5rem 0", fontFamily: "IMFellEnglish" }}>
-        {selectedBook.title}
-      </h2>
-      <p style={{ fontFamily: "Josefin Sans", color: "#555" }}>
-        by {selectedBook.author}
-      </p>
-    </div>
-  </Modal>
-)}
+            <button class="modal-close"
+              onClick={closeBookModal}
+            >
+              &times;
+            </button>
+
+            {/* Cover Image */}
+            <img id="modal-cover-image"
+              src={selectedBook.cover}
+              alt={`Cover of ${selectedBook.title}`}
+              style={{
+                Width: "400px",
+                Height: "600px",
+                marginBottom: "1rem",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                borderRadius: "4px",
+              }}
+            />
+
+            <div id="book-modal-metadata">
+
+            {/* Title + Author */}
+            <h3 style={{ margin: "0.5rem 0", fontFamily: "VT" }}>
+              {selectedBook.title}
+            </h3>
+            <p style={{ fontFamily: "VT", color: "#DEA262" }}>
+              by {selectedBook.author}
+            </p>
+            </div>
+          </div>
+        </Modal>
+      )}
 
       {/* ==== EXISTING FRIENDS/ABOUT MODAL LOGIC ==== */}
       {isModalOpen && !selectedBook && (
@@ -238,12 +235,11 @@ function HomePage() {
             </>
           ) : activeNav === "about" ? (
             <>
-              <h2 className="modalHeading">About Bound</h2>
+              <h2 className="modalHeading">Team Bound</h2>
               <p className="modalCopy">
-                Bound is an independent, female-led platform. Its founders met
-                while completing a Full Stack coding course with Code First
-                Girls.
+                Bound is an independent, female-led platform built to help readers find books through connection.
               </p>
+              <div id="about-modal-site-authors">
               <a href="https://www.linkedin.com/in/jennifer-rose-scott/">
                 Jennifer Scott <i className="bx bx-caret-right"></i>
               </a>
@@ -253,10 +249,9 @@ function HomePage() {
               <a href="https://www.linkedin.com/in/lydia-ibrahim2024/">
                 Lydia Ibrahim <i className="bx bx-caret-right"></i>
               </a>
-
+              </div>
               <div className="subtext">
-                To support us, consider purchasing books through affiliate
-                links.
+                Purchasing books through affiliate links supports Team Bound.
               </div>
             </>
           ) : null}
@@ -271,6 +266,17 @@ function HomePage() {
           <img id="logo" src={logo} alt="Bound Logo" />
           <nav>
             <ul>
+                            <li className="nav-search">
+                <div className="search-input-wrapper">
+                  <input
+                    className="search-input"
+                    type="text"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </li>
               <li>
                 <a
                   href="#home"
@@ -310,6 +316,7 @@ function HomePage() {
                   <span>Binds</span>
                 </a>
               </li>
+              
               <li>
                 <a
                   href="#bookshelf"
@@ -339,20 +346,16 @@ function HomePage() {
                   <span>About</span>
                 </button>
               </li>
+<button
+        className="ambient-toggle"
+        onClick={handleToggle}
+        aria-pressed={flickerOn}
+      >
+        {flickerOn ? "DAY LIGHT" : "NIGHT LIGHT"}
+      </button>
 
-              <li className="nav-search">
-                <div className="search-input-wrapper">
-                  <i className="bx bx-search" />
-                  <input
-                    className="search-input"
-                    type="text"
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-              </li>
-
+      {/* Conditionally render the flicker overlay */}
+      {flickerOn && <div className="flicker-overlay" />}
               <li>
                 <a href="#logout">
                   <i className="bx bx-door-open"></i>
@@ -362,32 +365,11 @@ function HomePage() {
             </ul>
           </nav>
         </aside>
-
+        <div id="homepage-content">
+        <HeroCarousel />
         <div className="user-library-binds">
-          <div className="homepage-hero">
-            <div className="homepage-hero-copy">
-              <h2>
-                Elif Shafak on the Importance and Vulnerability of Rivers
-              </h2>
-              <p className="homepage-header-p">
-                Telling the interconnected stories of three people who live on
-                the banks of either the Tigris or the Thames, Elif Shafak's
-                acclaimed There Are Rivers in the Sky is steeped in the
-                texture, culture and politics of water.
-              </p>
-              <button
-                id="homepage-hero-button"
-                onClick={() => navigate("/bind")}
-              >
-                READ MORE
-              </button>
-            </div>
-            <div className="homepage-hero-image">
-              <img id="stack" src={stack} alt="A stack of books" />
-            </div>
-          </div>
 
-          <h3>Your bookshelf. Packed with your favourite reads.</h3>
+          <h3>Your bookshelf</h3>
           <div className="grid-container">
             {books.map((book, index) => (
               <div
@@ -399,20 +381,20 @@ function HomePage() {
                 <img src={book.cover} alt={`Cover of ${book.title}`} />
                 <h3
                   style={{
-                    fontFamily: "IMFellEnglish",
+                    fontFamily: "VT",
                     fontSize: "1.3em",
+                    margin: "5px",
                     color: "white",
-                    margin: 5,
                   }}
                 >
                   {book.title}
                 </h3>
                 <p
                   style={{
-                    fontFamily: "Josefin Sans",
+                    fontFamily: "VT",
                     fontSize: "1.0em",
-                    color: "grey",
-                    margin: 0,
+                    color: "#DEA262",
+                    margin: "5px",
                   }}
                 >
                   {book.author}
@@ -421,7 +403,7 @@ function HomePage() {
             ))}
           </div>
 
-          <h3>Most popular picks. Take a look at what's hot right now.</h3>
+          <h3>Top books today</h3>
           <div className="grid-container">
             {books.map((book, index) => (
               <div
@@ -433,7 +415,7 @@ function HomePage() {
                 <img src={book.cover} alt={`Cover of ${book.title}`} />
                 <h3
                   style={{
-                    fontFamily: "IMFellEnglish",
+                    fontFamily: "VT",
                     fontSize: "1.3em",
                     color: "white",
                     margin: 5,
@@ -443,10 +425,10 @@ function HomePage() {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "Josefin Sans",
+                    fontFamily: "VT",
                     fontSize: "1.0em",
                     color: "grey",
-                    margin: 0,
+                    margin: "5px",
                   }}
                 >
                   {book.author}
@@ -455,7 +437,10 @@ function HomePage() {
             ))}
           </div>
         </div>
+        
       </div>
+      </div>
+        <div className="fade-bottom" />
     </div>
   );
 }
