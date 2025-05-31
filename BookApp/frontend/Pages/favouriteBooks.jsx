@@ -112,9 +112,11 @@ const BookSearch = () => {
 
   return (
     <div id="favouriteBooksContent">
-      <button className="homeButton">
+      <div id="favouriteBooksHeader">
+      <button onClick={() => navigate("/homepage")} className="homeButton" >
         <i className="bx bx-home-alt"></i> HOME
       </button>
+      </div>
       <h2>Build Your Bookshelf</h2>
       <p className="favouriteBooksMessage">
         Search and add books to your shelf.

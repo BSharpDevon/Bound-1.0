@@ -309,7 +309,7 @@ onChange={handleSearchChange}
 <div className="homepage-hero-copy">
           <h2>“How lucky I am to have something that makes saying goodbye so hard.”</h2>
 <p>Looking for something uniquely you? Start a Bind with a friend and reveal your genre-matched book recommendation.</p>
-<button>START BIND</button>
+<button onClick={() => navigate("/bind")}>START BIND</button>
 </div>
 <div className="homepage-hero-image">
 <img id="stack" src={stack} alt="A stack of books" />
