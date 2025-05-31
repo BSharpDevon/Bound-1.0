@@ -95,6 +95,7 @@ margin: 20px;
 
 .search-input-wrapper {
   position: relative;
+  /* ← dropdown will align to this box */
   width: 100%;
   max-width: 525px;
   margin: 0 auto;
