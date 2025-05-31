@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
-import stack from "../src/assets/images/book-stack.png";
+import stack from "../src/assets/images/writer-spotlight.png";
 import Modal from "../src/components/Modal.jsx";
 import 'boxicons/css/boxicons.min.css';
 
@@ -184,7 +184,7 @@ const books = [
       <>
         <h2 className="modalHeading">About Bound</h2>
         <p className="modalCopy">
-          Bound is brought to you by an independent & female-led software engineering team, based in England. 
+          Bound is an independent, female-led platform. Its founders met while completing a Full Stack coding course with Code First Girls.
         </p>
         <a href="https://www.linkedin.com/in/jennifer-rose-scott/">Jennifer Scott < i class='bx  bx-caret-right'  ></i> </a>
         <a href="https://www.linkedin.com/in/beth-sharp/">Beth Sharp < i class='bx  bx-caret-right'  ></i> </a>
@@ -307,9 +307,10 @@ onChange={handleSearchChange}
         <div className="user-library-binds">
 <div className="homepage-hero">
 <div className="homepage-hero-copy">
-          <h2>“How lucky I am to have something that makes saying goodbye so hard.”</h2>
-<p>Looking for something uniquely you? Start a Bind with a friend and reveal your genre-matched book recommendation.</p>
-<button onClick={() => navigate("/bind")}>START BIND</button>
+          <h2>Elif Shafak on the Importance and Vulnerability of Rivers
+</h2>
+<p className="homepage-header-p">Telling the interconnected stories of three people who live on the banks of either the Tigris or the Thames, Elif Shafak's acclaimed There Are Rivers in the Sky is steeped in the texture, culture and politics of water.</p>
+<button id="homepage-hero-button" onClick={() => navigate("/bind")}>READ MORE</button>
 </div>
 <div className="homepage-hero-image">
 <img id="stack" src={stack} alt="A stack of books" />
