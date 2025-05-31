@@ -18,7 +18,7 @@ const heroSlides = [
     imageUrl: writerSpotlight,
     ctaLabel: "READ MORE",
     ctaOnClickPath: "/bind",
-    backgroundColor: "#0052CC",
+    backgroundColor: "#1C1F26",
   },
   {
     title: "Monica Heisey on Her Favourite Comic Novels",
@@ -28,7 +28,7 @@ const heroSlides = [
     imageUrl: writerSpotlight2,
     ctaLabel: "READ MORE",
     ctaOnClickPath: "/discover/magic",
-    backgroundColor: "#fc5401",
+    backgroundColor: "#1C1F26",
   },
   {
     title: "Katy Hessel on the Pioneering Sculptor Camille Claudel",
@@ -38,7 +38,7 @@ const heroSlides = [
     imageUrl: writerSpotlight3,
     ctaLabel: "READ MORE",
     ctaOnClickPath: "/summer-reads",
-    backgroundColor: "#e41e60",
+    backgroundColor: "#1C1F26",
   },
   // …add more slides if you like…
 ];

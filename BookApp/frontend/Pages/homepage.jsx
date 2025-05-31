@@ -17,6 +17,12 @@ function HomePage() {
 
   const navigate = useNavigate();
 
+    const [flickerOn, setFlickerOn] = useState(false);
+
+  const handleToggle = () => {
+    setFlickerOn((prev) => !prev);
+  };
+
   // Debounce function for search
   const debounce = (func, delay) => {
     let timeoutId;
@@ -181,10 +187,10 @@ function HomePage() {
             <div id="book-modal-metadata">
 
             {/* Title + Author */}
-            <h3 style={{ margin: "0.5rem 0", fontFamily: "IMFellEnglish" }}>
+            <h3 style={{ margin: "0.5rem 0", fontFamily: "VT" }}>
               {selectedBook.title}
             </h3>
-            <p style={{ fontFamily: "IMFellEnglish", color: "#DEA262" }}>
+            <p style={{ fontFamily: "VT", color: "#DEA262" }}>
               by {selectedBook.author}
             </p>
             </div>
@@ -310,6 +316,7 @@ function HomePage() {
                   <span>Binds</span>
                 </a>
               </li>
+              
               <li>
                 <a
                   href="#bookshelf"
@@ -339,7 +346,16 @@ function HomePage() {
                   <span>About</span>
                 </button>
               </li>
+<button
+        className="ambient-toggle"
+        onClick={handleToggle}
+        aria-pressed={flickerOn}
+      >
+        {flickerOn ? "DAY LIGHT" : "NIGHT LIGHT"}
+      </button>
 
+      {/* Conditionally render the flicker overlay */}
+      {flickerOn && <div className="flicker-overlay" />}
               <li>
                 <a href="#logout">
                   <i className="bx bx-door-open"></i>
@@ -349,9 +365,9 @@ function HomePage() {
             </ul>
           </nav>
         </aside>
-
+        <div id="homepage-content">
+        <HeroCarousel />
         <div className="user-library-binds">
-          <HeroCarousel />
 
           <h3>Your bookshelf</h3>
           <div className="grid-container">
@@ -365,20 +381,20 @@ function HomePage() {
                 <img src={book.cover} alt={`Cover of ${book.title}`} />
                 <h3
                   style={{
-                    fontFamily: "IMFellEnglish",
+                    fontFamily: "VT",
                     fontSize: "1.3em",
+                    margin: "5px",
                     color: "white",
-                    margin: 5,
                   }}
                 >
                   {book.title}
                 </h3>
                 <p
                   style={{
-                    fontFamily: "IMFellEnglish",
+                    fontFamily: "VT",
                     fontSize: "1.0em",
                     color: "#DEA262",
-                    margin: "0px",
+                    margin: "5px",
                   }}
                 >
                   {book.author}
@@ -399,7 +415,7 @@ function HomePage() {
                 <img src={book.cover} alt={`Cover of ${book.title}`} />
                 <h3
                   style={{
-                    fontFamily: "IMFellEnglish",
+                    fontFamily: "VT",
                     fontSize: "1.3em",
                     color: "white",
                     margin: 5,
@@ -409,10 +425,10 @@ function HomePage() {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "IMFellEnglish",
+                    fontFamily: "VT",
                     fontSize: "1.0em",
                     color: "grey",
-                    margin: 0,
+                    margin: "5px",
                   }}
                 >
                   {book.author}
@@ -422,6 +438,7 @@ function HomePage() {
           </div>
         </div>
         
+      </div>
       </div>
         <div className="fade-bottom" />
     </div>

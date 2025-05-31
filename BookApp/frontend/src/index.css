@@ -1,3 +1,132 @@
+@keyframes candleFlicker {
+  0% {
+    opacity: 0.04;
+    filter: brightness(1.9) hue-rotate(0deg);
+  }
+
+  5% {
+    opacity: 0.06;
+    filter: brightness(1.1) hue-rotate(-1deg);
+  }
+
+  10% {
+    opacity: 0.03;
+    filter: brightness(0.8) hue-rotate(1deg);
+  }
+
+  20% {
+    opacity: 0.05;
+    filter: brightness(1.0) hue-rotate(0deg);
+  }
+
+  25% {
+    opacity: 0.04;
+    filter: brightness(0.85) hue-rotate(-1deg);
+  }
+
+  30% {
+    opacity: 0.07;
+    filter: brightness(1.2) hue-rotate(-2deg);
+  }
+
+  40% {
+    opacity: 0.05;
+    filter: brightness(1.0) hue-rotate(1deg);
+  }
+
+  45% {
+    opacity: 0.04;
+    filter: brightness(0.9) hue-rotate(0deg);
+  }
+
+  55% {
+    opacity: 0.06;
+    filter: brightness(1.1) hue-rotate(-1deg);
+  }
+
+  60% {
+    opacity: 0.03;
+    filter: brightness(0.8) hue-rotate(1deg);
+  }
+
+  70% {
+    opacity: 0.05;
+    filter: brightness(1.0) hue-rotate(0deg);
+  }
+
+  80% {
+    opacity: 0.04;
+    filter: brightness(0.9) hue-rotate(1deg);
+  }
+
+  90% {
+    opacity: 0.06;
+    filter: brightness(1.15) hue-rotate(-1deg);
+  }
+
+  100% {
+    opacity: 0.04;
+    filter: brightness(0.9) hue-rotate(0deg);
+  }
+}
+
+.flicker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center,
+      rgba(255, 235, 180, 0.0) 0%,
+      /* transparent in center */
+      rgba(255, 220, 120, 0.15) 70%,
+      /* warm amber at 15% opacity */
+      rgba(255, 200, 0, 0.3) 100%
+      /* deeper golden at 30% opacity on edges */
+    );
+  pointer-events: none;
+  /* let clicks pass through */
+  z-index: 999;
+  /* just below your modals (modal is 1000+) */
+  opacity: 0.05;
+  /* baseline opacity (5%) */
+  animation: candleFlicker 3s infinite;
+  /* 3s loop for flicker */
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:
+      radial-gradient(circle at center,
+        rgba(0, 0, 0, 0) 40%,
+        rgba(0, 0, 0, 0.25) 90%,
+        rgba(0, 0, 0, 0.5) 100%),
+        url("src/assets/images/leather-background.jpg") repeat;
+        pointer-events: none;
+        z-index: -1;}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #1A1A1A;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-page {
+  background-color: #1C1F26;
+}
+
 .book-shelf {
   display: flex;
   align-items: flex-end;
@@ -74,8 +203,8 @@
 
 :root {
   color: #EEF4F8;
-  background-color: #091819;
-  background-image: url('./assets/images/starlight.jpg');
+  background-color: #1A1A1A;;
+  z-index: 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -89,14 +218,20 @@
 
 a {
   color: grey;
+  text-decoration: none;
+  font-family: 'VT';
 }
 
+html,
 body {
-  margin: 0px;
-  padding: 0px;
-  height: 100vh;
+  margin: 0;
+  padding: 0;
+  height: 100%;
   width: 100%;
+  background-color: inherit;
+  position: relative;
 }
+
 footer {
   width: 100%;
 margin: 20px;
@@ -118,25 +253,35 @@ margin: 20px;
   max-width: 525px;
   box-sizing: border-box;
   padding: 8px 12px 8px 36px;
-  border: 1px solid #DEA262;
+  border: 1px solid #C9A966;
   border-radius: 10px;
-  background: #070F2A;
-  font-size: 16px;
+  background: #0D0D0D;
+  font-size: 20px;
   text-align: left;
-    font-family: 'IMFellEnglish';
+  color: rgba(238, 236, 231, 0.6);
+    font-family: 'VT';
     line-height: 1.1;
 }
 
+@font-face {
+  font-family: 'VT';
+  src: url('../src/assets/fonts/VT.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 p {
-  font-family: 'VT.ttf';
+  font-family: 'VT', sans-serif;
   font-weight: 500;
   max-width: 500px;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.5;
+  color: #F5E9D4;
 }
 
 .homepage-header-p {
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
   font-weight: 500;
   max-width: 500px;
   font-size: 18px;
@@ -149,31 +294,41 @@ p {
   display: grid;
   grid-template-columns: 220px 2000px;
   height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 h1 {
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
   font-size: 3.9em;
   line-height: 1.0;
   margin: 65px 0px 15px;
   padding: 0;
 }
+
+@font-face {
+  font-family: 'OldStandard';
+  src: url('../src/assets/fonts/OldStandard.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 h2 {
-  font-family: 'OldStandard.ttf';
+  font-family: 'OldStandard';
   font-size: 3.0em;
   line-height: 1.0;
+  color: #F5E9D4;
   margin:20px 10px 20px;
   padding: 0;
 }
 
 h3 {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 1.5em;
+  font-family: 'VT';
+  font-size: 30px;
 }
 
 label {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-family: 'VT';
   font-size: 14px;
   max-width: 50%;
   line-height: 1.1;
@@ -189,7 +344,7 @@ label {
 .highlight {
   color: #DEA262;
 }
-/*  Containers */
+
 .friends-buttons-container {
   display: flex;
   flex-direction: row;
@@ -202,7 +357,7 @@ label {
   margin: 0 auto;
   text-align: center;
 }
-/*  Images */
+
 #stack {
   width: 550px;
   padding: 0px;
@@ -219,7 +374,7 @@ label {
 
 .my-rotator-wrapper {
   margin: 1rem;
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
   margin-left: 150px;
   font-size: 1.2rem;
   color: #DEA262;
@@ -249,7 +404,6 @@ img {
   max-height: 100vh;
 }
 
-/*  Buttons */
 .button:hover {
   background-color: #FFCA0B;
   color: #091819;
@@ -257,11 +411,11 @@ img {
   box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
 }
 button {
-  background-color: #070F2A;
-  font-family: 'IMFellEnglish', serif;
-  color: white;
+  background-color: #7D2F3F;
+  font-family: 'VT';
+  color: #EAE2D6;
   padding: 10px 40px;
-  border: solid grey 1px;
+  border: solid 1px #C9A966;
   text-align: center;
   border-radius: 412px;
   cursor: pointer;
@@ -281,7 +435,7 @@ button:hover {
 
 #friends-buttons {
   background-color: #070F2A;
-  font-family: 'IMFellEnglish', serif;
+  font-family: 'VT';
   color: white;
   padding: 10px 40px;
   border: solid #DEA262 1px;
@@ -293,7 +447,7 @@ button:hover {
 
 #homeButton {
   background-color: #070F2A;
-  font-family: 'IMFellEnglish', serif;
+  font-family: 'VT';
   color: white;
   padding: 10px 40px;
   border: solid grey 1px;
@@ -304,11 +458,11 @@ button:hover {
 }
 
 #signUpButton {
-  background-color: #070F2A;
-  font-family: 'IMFellEnglish', serif;
-  color: #DEA262;
+  background-color: #7D2F3F;
+  font-family: 'VT';
+  color: #EAE2D6;
   padding: 10px 40px;
-  border: solid #DEA262 1px;
+  border: solid 1px #C9A966;
   text-align: center;
   font-weight: 900;
   border-radius: 412px;
@@ -318,11 +472,11 @@ button:hover {
 }
 
 #signInButton {
-  background-color: #070F2A;
-  font-family: 'IMFellEnglish', serif;
-  color: #DEA262;
-  padding: 10px 40px;
-  border: solid #DEA262 1px;
+  background-color: #7D2F3F;
+    font-family: 'VT';
+    color: #EAE2D6;
+    padding: 10px 40px;
+    border: solid 1px #C9A966;
   text-align: center;
   font-weight: 900;
   border-radius: 412px;
@@ -349,7 +503,6 @@ button:hover {
   transform: scale(1.02);
 }
 
-/*  Grid and Display Elements */
 
 #favouriteBooksContent, .book-search-container {
   margin-top: 30px;
@@ -369,8 +522,8 @@ button:hover {
 }
 
 input {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  font-size: 1.0em;
+  font-family: 'VT';
+  font-size: 20px;
   line-height: 1.1;
   padding: 10px;
   background-color: #070F2A;
@@ -382,7 +535,7 @@ input {
   color: #DEA262;
 }
 input:focus {
-  background-color: #070F2A;
+  background-color: #0D0D0D;
   border-color: #DEA262;
   color: #DEA262;
   outline: none;
@@ -393,12 +546,12 @@ input:focus {
   flex-direction: row;
 }
 .count-display {
-  font-family: 'IMFellEnglish', serif;
+  font-family: 'VT', serif;
   font-size: 25px;
   font-weight: 800;
 }
 .favouriteBooksMessage {
-  font-family: 'IMFellEnglish', serif;
+  font-family: 'VT', serif;
   font-size: 20px;
   font-weight: 300;
   text-align: center;
@@ -418,45 +571,38 @@ input:focus {
     display: grid;
       grid-template-columns: 220px 2fr;
       height: 100vh;
-      overflow: hidden;
 }
 
 .hero-carousel-container {
   position: relative;
   width: 100%;
   margin-bottom: 32px;
-  /* space below carousel */
   overflow: hidden;
-  /* clip slides that overflow */
   border-radius: 12px;
-  /* round corners */
+  background: linear-gradient(180deg,
+        #161C25 0%,
+        #1E242E 100%);
 }
 
 .carousel-slider-wrapper {
   overflow: hidden;
-  width: 100%;
-  max-width: 1400px;
+  width: 1350px;
+  box-shadow:
+      4px 0 12px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-slides {
   display: flex;
   transition: transform 0.6s ease-in-out;
-  
-  /* width is set inline as slideCount * 100% */
+  width: 150px;
 }
 
-/* --------------------------------------------
-   2. EACH SLIDE
-   -------------------------------------------- */
 .carousel-slide {
   flex-shrink: 0;
   display: flex;
-  justify-content: center;
-  /* center the inner content */
-  align-items: center;
-  box-sizing: border-box;
-  /* width is set inline as 100 / slideCount % */
-}
+  justify-content: center;  align-items: center;
+  
+  box-sizing: border-box;}
 
 .carousel-slide-content {
   display: flex;
@@ -464,6 +610,7 @@ input:focus {
   width: 100%;
   align-items: center;
   gap: 24px;
+  
 }
 
 @media (max-width: 768px) {
@@ -478,7 +625,7 @@ input:focus {
   flex: 1;
   color: #EEF4F8;
   margin-left: 70px;
-  font-family: "IMFellEnglish", serif;
+  font-family: "VT", serif;
 }
 
 .carousel-text h2 {
@@ -489,19 +636,20 @@ input:focus {
 }
 
 .carousel-text p {
-  font-size: 1rem;
+  font-size: 20px;
   line-height: 1.5;
   max-width: 480px;
   margin-bottom: 16px;
 }
 
 .carousel-cta {
-  background-color: #070F2A;
-  color: #EEF4F8;
-  border: 1px solid #DEA262;
+  background-color: #7D2F3F;
+  color: #EAE2D6;
+  border: solid 1px #C9A966;;
   border-radius: 999px;
   padding: 10px 32px;
-  font-family: "IMFellEnglish", serif;
+  font-family: "VT", serif;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
   margin-top: 20px;
@@ -640,7 +788,7 @@ input:focus {
 .homepage-content {
   display: flex;
   flex-direction: row;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .user-library {
   background-color: #ffffff07;
@@ -655,13 +803,15 @@ input:focus {
 }
 .user-library-binds {
   position: relative;
-  background-color: #ffffff07;
+  background: linear-gradient(90deg,
+        #36211B 0%,
+        #3B2921 100%);
   border-radius: 20px;
-  width: 90%;
+  max-width: 1300px;
   max-height: 100vh;
-  overflow: scroll;
   color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow:
+      0 8px 16px rgba(0, 0, 0, 0.5);
   padding: 30px;
 }
 
@@ -673,8 +823,8 @@ input:focus {
   height: 60px;
   pointer-events: none;
   background: linear-gradient(to top,
-      rgba(9, 24, 25, 1),
-      rgba(9, 24, 25, 0.0));
+      hsl(25, 55%, 8%),
+      rgba(67, 49, 10, 0));
   z-index: 10;
 }
 
@@ -689,11 +839,13 @@ input:focus {
   border-radius: 10px;
 }
 .first-name {
-  font-family: 'Josefin Sans';
+  font-family: 'VT';
   font-weight: 600;
   max-width: 500px;
+  text-align: center;
   font-size: 1.0em;
-  margin-top: 25px;
+  padding: 10px;
+  margin: 10px;
 }
 .user-friends {
   background-color: #09151d;
@@ -719,7 +871,7 @@ input:focus {
 }
 
 #homepage-subheadings {
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
   font-size: 1.5em;
   opacity: 80%;
   line-height: 1.0;
@@ -733,11 +885,13 @@ input:focus {
 }
 .friend-search-input {
   width: 350px;
-  font-family: "Josefin Sans";
+  font-family: "VT";
+  font-size: 20px;
 }
 .search-bar input {
   width: 450px;
-    font-family: "Josefin Sans";
+    font-family: "VT";
+    font-size: 20px;
     padding: 5px,
 }
 .circle-container {
@@ -788,10 +942,11 @@ a {
 .subtext {
   font-size: 12px;
   margin-top: 12px;
+  font-family: 'VT';
 }
 
 .bind-header {
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
   font-size: 60px;
   line-height: 1.0;
   margin: 80px 40px 40px 30px;
@@ -808,12 +963,11 @@ a {
   font-size: 30px;
 }
 
-
 .bind-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, #ffffff14 0%, #00000060 100%);
+  background: #ffffff07;
   border-radius: 20px;
   font-size: 25px;
   width: 1300px;
@@ -877,7 +1031,7 @@ a {
   border-radius: 15px;
 }
 .bind-header {
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
   font-size: 40px;
   line-height: 1.0;
   margin: 60px 10px 20px;
@@ -951,17 +1105,14 @@ a {
   from {
     opacity: 0;
     transform: translateY(20px);
-    /* Optional: slight upward movement */
-  }
+    }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-/* Animation class for the second page */
 .fade-in {
   animation: fadeIn 6s ease-in-out;
-  /* Adjust duration and timing function */
 }
 
 aside {
@@ -973,9 +1124,10 @@ aside {
   inset: 0 auto 0 0;
   padding: 1rem;
   width: 150px;
-  /* width: 60px; */
   background-color: #3B2921;
   transition: width 0.5s ease-in-out;
+  box-shadow:
+      4px 0 12px rgba(0, 0, 0, 0.3);
 }
 
 nav {
@@ -1015,8 +1167,8 @@ nav button.nav-link {
     color 0.5s ease-in-out;
   cursor: pointer;
   margin: 0;
-    font-size: 1.0rem;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+      font-family: 'VT';
 }
 
 nav a.active,
@@ -1026,19 +1178,19 @@ nav button.nav-link:hover,
 nav a:focus-visible,
 nav button.nav-link:focus-visible {
   outline: none;
-  color: #070F2A;
+  color: #3B2921;
   background-color: #DEA262;
   padding: 0.625rem 0.875rem;
   margin: 0;
   gap: 0.625rem;
   padding: 0.625rem 0.875rem;
-    font-size: 1.0rem;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  font-family: 'VT';
 }
 
 nav a span {
-  font-size: 1.0rem;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  font-family: 'VT';
       line-height: 1.1;
 }
 
@@ -1065,7 +1217,7 @@ nav li:last-child {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #09151d;
+  background: #091519;
   padding: 2rem;
   border-radius: 12px;
   position: relative;
@@ -1090,7 +1242,6 @@ nav li:last-child {
   max-height: 600px;
   overflow: scroll;
   max-width: 600px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 #book-modal-metadata {
@@ -1106,7 +1257,6 @@ nav li:last-child {
   max-height: 600px;
   overflow: scroll;
   width: 400px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 button.modal-close {
@@ -1127,7 +1277,7 @@ button.modal-close {
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
-  background: #070F2A;
+  background: #1A1A1A;
   border: 1px solid #DEA262;
   border-radius: 8px;
   z-index: 1000;
@@ -1135,20 +1285,20 @@ button.modal-close {
 
 .dropdown-item { display: flex; align-items: center; padding: 8px 12px; }
 .dropdown-item img { width: 40px; height: 60px; object-fit: cover; margin-right: 12px; }
-.dropdown-item .title { flex: 1; color: #EEF4F8; font-family: 'IMFellEnglish'; }
+.dropdown-item .title { flex: 1; color: #EEF4F8; font-family: 'VT'; }
 .dropdown-item .add-btn {
-  background: #336699;
+  background: #7D2F3F;
   color: #EEF4F8;
   border: none;
   padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
-  font-family: 'IMFellEnglish';
+  font-family: 'VT';
 }
 .dropdown-item .add-btn:hover { background: #264d73; }
 .empty-message {
   color: #EEF4F8;
-  font-family: 'IMFellEnglish';
+  font-family: 'VT';
   padding: 16px;
 }
 
@@ -1164,7 +1314,7 @@ button.modal-close {
   max-width: 480px;
   max-height: 300px;
   overflow-y: auto;
-  background: #070F2A;
+  background: #1C1F26;
   border: 2px solid #DEA262;
   border-radius: 8px;
   margin-top: 4px;
@@ -1187,17 +1337,17 @@ button.modal-close {
 .dropdown-item .title {
   flex: 1;
   color: #EEF4F8;
-  font-family: 'IMFellEnglish';
+  font-family: 'OldStandard';
 }
 
 .dropdown-item .add-btn {
-  background: #336699;
+  background: #7D2F3F;
   color: #EEF4F8;
   border: none;
   padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
-  font-family: 'IMFellEnglish';
+  font-family: 'VT';
 }
 
 .dropdown-item .add-btn:hover {
@@ -1206,6 +1356,6 @@ button.modal-close {
 
 .empty-message {
   color: #EEF4F8;
-  font-family: 'IMFellEnglish';
+  font-family: 'VT';
   padding: 16px;
 }
