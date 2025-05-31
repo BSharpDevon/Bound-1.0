@@ -113,7 +113,7 @@ const BookSearch = () => {
   return (
     <div id="favouriteBooksContent">
       <div id="favouriteBooksHeader">
-      <button onClick={() => navigate("/homepage")} className="homeButton" >
+      <button id="homepage-hero-button" onClick={() => navigate("/homepage")} className="homeButton" >
         <i className="bx bx-home-alt"></i> HOME
       </button>
       </div>

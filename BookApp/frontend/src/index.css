@@ -132,7 +132,15 @@ p {
   max-width: 500px;
   font-size: 18px;
   line-height: 1.5;
-  padding: 0;
+}
+
+.homepage-header-p {
+  font-family: 'IMFellEnglish';
+  font-weight: 500;
+  max-width: 500px;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 10px;
 }
 
 .homepage {
@@ -195,8 +203,7 @@ label {
 }
 /*  Images */
 #stack {
-  width: 400px;
-  margin-left: 100px;
+  width: 550px;
   padding: 0px;
   
 }
@@ -260,6 +267,7 @@ button {
   cursor: pointer;
   margin: 20px;
 }
+
 button:hover {
   background-color: #070F2A;
   color: #DEA262;
@@ -409,6 +417,14 @@ input:focus {
 
 .homepage-hero {
   display: flex;
+  flex-direction: row;
+  background-color: #084eb4;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.homepage-hero-image {
+  width: 600px;
   flex-direction: row;
 }
 
