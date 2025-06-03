@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux"; 
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
 import Modal from "../src/components/Modal.jsx";
@@ -17,7 +18,13 @@ function HomePage() {
 
   const navigate = useNavigate();
 
-    const [flickerOn, setFlickerOn] = useState(false);
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log('Current user state:', user);
+  }, [user]);
+
+  const [flickerOn, setFlickerOn] = useState(false);
 
   const handleToggle = () => {
     setFlickerOn((prev) => !prev);

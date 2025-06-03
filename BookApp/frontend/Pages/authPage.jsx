@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../src/assets/images/logo.svg';
@@ -74,10 +74,10 @@ function AuthPage() {
 
       console.log('Login response:', response.data);
 
-      const { success, memberId, email } = response.data;
+      const { success, memberId, email, fullName } = response.data;
 
       if (success) {
-        dispatch(setMemberId({ memberId, email, fullName: "User" })); // fullName not sent from login, so default for now
+        dispatch(setMemberId({ memberId, email, fullName })); // fullName not sent from login, so default for now
         navigate('/homepage');
       } else {
         alert('Invalid email or password. Try again!');
@@ -115,7 +115,7 @@ function AuthPage() {
 
       console.log('Signup response:', response.data);
 
-      const { success, memberId, user } = response.data;
+      const { success, memberId, user, fullName } = response.data;
 
       if (success && user) {
         const { email, fullName } = user;
@@ -176,14 +176,13 @@ function AuthPage() {
 
         </div>
 
-
         <div className="intro-section">
           <div id="introMessage">
             <h1>
-              <span className="highlight">Bound.</span> The best way to find books you'll both love.
+              <span className="highlight">Bound.</span> The best way to find books you&apos;ll both love.
             </h1>
             <p>
-              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you'll both love!
+              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you&apos;ll both love!
             </p>
 
             <div className="signup">
@@ -220,7 +219,7 @@ function AuthPage() {
                     type="checkbox"
                     onChange={(e) => setIsChecked(e.target.checked)}
                   />
-                  I solemnly swear I’ve read the <b>Privacy Policy</b>. Pinky promise.
+                  I solemnly swear I&apos;ve read the <b>Privacy Policy</b>. Pinky promise.
                 </label>
                 <br />
                 <input
