@@ -182,7 +182,7 @@ function AuthPage() {
               <span className="highlight">Bound.</span> The best way to find books you&apos;ll both love.
             </h1>
             <p>
-              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you&apos;ll both love!
+              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you'll both enjoy.
             </p>
 
             <div className="signup">

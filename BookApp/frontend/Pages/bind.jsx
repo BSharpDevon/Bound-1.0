@@ -89,89 +89,82 @@ function BindPage() {
   return (
     <div className="homepage">
       {/* Sidebar navigation */}
-      <aside>
-        <img id="logo" src={logo} alt="Bound Logo" />
-        <nav>
-          <ul>
-            <li>
-              <a
-                href="#home"
-                className={activeNav === "home" ? "active" : ""}
-                onClick={() => setActiveNav("home")}
-              >
-                <i className="bx bx-home" />
-                <span>Home</span>
-              </a>
-            </li>
-            <li>
-              <button
-                className={`nav-link ${
-                  activeNav === "friends" ? "active" : ""
-                }`}
-                onClick={() => {
-                  setActiveNav("friends");
-                  setIsModalOpen(true);
-                }}
-              >
-                <i className="bx bx-group" />
-                <span>Friends</span>
-              </button>
-            </li>
-            <li>
-              <a
-                href="#binds"
-                className={activeNav === "binds" ? "active" : ""}
-                onClick={() => setActiveNav("binds")}
-              >
-                <i className="bx bx-link" />
-                <span>Binds</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#bookshelf"
-                className={activeNav === "bookshelf" ? "active" : ""}
-                onClick={() => setActiveNav("bookshelf")}
-              >
-                <i className="bx bx-book-alt" />
-                <span>Bookshelf</span>
-              </a>
-            </li>
-            <li>
-              <button
-                className={`nav-link ${
-                  activeNav === "about" ? "active" : ""
-                }`}
-                onClick={() => {
-                  setActiveNav("about");
-                  setIsModalOpen(true);
-                }}
-              >
-                <i className="bx bx-donate-heart" />
-                <span>About</span>
-              </button>
-            </li>
-            <li className="nav-search">
-              <div className="search-input-wrapper">
-                <i className="bx bx-search" />
-                <input
-                  className="search-input"
-                  type="text"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-              </div>
-            </li>
-            <li>
-              <a href="#logout">
-                <i className="bx bx-door-open" />
-                <span>Log Out</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+      <aside className="sidebar">
+          <img id="logo" src={logo} alt="Bound Logo" />
+          <nav className="shelf-nav">
+            <ul>
+
+              <li>
+                <a
+                  href="#home"
+                  className={activeNav === "home" ? "active" : ""}
+                  onClick={() => setActiveNav("home")}
+                >
+                  <span>HOME</span>
+                </a>
+              </li>
+              <li>
+                <button id="friends-nav"
+                  className={`nav-link ${
+                    activeNav === "friends" ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setActiveNav("friends");
+                    // Only open the generic modal if no book is selected
+                    if (!selectedBook) setIsModalOpen(true);
+                  }}
+                >
+                  <span>FRIENDS</span>
+                </button>
+              </li>
+              <li>
+                <a id="bind-nav"
+                  href="/bind"
+                  className={activeNav === "binds" ? "active" : ""}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveNav("binds");
+                    navigate("/bind");
+                  }}
+                >
+                  <span>BINDS</span>
+                </a>
+              </li>
+              
+              <li>
+                <a id="bookshelf-nav" href="#bookshelf"
+                  className={activeNav === "bookshelf" ? "active" : ""}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveNav("bookshelf");
+                    navigate("/favourite-books");
+                  }}
+                >
+                  <span>BOOKSHELF</span>
+                </a>
+              </li>
+              <li>
+                <button id="about-nav"
+                  className={`nav-link ${
+                    activeNav === "about" ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setActiveNav("about");
+                    // Only open the generic modal if no book is selected
+                    if (!selectedBook) setIsModalOpen(true);
+                  }}
+                >
+                  <span>ABOUT</span>
+                </button>
+              </li>
+              <li>
+                <a href="#logout">
+                  <span>LOG OUT</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
 
       {/* Main content */}
       {isBindComplete ? (
