@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
 import Modal from "../src/components/Modal";
+import Sidebar from "../src/components/Sidebar";
 
 function BindPage() {
   const navigate = useNavigate();
@@ -88,83 +89,13 @@ function BindPage() {
 
   return (
     <div className="homepage">
-      {/* Sidebar navigation */}
-      <aside className="sidebar">
-          <img id="logo" src={logo} alt="Bound Logo" />
-          <nav className="shelf-nav">
-            <ul>
 
-              <li>
-                <a
-                  href="#home"
-                  className={activeNav === "home" ? "active" : ""}
-                  onClick={() => setActiveNav("home")}
-                >
-                  <span>HOME</span>
-                </a>
-              </li>
-              <li>
-                <button id="friends-nav"
-                  className={`nav-link ${
-                    activeNav === "friends" ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setActiveNav("friends");
-                    // Only open the generic modal if no book is selected
-                    if (!selectedBook) setIsModalOpen(true);
-                  }}
-                >
-                  <span>FRIENDS</span>
-                </button>
-              </li>
-              <li>
-                <a id="bind-nav"
-                  href="/bind"
-                  className={activeNav === "binds" ? "active" : ""}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav("binds");
-                    navigate("/bind");
-                  }}
-                >
-                  <span>BINDS</span>
-                </a>
-              </li>
-              
-              <li>
-                <a id="bookshelf-nav" href="#bookshelf"
-                  className={activeNav === "bookshelf" ? "active" : ""}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav("bookshelf");
-                    navigate("/favourite-books");
-                  }}
-                >
-                  <span>BOOKSHELF</span>
-                </a>
-              </li>
-              <li>
-                <button id="about-nav"
-                  className={`nav-link ${
-                    activeNav === "about" ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setActiveNav("about");
-                    // Only open the generic modal if no book is selected
-                    if (!selectedBook) setIsModalOpen(true);
-                  }}
-                >
-                  <span>ABOUT</span>
-                </button>
-              </li>
-              <li>
-                <a href="#logout">
-                  <span>LOG OUT</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </aside>
+      <Sidebar
+  activeNav={activeNav}
+  setActiveNav={setActiveNav}
+  setIsModalOpen={setIsModalOpen}
+/>
+
 
       {/* Main content */}
       {isBindComplete ? (
@@ -212,7 +143,6 @@ function BindPage() {
                 />
                 <p
                   style={{
-                    color: "white",
                     margin: 5,
                   }}
                 >
@@ -230,16 +160,15 @@ function BindPage() {
             ))}
           </div>
 
-          {/* ACTION BUTTONS (outside the map) */}
           <div className="bind-buttons">
             <button
-              id="signUpButtonHomepage"
+              class="bind-cta"
               onClick={() => selectFriend(true)}
             >
               SELECT FRIEND
             </button>
             <button
-              id="signUpButtonHomepage"
+              class="bind-cta"
               onClick={() => setIsBindComplete(true)}
             >
               START BIND

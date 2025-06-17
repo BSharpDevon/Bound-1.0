@@ -11,7 +11,8 @@ body::after {
         z-index: -1;}
 
 .auth-page {
-  background-color: #7D2F3F;
+  background-color: #10282A;
+  height: 100vh;
 }
 
 .book-shelf {
@@ -216,12 +217,13 @@ h1 {
   color: #221F1B;
 }
 
-@font-face {
+h1 {
   font-family: 'Garamond';
-  src: url('../src/assets/fonts/Garamond.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+  font-size: 3.9em;
+  line-height: 1.0;
+  margin: 65px 0px 15px;
+  padding: 0;
+  color: #221F1B;
 }
 
 @font-face {
@@ -232,11 +234,19 @@ h1 {
   font-display: swap;
 }
 
-h2 {
+@font-face {
+  font-family: 'Garamond';
+  src: url('../src/assets/fonts/Garamond.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.authPage-header {
   font-family: 'Garamond';
   font-size: 3.5em;
   line-height: 1.0;
-  color: #221F1B;
+  color: #F5F1E7;
   margin:20px 10px 20px;
   padding: 0;
 }
@@ -333,6 +343,7 @@ button {
   margin: 7px;
 }
 
+
 #about-bound-button {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -402,6 +413,20 @@ button:hover {
 }
 
 #signUpButton {
+  background-color: #7D2F3F;
+  font-family: 'Libre';
+  color: #EAE2D6;
+  padding: 10px 40px;
+  border: solid 1px #C9A966;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 412px;
+  cursor: pointer;
+  max-height: 40px;
+  margin-top: 30px;
+}
+
+#signInButton {
   background-color: #7D2F3F;
   font-family: 'Libre';
   color: #EAE2D6;
@@ -596,6 +621,22 @@ input:focus {
   margin: 0px;
 }
 
+.bind-cta {
+  background-color: #7D2F3F;
+  color: 	#F5F1E7;
+  border: solid 1px #C9A966;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 10px 32px;
+  font-family: 'Libre';
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  margin-top: 20px;
+  margin: 10px;
+}
+
 .carousel-cta:hover {
   background-color: #DEA262;
   color: #091819;
@@ -751,6 +792,19 @@ box-shadow:
       hsla(26, 56%, 8%, 0.479),
       rgba(220, 209, 186, 0));
   z-index: 10;
+}
+
+#nav-link {
+  background-color: transparent;
+  font-family: 'Libre';
+  font-size: 20px;
+  color: #EAE2D6;
+  padding: 0px 00px;
+  border: none;
+  text-align: center;
+  border-radius: 412px;
+  cursor: pointer;
+  margin: 0px;
 }
 
 .sidebar-bottom {
@@ -1118,11 +1172,11 @@ a {
   align-items: center;
   width: 65px;
   height: 100vh;
-  background-color: #7D2F3F;
+  background-color: #10282A;
   position: fixed;
   left: 0;
   top: 0;
-  border: black 1px solid;
+  border-right: #D4A441 1px solid;
 }
 
 nav .logo {
@@ -1172,7 +1226,6 @@ nav .logo {
 .book-modal-content {
   display: flex;
   flex-direction: row;
-  background: #09151d;
   padding: 2rem;
   border-radius: 12px;
   position: relative;
@@ -1187,7 +1240,6 @@ nav .logo {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #09151d;
   padding: 2rem;
   border-radius: 12px;
   position: relative;

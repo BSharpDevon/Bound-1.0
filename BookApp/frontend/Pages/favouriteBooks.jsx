@@ -113,7 +113,7 @@ const BookSearch = () => {
   return (
     <div id="favouriteBooksContent">
       <div id="favouriteBooksHeader">
-      <button id="homepage-hero-button" onClick={() => navigate("/homepage")} className="homeButton" >
+      <button class="carousel-cta" onClick={() => navigate("/homepage")}>
         <i className="bx bx-home-alt"></i> HOME
       </button>
       </div>
@@ -140,7 +140,7 @@ const BookSearch = () => {
                   <span className="title">{book.title}</span>
                   <button
                     onClick={() => handleAdd(book)}
-                    className="add-btn"
+                    className="carousel-cta"
                   >
                     + ADD
                   </button>

@@ -7,6 +7,8 @@ import HeroCarousel from "../src/components/HeroCarousel.jsx";
 import instagram from '../src/assets/images/instagram.svg.webp';
 import discord from '../src/assets/images/discord.svg';
 import logo from '../src/assets/images/logo.svg';
+import Sidebar from "../src/components/Sidebar.jsx";
+
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -212,15 +214,14 @@ useEffect(() => {
             <div id="book-modal-metadata">
 
             {/* Title + Author */}
-            <h3 style={{ margin: "0.5rem 0", fontFamily: 'Cabin' }}>
+            <h3 style={{ margin: "0.5rem 0", fontFamily: 'Garamond' }}>
               {selectedBook.title}
             </h3>
-            <p style={{ fontFamily: "Cabin", fontSize: "12px"}}>
+            <p style={{ fontFamily: "Libre"}}>
             {selectedBook.author}
             </p>
             <p>< i class='bx  bxs-hot'  ></i> Seen in 500 binds</p>
-            <button className="shop-button">Buy on Bookshop</button>
-            <button className="shop-button">Buy on Waterstones</button>
+            <button className="carousel-cta">Buy on Bookshop</button>
             </div>
           </div>
         </Modal>
@@ -305,7 +306,7 @@ useEffect(() => {
           </button>
           <div className="sidebar-bottom">
 
-            <button id="about-bound-button">ABOUT BIND</button>
+            <button id="about-bound-button">INSTAGRAM</button>
           </div>
         </aside>
 
@@ -363,7 +364,7 @@ useEffect(() => {
           </li>
           <hr></hr>
           <li class="nav-project-drawer-item">
-            <button id="about-nav"
+            <button id="nav-link"
                   className={`nav-link ${
                     activeNav === "about" ? "active" : ""
                   }`}

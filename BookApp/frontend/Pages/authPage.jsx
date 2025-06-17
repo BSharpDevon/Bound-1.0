@@ -178,7 +178,7 @@ function AuthPage() {
 
         <div className="intro-section">
           <div id="introMessage">
-            <h1>
+            <h1 className="authPage-header">
               <span className="highlight">Bound.</span> The best way to find books you&apos;ll both love.
             </h1>
             <p>
