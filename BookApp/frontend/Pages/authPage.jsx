@@ -57,7 +57,6 @@ function AuthPage() {
   const [passwordSignUp, setPasswordSignUp] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
-  // 👋 Function to sign the user in like a bouncer checking the guest list
   const signInBtn = async () => {
     if (!emailSignIn || !passwordSignIn) {
       alert('Oi! Email and password, please.');
@@ -176,7 +175,7 @@ function AuthPage() {
 
         </div>
 
-        <div className="intro-section">
+ <div className="intro-section">
           <div id="introMessage">
             <h1 className="authPage-header">
               <span className="highlight">Bound.</span> The best way to find books you&apos;ll both love.
