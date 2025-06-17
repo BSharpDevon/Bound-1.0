@@ -208,15 +208,6 @@ p {
   overflow-x: hidden;
 }
 
-h1 {
-  font-family: 'Garamond';
-  font-size: 3.9em;
-  line-height: 1.0;
-  margin: 65px 0px 15px;
-  padding: 0;
-  color: #221F1B;
-}
-
 @font-face {
   font-family: 'Garamond';
   src: url('../src/assets/fonts/Garamond.ttf') format('truetype');
@@ -245,6 +236,13 @@ h1 {
 h3 {
   font-family: 'Garamond';
   font-size: 25px;
+  color: #221F1B;
+  margin-left: 15px;
+}
+
+h2 {
+  font-family: 'Garamond';
+  font-size: 35px;
   color: #221F1B;
   margin-left: 15px;
 }
@@ -991,6 +989,7 @@ a {
 .bind-header {
   font-family: 'Garamond';
   font-size: 60px;
+  color: black;
   line-height: 1.0;
   margin: 80px 40px 40px 30px;
   padding: 0;
