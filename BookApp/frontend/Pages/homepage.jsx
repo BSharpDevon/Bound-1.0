@@ -8,6 +8,8 @@ import instagram from '../src/assets/images/instagram.svg.webp';
 import discord from '../src/assets/images/discord.svg';
 import logo from '../src/assets/images/logo.svg';
 import Sidebar from "../src/components/Sidebar.jsx";
+import FriendsModal from "../src/components/FriendsModal.jsx";
+
 
 
 function HomePage() {
@@ -226,69 +228,45 @@ useEffect(() => {
           </div>
         </Modal>
       )}      
-      
+    
 
+{isModalOpen && !selectedBook && (
+  <>
+    {activeNav === "friends" && (
+      <FriendsModal
+        isOpen={true}
+        onClose={() => setIsModalOpen(false)}
+        searchUserEmail={searchUserEmail}
+        handleInputChange={handleInputChange}
+        handleAddFriend={handleAddFriend}
+        filteredUsers={filteredUsers}
+      />
+    )}
 
-      {/* ==== EXISTING FRIENDS/ABOUT MODAL LOGIC ==== */}
-      {isModalOpen && !selectedBook && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          {activeNav === "friends" ? (
-            <>
-              <h2>Friends</h2>
-              <input
-                className="friend-search-input"
-                type="text"
-                placeholder="Search users by name"
-                value={searchUserEmail}
-                onChange={handleInputChange}
-              />
-              <div className="friends-buttons-container">
-                <button
-                  id="friends-buttons"
-                  onClick={() => handleAddFriend(/* … */)}
-                >
-                  <i className="bx bx-user-search"></i> SEARCH
-                </button>
-                <button
-                  id="friends-buttons"
-                  onClick={() => handleAddFriend(/* … */)}
-                >
-                  <i className="bx bx-user-plus"></i> ADD
-                </button>
-              </div>
-              <div className="search-results">
-                {filteredUsers.map((user) => (
-                  <div className="name-add" key={user.id}>
-                    <p className="first-name">{user.firstName}</p>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : activeNav === "about" ? (
-            <>
-              <h2 className="modalHeading">Team Bound</h2>
-              <p className="modalCopy">
-                Bound features millions of books from around the world, and helps you find new favourites through your real-life connections.
-              </p>
-              <div id="about-modal-site-authors">
-              <a href="https://www.linkedin.com/in/jennifer-rose-scott/">
-                Jenni Scott - Developer<i className="bx bx-caret-right"></i>
-              </a>
-              <a href="https://www.linkedin.com/in/beth-sharp/">
-                Beth Sharp - Developer<i className="bx bx-caret-right"></i>
-              </a>
-              <a href="https://www.linkedin.com/in/lydia-ibrahim2024/">
-                Lydia Hess - Developer <i className="bx bx-caret-right"></i>
-              </a>
-              </div>
-              <div className="subtext">
-                Purchasing books through affiliate links supports Team Bound.
-              </div>
-            </>
-          ) : null}
-        </Modal>
-      )}
-
+    {activeNav === "about" && (
+      <Modal onClose={() => setIsModalOpen(false)}>
+        <h2 className="modalHeading">Team Bound</h2>
+        <p className="modalCopy">
+          Bound features millions of books from around the world, and helps you find new favourites through your real-life connections.
+        </p>
+        <div id="about-modal-site-authors">
+          <a href="https://www.linkedin.com/in/jennifer-rose-scott/">
+            Jenni Scott - Developer<i className="bx bx-caret-right"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/beth-sharp/">
+            Beth Sharp - Developer<i className="bx bx-caret-right"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/lydia-ibrahim2024/">
+            Lydia Hess - Developer<i className="bx bx-caret-right"></i>
+          </a>
+        </div>
+        <div className="subtext">
+          Purchasing books through affiliate links supports Team Bound.
+        </div>
+      </Modal>
+    )}
+  </>
+)}
       {/* ==== HEADER, SIDEBAR, HERO, ETC. ==== */}
       <div className="homepage-header">{/* your header (logo, nav) */}</div>
 
