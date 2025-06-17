@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux"; 
 import { useNavigate } from "react-router-dom";
-import logo from "../src/assets/images/logo.svg";
 import Modal from "../src/components/Modal.jsx";
 import "boxicons/css/boxicons.min.css";
 import HeroCarousel from "../src/components/HeroCarousel.jsx";
+import instagram from '../src/assets/images/instagram.svg.webp';
+import discord from '../src/assets/images/discord.svg';
+import logo from '../src/assets/images/logo.svg';
+import Sidebar from "../src/components/Sidebar.jsx";
+
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,6 +33,12 @@ function HomePage() {
   const handleToggle = () => {
     setFlickerOn((prev) => !prev);
   };
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+const toggleDrawer = () => {
+  setIsDrawerOpen((prev) => !prev);
+};
 
   // Debounce function for search
   const debounce = (func, delay) => {
@@ -163,6 +173,24 @@ function HomePage() {
     setIsModalOpen(false);
   };
 
+
+  const [toastMessage, setToastMessage] = useState("");
+
+  const showToast = (message, duration = 10000) => {
+  setToastMessage(message);
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setToastMessage("");
+  }, duration);
+};
+
+useEffect(() => {
+  showToast("Welcome, Lydia! Add your first friend to start a bind.");
+}, []);
+
   return (
     <div className="homepage">
       {isModalOpen && selectedBook && (
@@ -172,19 +200,11 @@ function HomePage() {
             style={{ textAlign: "center", position: "relative" }}
           >
 
-            <button class="modal-close"
-              onClick={closeBookModal}
-            >
-              &times;
-            </button>
-
             {/* Cover Image */}
             <img id="modal-cover-image"
               src={selectedBook.cover}
               alt={`Cover of ${selectedBook.title}`}
               style={{
-                Width: "400px",
-                Height: "600px",
                 marginBottom: "1rem",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                 borderRadius: "4px",
@@ -194,16 +214,20 @@ function HomePage() {
             <div id="book-modal-metadata">
 
             {/* Title + Author */}
-            <h3 style={{ margin: "0.5rem 0", fontFamily: "VT" }}>
+            <h3 style={{ margin: "0.5rem 0", fontFamily: 'Garamond' }}>
               {selectedBook.title}
             </h3>
-            <p style={{ fontFamily: "VT", color: "#DEA262" }}>
-              by {selectedBook.author}
+            <p style={{ fontFamily: "Libre"}}>
+            {selectedBook.author}
             </p>
+            <p>< i class='bx  bxs-hot'  ></i> Seen in 500 binds</p>
+            <button className="carousel-cta">Buy on Bookshop</button>
             </div>
           </div>
         </Modal>
-      )}
+      )}      
+      
+
 
       {/* ==== EXISTING FRIENDS/ABOUT MODAL LOGIC ==== */}
       {isModalOpen && !selectedBook && (
@@ -244,17 +268,17 @@ function HomePage() {
             <>
               <h2 className="modalHeading">Team Bound</h2>
               <p className="modalCopy">
-                Bound is an independent, female-led platform built to help readers find books through connection.
+                Bound features millions of books from around the world, and helps you find new favourites through your real-life connections.
               </p>
               <div id="about-modal-site-authors">
               <a href="https://www.linkedin.com/in/jennifer-rose-scott/">
-                Jennifer Scott <i className="bx bx-caret-right"></i>
+                Jenni Scott - Developer<i className="bx bx-caret-right"></i>
               </a>
               <a href="https://www.linkedin.com/in/beth-sharp/">
-                Beth Sharp <i className="bx bx-caret-right"></i>
+                Beth Sharp - Developer<i className="bx bx-caret-right"></i>
               </a>
               <a href="https://www.linkedin.com/in/lydia-ibrahim2024/">
-                Lydia Ibrahim <i className="bx bx-caret-right"></i>
+                Lydia Hess - Developer <i className="bx bx-caret-right"></i>
               </a>
               </div>
               <div className="subtext">
@@ -269,33 +293,36 @@ function HomePage() {
       <div className="homepage-header">{/* your header (logo, nav) */}</div>
 
       <div className="homepage-content">
-        <aside>
-          <img id="logo" src={logo} alt="Bound Logo" />
-          <nav>
-            <ul>
-                            <li className="nav-search">
-                <div className="search-input-wrapper">
-                  <input
-                    className="search-input"
-                    type="text"
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-              </li>
-              <li>
-                <a
-                  href="#home"
+        <aside className="sidebar">
+      <div class="logo">
+        <img id="logo" src={logo} width="32px" height="32px"></img>
+      </div>
+          <button class="nav-button" onClick={toggleDrawer}>
+            <div class="nav-button__lines">
+              <span class="nav-button__line"></span>
+              <span class="nav-button__line"></span>
+              <span class="nav-button__line"></span>
+            </div>
+          </button>
+          <div className="sidebar-bottom">
+
+            <button id="about-bound-button">INSTAGRAM</button>
+          </div>
+        </aside>
+
+      <div className={`nav-project-drawer ${isDrawerOpen ? 'active' : ''}`}>
+        <ul>
+          <li class="nav-project-drawer-item">
+            <a href="#home"
                   className={activeNav === "home" ? "active" : ""}
                   onClick={() => setActiveNav("home")}
                 >
-                  <i className="bx bx-home" />
-                  <span>Home</span>
-                </a>
-              </li>
-              <li>
-                <button
+            <div class="nav-project-drawer-item-image"></div>
+            <div class="nav-project-drawer-item-title">HOME</div></a>
+          </li>
+          <hr></hr>
+          <li>
+                <button id="nav-link"
                   className={`nav-link ${
                     activeNav === "friends" ? "active" : ""
                   }`}
@@ -304,29 +331,26 @@ function HomePage() {
                     // Only open the generic modal if no book is selected
                     if (!selectedBook) setIsModalOpen(true);
                   }}
-                >
-                  <i className="bx bx-group" />
-                  <span>Friends</span>
+                ><div class="nav-project-drawer-item-title">FRIENDS</div>
                 </button>
               </li>
-              <li>
-                <a
-                  href="/bind"
-                  className={activeNav === "binds" ? "active" : ""}
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <a id="bookshelf-nav" href="#bookshelf"
+                  className={activeNav === "bookshelf" ? "active" : ""}
                   onClick={(e) => {
                     e.preventDefault();
-                    setActiveNav("binds");
+                    setActiveNav("bookshelf");
                     navigate("/bind");
                   }}
                 >
-                  <i className="bx bx-link" />
-                  <span>Binds</span>
-                </a>
-              </li>
-              
-              <li>
-                <a
-                  href="#bookshelf"
+            <div class="nav-project-drawer-item-image"></div>
+            <div class="nav-project-drawer-item-title">BINDS</div>
+          </a>
+          </li>
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <a id="bookshelf-nav" href="#bookshelf"
                   className={activeNav === "bookshelf" ? "active" : ""}
                   onClick={(e) => {
                     e.preventDefault();
@@ -334,12 +358,13 @@ function HomePage() {
                     navigate("/favourite-books");
                   }}
                 >
-                  <i className="bx bx-book-alt"></i>
-                  <span>Bookshelf</span>
-                </a>
-              </li>
-              <li>
-                <button
+            <div class="nav-project-drawer-item-image"></div>
+            <div class="nav-project-drawer-item-title">BOOKSHELF</div>
+          </a>
+          </li>
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <button id="nav-link"
                   className={`nav-link ${
                     activeNav === "about" ? "active" : ""
                   }`}
@@ -349,34 +374,24 @@ function HomePage() {
                     if (!selectedBook) setIsModalOpen(true);
                   }}
                 >
-                  <i className="bx bx-donate-heart"></i>
-                  <span>About</span>
-                </button>
-              </li>
-<button
-        className="ambient-toggle"
-        onClick={handleToggle}
-        aria-pressed={flickerOn}
-      >
-        {flickerOn ? "DAY LIGHT" : "NIGHT LIGHT"}
-      </button>
+            <div class="nav-project-drawer-item-image"></div>
+            <div class="nav-project-drawer-item-title">ABOUT</div>
+          </button>
+          </li>
+          <hr></hr>
+        </ul>
+      </div>
 
-      {/* Conditionally render the flicker overlay */}
-      {flickerOn && <div className="flicker-overlay" />}
-              <li>
-                <a href="#logout">
-                  <i className="bx bx-door-open"></i>
-                  <span>Log Out</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </aside>
         <div id="homepage-content">
         <HeroCarousel />
         <div className="user-library-binds">
 
-          <h3>Your bookshelf</h3>
+          <div id="toast" className="toast">
+  {toastMessage}
+</div>
+
+          <h3>Your Bookshelf</h3>
+          <hr></hr>
           <div className="grid-container">
             {books.map((book, index) => (
               <div
@@ -388,18 +403,17 @@ function HomePage() {
                 <img src={book.cover} alt={`Cover of ${book.title}`} />
                 <h3
                   style={{
-                    fontFamily: "VT",
-                    fontSize: "1.3em",
+                    fontFamily: 'Libre',
+                    fontSize: "15px",
                     margin: "5px",
-                    color: "white",
                   }}
                 >
                   {book.title}
                 </h3>
                 <p
                   style={{
-                    fontFamily: "VT",
-                    fontSize: "1.0em",
+                    fontFamily: 'Libre',
+                    fontSize: "15px",
                     color: "#DEA262",
                     margin: "5px",
                   }}
@@ -410,7 +424,8 @@ function HomePage() {
             ))}
           </div>
 
-          <h3>Top books today</h3>
+          <h3>Top Books Today</h3>
+          <hr></hr>
           <div className="grid-container">
             {books.map((book, index) => (
               <div
@@ -422,9 +437,8 @@ function HomePage() {
                 <img src={book.cover} alt={`Cover of ${book.title}`} />
                 <h3
                   style={{
-                    fontFamily: "VT",
-                    fontSize: "1.3em",
-                    color: "white",
+                    fontFamily: 'Libre',
+                    fontSize: "15px",
                     margin: 5,
                   }}
                 >
@@ -432,9 +446,9 @@ function HomePage() {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "VT",
-                    fontSize: "1.0em",
-                    color: "grey",
+                    color: "rgb(222, 162, 98)",
+                    fontFamily: 'Libre',
+                    fontSize: "15px",
                     margin: "5px",
                   }}
                 >

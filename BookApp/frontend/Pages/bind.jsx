@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
 import Modal from "../src/components/Modal";
+import Sidebar from "../src/components/Sidebar";
 
 function BindPage() {
   const navigate = useNavigate();
@@ -88,90 +89,13 @@ function BindPage() {
 
   return (
     <div className="homepage">
-      {/* Sidebar navigation */}
-      <aside>
-        <img id="logo" src={logo} alt="Bound Logo" />
-        <nav>
-          <ul>
-            <li>
-              <a
-                href="#home"
-                className={activeNav === "home" ? "active" : ""}
-                onClick={() => setActiveNav("home")}
-              >
-                <i className="bx bx-home" />
-                <span>Home</span>
-              </a>
-            </li>
-            <li>
-              <button
-                className={`nav-link ${
-                  activeNav === "friends" ? "active" : ""
-                }`}
-                onClick={() => {
-                  setActiveNav("friends");
-                  setIsModalOpen(true);
-                }}
-              >
-                <i className="bx bx-group" />
-                <span>Friends</span>
-              </button>
-            </li>
-            <li>
-              <a
-                href="#binds"
-                className={activeNav === "binds" ? "active" : ""}
-                onClick={() => setActiveNav("binds")}
-              >
-                <i className="bx bx-link" />
-                <span>Binds</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#bookshelf"
-                className={activeNav === "bookshelf" ? "active" : ""}
-                onClick={() => setActiveNav("bookshelf")}
-              >
-                <i className="bx bx-book-alt" />
-                <span>Bookshelf</span>
-              </a>
-            </li>
-            <li>
-              <button
-                className={`nav-link ${
-                  activeNav === "about" ? "active" : ""
-                }`}
-                onClick={() => {
-                  setActiveNav("about");
-                  setIsModalOpen(true);
-                }}
-              >
-                <i className="bx bx-donate-heart" />
-                <span>About</span>
-              </button>
-            </li>
-            <li className="nav-search">
-              <div className="search-input-wrapper">
-                <i className="bx bx-search" />
-                <input
-                  className="search-input"
-                  type="text"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-              </div>
-            </li>
-            <li>
-              <a href="#logout">
-                <i className="bx bx-door-open" />
-                <span>Log Out</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+
+      <Sidebar
+  activeNav={activeNav}
+  setActiveNav={setActiveNav}
+  setIsModalOpen={setIsModalOpen}
+/>
+
 
       {/* Main content */}
       {isBindComplete ? (
@@ -219,7 +143,6 @@ function BindPage() {
                 />
                 <p
                   style={{
-                    color: "white",
                     margin: 5,
                   }}
                 >
@@ -237,16 +160,15 @@ function BindPage() {
             ))}
           </div>
 
-          {/* ACTION BUTTONS (outside the map) */}
           <div className="bind-buttons">
             <button
-              id="signUpButtonHomepage"
+              class="bind-cta"
               onClick={() => selectFriend(true)}
             >
               SELECT FRIEND
             </button>
             <button
-              id="signUpButtonHomepage"
+              class="bind-cta"
               onClick={() => setIsBindComplete(true)}
             >
               START BIND

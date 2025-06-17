@@ -18,7 +18,7 @@ const heroSlides = [
     imageUrl: writerSpotlight,
     ctaLabel: "READ MORE",
     ctaOnClickPath: "/bind",
-    backgroundColor: "#1C1F26",
+    backgroundColor: "#FCFAF4",
   },
   {
     title: "Monica Heisey on Her Favourite Comic Novels",
@@ -28,7 +28,7 @@ const heroSlides = [
     imageUrl: writerSpotlight2,
     ctaLabel: "READ MORE",
     ctaOnClickPath: "/discover/magic",
-    backgroundColor: "#1C1F26",
+    backgroundColor: "#FCFAF4",
   },
   {
     title: "Katy Hessel on the Pioneering Sculptor Camille Claudel",
@@ -38,7 +38,7 @@ const heroSlides = [
     imageUrl: writerSpotlight3,
     ctaLabel: "READ MORE",
     ctaOnClickPath: "/summer-reads",
-    backgroundColor: "#1C1F26",
+    backgroundColor: "#FCFAF4",
   },
   // …add more slides if you like…
 ];
@@ -101,7 +101,8 @@ const HeroCarousel = () => {
               <div className="carousel-slide-content">
                 {/* LEFT: Textual Content */}
                 <div className="carousel-text">
-                  <h2>{slide.title}</h2>
+                  <hr></hr>
+                  <h2>{slide.title}</h2><hr></hr>
                   <p>{slide.copy}</p>
                   <button
                     className="carousel-cta"
