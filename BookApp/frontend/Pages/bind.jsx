@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
-import Modal from "../src/components/Modal";
 import Sidebar from "../src/components/Sidebar";
 
 function BindPage() {
