@@ -2,239 +2,293 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../src/assets/images/logo.svg';
-import group from '../src/assets/images/authPage-image.png';
+import menuicon from '../src/assets/images/menu-icon.svg';
 import Footer from '../src/components/footer.jsx';
 import { useDispatch } from 'react-redux';
 import { setMemberId } from '../src/Redux/slices/userSlice.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
-function RotatingText({ messages, interval = 3000 }) {
-  const [current, setCurrent] = useState(0);
+// Import book covers
+import cover1 from '../src/assets/images/book-cover-1.jpg';
+import cover2 from '../src/assets/images/book-cover-2.jpg';
+import cover3 from '../src/assets/images/book-cover-3.jpg';
+import cover4 from '../src/assets/images/book-cover-4.jpg';
+import cover5 from '../src/assets/images/book-cover-5.jpg';
+import cover6 from '../src/assets/images/book-cover-6.jpg';
+import cover7 from '../src/assets/images/book-cover-7.jpg';
+import cover8 from '../src/assets/images/book-cover-8.jpg';
+import cover9 from '../src/assets/images/book-cover-9.jpg';
+import cover10 from '../src/assets/images/book-cover-10.jpg';
+import cover11 from '../src/assets/images/book-cover-11.jpg';
+import cover12 from '../src/assets/images/book-cover-12.jpg';
+import cover13 from '../src/assets/images/book-cover-13.jpg';
+import cover14 from '../src/assets/images/book-cover-14.jpg';
+import cover15 from '../src/assets/images/book-cover-15.jpg';
+import cover16 from '../src/assets/images/book-cover-16.jpg';
+import cover17 from '../src/assets/images/book-cover-17.jpg';
+import cover18 from '../src/assets/images/book-cover-18.jpg';
+import cover19 from '../src/assets/images/book-cover-19.jpg';
+import cover20 from '../src/assets/images/book-cover-20.jpg';
+import cover21 from '../src/assets/images/book-cover-21.jpg';
+import cover22 from '../src/assets/images/book-cover-22.jpg';
+import cover23 from '../src/assets/images/book-cover-23.jpg';
+import cover24 from '../src/assets/images/book-cover-24.jpg';
 
-useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent(i => (i + 1) % messages.length);
-    }, interval);
-    return () => clearInterval(timer);
-  }, [messages.length, interval]);
+import 'boxicons/css/boxicons.min.css';
 
-    return (
-    <div style={{ position: 'relative', height: '1.5em'}}>
-      <AnimatePresence exitBeforeEnter>
-        <motion.div
-          key={current}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5 }}
-          style={{ position: 'absolute', width: '100%' }}
-        >
-          {messages[current]}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-}
+const bookCovers = [
+  cover1, cover2, cover3, cover4, cover5, cover6,
+  cover7, cover8, cover9, cover10, cover11, cover12,
+  cover13, cover14, cover15, cover16, cover17, cover18,
+  cover19, cover20, cover21, cover22, cover23, cover24,
+];
 
 function AuthPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const demoLines = [
-  "Beth and Jake were recommended The Great Gatsby.",
-  "Alicia and Jenni are now reading The Little Prince.",
-  "Eve and Frank found The Hobbit together."
-];
-
-  // State to keep track of Sign In inputs
+  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailSignIn, setEmailSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // State for Sign Up
   const [fullName, setFullName] = useState('');
   const [emailSignUp, setEmailSignUp] = useState('');
   const [passwordSignUp, setPasswordSignUp] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
+const numColumns = 8;
+const columns = Array.from({ length: numColumns }, () => []);
+bookCovers.forEach((cover, i) => {
+  columns[i % numColumns].push(cover);
+});
+
   const signInBtn = async () => {
     if (!emailSignIn || !passwordSignIn) {
-      alert('Oi! Email and password, please.');
+      alert('Please enter both email and password.');
       return;
     }
 
     setIsSubmitting(true);
-
     try {
-      const response = await axios.post('http://localhost:8000/login-page/login', {
+      const res = await axios.post('http://localhost:8000/login-page/login', {
         email: emailSignIn,
         password: passwordSignIn,
       });
 
-      console.log('Login response:', response.data);
-
-      const { success, memberId, email, fullName } = response.data;
-
+      const { success, memberId, email, fullName } = res.data;
       if (success) {
-        dispatch(setMemberId({ memberId, email, fullName })); // fullName not sent from login, so default for now
+        dispatch(setMemberId({ memberId, email, fullName }));
         navigate('/homepage');
       } else {
-        alert('Invalid email or password. Try again!');
+        alert('Invalid credentials.');
       }
-    } catch (error) {
-      console.error('Error during login:', error.message);
-      alert('Login failed. Try again later.');
+    } catch (err) {
+      console.error('Login error:', err);
+      alert('Something went wrong. Try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // ✨ Function to sign the user up and send them on their bookish way
   const signUpBtn = async () => {
     if (!fullName || !emailSignUp || !passwordSignUp || !isChecked) {
-      alert('All fields please! And don’t forget the Privacy checkbox.');
+      alert('All fields are required, and you must accept the privacy policy.');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailSignUp)) {
-      alert('Please enter a valid email.');
+      alert('Enter a valid email.');
       return;
     }
 
     setIsSubmitting(true);
-
     try {
-      const response = await axios.post('http://localhost:8000/login-page/signup', {
+      const res = await axios.post('http://localhost:8000/login-page/signup', {
         fullName,
         email: emailSignUp,
         password: passwordSignUp,
         privacyAccepted: isChecked,
       });
 
-      console.log('Signup response:', response.data);
-
-      const { success, memberId, user, fullName } = response.data;
-
+      const { success, memberId, user } = res.data;
       if (success && user) {
-        const { email, fullName } = user;
-        dispatch(setMemberId({ memberId, email, fullName }));
-        navigate('/favourite-books', { state: { fullName } });
+        dispatch(setMemberId({ memberId, email: user.email, fullName: user.fullName }));
+        navigate('/favourite-books', { state: { fullName: user.fullName } });
       } else {
-        alert(response.data.message || 'Sign up failed. Please try again.');
+        alert(res.data.message || 'Signup failed.');
       }
-    } catch (error) {
-      console.error('Error during signup:', error.message);
-      alert('Sign up failed. Please try again.');
+    } catch (err) {
+      console.error('Signup error:', err);
+      alert('Something went wrong. Try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+useEffect(() => {
+  const spotlight = document.getElementById('spotlight');
+
+  const handleMouseMove = (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    spotlight.style.background = `radial-gradient(
+      circle at ${x}px ${y}px,
+      rgba(255, 215, 128, 0.15) 0%,
+      rgba(0, 0, 0, 0.85) 60%
+    )`;
+  };
+
+  window.addEventListener('mousemove', handleMouseMove);
+  return () => window.removeEventListener('mousemove', handleMouseMove);
+}, []);
+
+useEffect(() => {
+  const sparkles = document.querySelectorAll('.sparkle');
+  sparkles.forEach(sparkle => {
+    sparkle.style.setProperty('--rand-x', Math.random());
+    sparkle.style.left = `${Math.random() * 100}vw`;
+    sparkle.style.top = `${Math.random() * 100}vh`;
+  });
+}, []);
+
+
   return (
     <div className="auth-page">
-      {/* Sign In Panel — for returning heroes */}
-      <div className="login">
-        <img id="logo" src={logo} alt="Bound Logo" />
-        <form className="signin" onSubmit={(e) => e.preventDefault()}>
-          <label>
-            <input
-              type="text"
-              value={emailSignIn}
-              placeholder="Email address"
-              onChange={(e) => setEmailSignIn(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            <input
-              type="password"
-              value={passwordSignIn}
-              placeholder="Password"
-              onChange={(e) => setPasswordSignIn(e.target.value)}
-            />
-          </label>
-          <br />
-          <input
-            id="signInButton"
-            type="button"
-            value="LOGIN"
-            onClick={signInBtn}
-            disabled={isSubmitting}
-          />
-        </form>
+      {/* Background animated book masonry */}
+      <div className="background-masonry">
+  {columns.map((column, colIdx) => (
+    <div className="scrolling-column" key={colIdx}>
+      <div
+        className="scrolling-content"
+        style={{ animationDelay: `${colIdx * 2}s` }}
+      >
+        {column.concat(column).map((cover, i) => (
+          <img key={i} src={cover} alt={`book-${i}`} className="masonry-tile" />
+        ))}
       </div>
-
-      {/* Fun Book Vibes and Signup Panel */}
-      <div className="header-section">
-        <div id="hero-image-container">
-          <img id="hero-image" src={group} alt="Woman reading a book" />
-          <div className="my-rotator-wrapper">
-  <RotatingText messages={demoLines} interval={3000} />
+    </div>
+  ))}
 </div>
 
-        </div>
 
- <div className="intro-section">
-          <div id="introMessage">
-            <h1 className="authPage-header">
-              <span className="highlight">Bound.</span> The best way to find books you&apos;ll both love.
-            </h1>
-            <p>
-              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you'll both enjoy.
-            </p>
+      
 
-            <div className="signup">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <label>
-                  <input
-                    type="text"
-                    value={fullName}
-                    placeholder="Full name"
-                    onChange={(e) => setFullName(e.target.value)}
-                  />
-                </label>
-                <br />
-                <label>
-                  <input
-                    type="email"
-                    value={emailSignUp}
-                    placeholder="Email address"
-                    onChange={(e) => setEmailSignUp(e.target.value)}
-                  />
-                </label>
-                <br />
-                <label>
-                  <input
-                    type="password"
-                    value={passwordSignUp}
-                    placeholder="Password"
-                    onChange={(e) => setPasswordSignUp(e.target.value)}
-                  />
-                </label>
-                <br />
-                <label id="privacyPolicy">
-                  <input
-                    type="checkbox"
-                    onChange={(e) => setIsChecked(e.target.checked)}
-                  />
-                  I solemnly swear I&apos;ve read the <b>Privacy Policy</b>. Pinky promise.
-                </label>
-                <br />
-                <input
-                  id="signUpButton"
-                  type="button"
-                  value="SIGN UP"
-                  onClick={signUpBtn}
-                  disabled={isSubmitting}
-                />
-              </form>
-            </div>
+      <div className="masonry-spotlight" id="spotlight"></div>
+
+      <div className="sparkle-overlay">
+  {[...Array(20)].map((_, i) => (
+    <div key={i} className="sparkle" style={{ animationDelay: `${Math.random() * 10}s` }} />
+  ))}
+</div>
+
+
+      {/* Top bar */}
+      <div className="login">
+        <img id="menu-icon" src={menuicon} alt="menu icon" />
+        <button className="auth-tab-button" onClick={() => setIsSignUp(prev => !prev)}>
+          {isSignUp ? 'Sign In' : 'Sign Up'}
+        </button>
+      </div>
+
+      {/* Main auth form */}
+      <div className="content-overlay">
+        <div className="header-section">
+          <div className="intro-section">
+            <img id="logo" src={logo} alt="Bound Logo" />
+            <p className="intro-message">The best way to find books you'll love.</p>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isSignUp ? 'signup' : 'signin'}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                style={{ overflow: 'hidden' }}
+              >
+                <form onSubmit={(e) => e.preventDefault()}>
+                  {isSignUp ? (
+                    <>
+                      <div className="input-wrapper">
+                        <i className="bx bx-user"></i>
+                        <input
+                          type="text"
+                          value={fullName}
+                          placeholder="Username"
+                          onChange={(e) => setFullName(e.target.value)}
+                        />
+                      </div>
+                      <div className="input-wrapper">
+                        <i className="bx bx-at"></i>
+                        <input
+                          type="email"
+                          value={emailSignUp}
+                          placeholder="Email address"
+                          onChange={(e) => setEmailSignUp(e.target.value)}
+                        />
+                      </div>
+                      <div className="input-wrapper">
+                        <i className="bx bx-key"></i>
+                        <input
+                          type="password"
+                          value={passwordSignUp}
+                          placeholder="Password"
+                          onChange={(e) => setPasswordSignUp(e.target.value)}
+                        />
+                      </div>
+                      <label id="privacyPolicy">
+                        <input
+                          id="checkbox"
+                          type="checkbox"
+                          onChange={(e) => setIsChecked(e.target.checked)}
+                        />
+                        I agree to Bound's Terms of Service and Privacy Policy.
+                      </label>
+                      <input
+                        id="auth-page-submit-button"
+                        type="button"
+                        value="Sign Up"
+                        onClick={signUpBtn}
+                        disabled={isSubmitting || !isChecked}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <div className="input-wrapper">
+                        <i className="bx bx-at"></i>
+                        <input
+                          type="email"
+                          value={emailSignIn}
+                          placeholder="Email address"
+                          onChange={(e) => setEmailSignIn(e.target.value)}
+                        />
+                      </div>
+                      <div className="input-wrapper">
+                        <i className="bx bx-lock"></i>
+                        <input
+                          type="password"
+                          value={passwordSignIn}
+                          placeholder="Password"
+                          onChange={(e) => setPasswordSignIn(e.target.value)}
+                        />
+                      </div>
+                      <input
+                        id="auth-page-submit-button"
+                        type="button"
+                        value="Sign In"
+                        onClick={signInBtn}
+                        disabled={isSubmitting}
+                      />
+                    </>
+                  )}
+                </form>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

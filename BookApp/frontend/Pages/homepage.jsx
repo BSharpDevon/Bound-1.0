@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../src/components/Modal.jsx";
 import "boxicons/css/boxicons.min.css";
 import HeroCarousel from "../src/components/HeroCarousel.jsx";
-import instagram from '../src/assets/images/instagram.svg.webp';
-import discord from '../src/assets/images/discord.svg';
 import logo from '../src/assets/images/logo.svg';
 import Sidebar from "../src/components/Sidebar.jsx";
 import FriendsModal from "../src/components/FriendsModal.jsx";
