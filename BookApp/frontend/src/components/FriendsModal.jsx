@@ -31,6 +31,7 @@ const FriendsModal = ({
         {filteredUsers.map((user) => (
           <div className="name-add" key={user.id}>
             <p className="first-name">{user.firstName}</p>
+            <button className="friends-start-bind-button">Start Bind</button>
           </div>
         ))}
       </div>
