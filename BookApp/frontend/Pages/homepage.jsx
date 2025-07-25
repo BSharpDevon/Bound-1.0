@@ -304,7 +304,7 @@ useEffect(() => {
         filteredUsers={filteredUsers}
       />
     )}
-
+    
     {activeNav ==="Support" && (
       <Modal onClose={() => setIsModalOpen(false)}>
         <h2 className="modalHeading">Team Bound</h2>
