@@ -156,7 +156,6 @@ useEffect(() => {
 
   return (
     <div className="auth-page">
-      {/* Background animated book masonry */}
       <div className="background-masonry">
   {columns.map((column, colIdx) => (
     <div className="scrolling-column" key={colIdx}>

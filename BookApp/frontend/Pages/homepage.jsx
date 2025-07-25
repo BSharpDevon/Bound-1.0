@@ -5,10 +5,7 @@ import Modal from "../src/components/Modal.jsx";
 import "boxicons/css/boxicons.min.css";
 import HeroCarousel from "../src/components/HeroCarousel.jsx";
 import logo from '../src/assets/images/logo.svg';
-import Sidebar from "../src/components/Sidebar.jsx";
 import FriendsModal from "../src/components/FriendsModal.jsx";
-
-
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,15 +27,39 @@ function HomePage() {
 
   const [flickerOn, setFlickerOn] = useState(false);
 
+  const [showFullBio, setShowFullBio] = useState(false);
+
+
   const handleToggle = () => {
     setFlickerOn((prev) => !prev);
   };
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+useEffect(() => {
+  const spotlight = document.getElementById('spotlight');
 
-const toggleDrawer = () => {
-  setIsDrawerOpen((prev) => !prev);
-};
+  const handleMouseMove = (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    spotlight.style.background = `radial-gradient(
+      circle at ${x}px ${y}px,
+      rgba(255, 215, 128, 0.15) 0%,
+      rgba(0, 0, 0, 0.85) 60%
+    )`;
+  };
+
+  window.addEventListener('mousemove', handleMouseMove);
+  return () => window.removeEventListener('mousemove', handleMouseMove);
+}, []);
+
+useEffect(() => {
+  const sparkles = document.querySelectorAll('.sparkle');
+  sparkles.forEach(sparkle => {
+    sparkle.style.setProperty('--rand-x', Math.random());
+    sparkle.style.left = `${Math.random() * 100}vw`;
+    sparkle.style.top = `${Math.random() * 100}vh`;
+  });
+}, []);
 
   // Debounce function for search
   const debounce = (func, delay) => {
@@ -55,11 +76,9 @@ const toggleDrawer = () => {
 
   // Dummy users
   const users = [
-    { firstName: "Jeveria", id: 1, email: "jeveria@cfg.com" },
-    { firstName: "Beth", id: 2, email: "beth@cfg.com" },
-    { firstName: "Steph", id: 3, email: "steph@cfg.com" },
-    { firstName: "Jenni", id: 4, email: "jenni@cfg.com" },
-    { firstName: "Lydia", id: 5, email: "lydia@cfg.com" },
+    { firstName: "Beth213", id: 2, email: "beth@cfg.com" },
+    { firstName: "JenniRose", id: 4, email: "jenni@cfg.com" },
+    { firstName: "LydiaIbbi", id: 5, email: "lydia@cfg.com" },
   ];
 
   const books = [
@@ -68,38 +87,53 @@ const toggleDrawer = () => {
       author: "Stephen King",
       cover:
         "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1647789287i/60177373.jpg",
+        genre: "Fantasy",
+        bio: "Legendary storyteller Stephen King goes into the deepest well of his imagination in this spellbinding novel about a seventeen-year-old boy who inherits the keys to a parallel world where good and evil are at war, and the stakes could not be higher - for their world or ours."
+
     },
     {
       title: "Never After",
       author: "Stephanie Garber",
       cover:
         "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011416i/59808071.jpg",
+      genre: "Fantasy",
+      bio: "She belongs to the crown. Prince Tristan Faasa was never destined for the throne. That was always his brother, Michael. The same brother responsible for both Tristan's tormented childhood and the scar that mars his face. When their father dies, Michael is set to assume the throne, and Tristan is set to steal it."
     },
+
     {
       title: "Klara and the Sun",
       author: "Kazuo Ishiguro",
       cover:
-        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603206535i/54120408.jpg",
+        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603206535i/54120408.jpg", 
+        genre: "Dystopian",
+        bio: "From her place in the store, Klara, an Artificial Friend with outstanding observational qualities, watches carefully the behavior of those who come in to browse, and of those who pass on the street outside. She remains hopeful that a customer will soon choose her, but when the possibility emerges that her circumstances may change forever, Klara is warned not to invest too much in the promises of humans."
     },
+    
     {
       title: "A Court of Mist and Fury",
       author: "Sarah J. Maas",
       cover:
         "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1620325671i/50659468.jpg",
-    },
+    genre: "Fantasy",
+    bio: "The seductive and stunning #1 New York Times bestselling sequel to Sarah J. Maas's spellbinding A Court of Thorns and Roses. Feyre has undergone more trials than one human woman can carry in her heart. Though she's now been granted the powers and lifespan of the High Fae, she is haunted by her time Under the Mountain and the terrible deeds she performed to save the lives of Tamlin and his people."
+  },
   
     {
-      title: "Never After",
-      author: "Stephanie Garber",
+      title: "The Wedding People",
+      author: "Alison Espach",
       cover:
-        "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011416i/59808071.jpg",
-    },
+        "https://m.media-amazon.com/images/I/91EReeJwIjL._SL1500_.jpg",
+    genre: "Indie Comedy",
+    bio: "It’s a beautiful day in Newport, Rhode Island, when Phoebe Stone arrives at the grand Cornwall Inn wearing a green dress and gold heels, not a bag in sight, alone. She's immediately mistaken by everyone in the lobby for one of the wedding people, but she’s actually the only guest at the Cornwall who isn’t here for the big event."
+  },
     {
       title: "Hamnet",
       author: "Maggie O'Farrell",
       cover:
         "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574943819i/43890641.jpg",
-    },
+    genre: "Historical",
+    bio: "Drawing on Maggie O'Farrell's long-term fascination with the little-known story behind Shakespeare's most enigmatic play, Hamnet is a luminous portrait of a marriage, at its heart the loss of a beloved child."
+  },
   ];
 
   // Filter friends
@@ -192,7 +226,15 @@ useEffect(() => {
 }, []);
 
   return (
+
     <div className="homepage">
+
+
+      <div className="sparkle-overlay">
+  {Array.from({ length: 60 }).map((_, i) => (
+    <div key={i} className="sparkle"></div>
+  ))}
+</div>
       {isModalOpen && selectedBook && (
         <Modal onClose={closeBookModal}>
           <div
@@ -214,14 +256,36 @@ useEffect(() => {
             <div id="book-modal-metadata">
 
             {/* Title + Author */}
-            <h3 style={{ margin: "0.5rem 0", fontFamily: 'Garamond' }}>
+            <p style={{ fontFamily: "Libre", color: "#DEA262",}}>
+            <b>{selectedBook.genre}</b>
+            </p>
+            <h3 style={{ margin: "0.5rem 0", fontSize: "40px", fontFamily: 'Garamond', color: "white"}}>
               {selectedBook.title}
             </h3>
-            <p style={{ fontFamily: "Libre"}}>
-            {selectedBook.author}
+            <p style={{ fontFamily: "Libre", color: "white", marginTop: "-4px"}}>
+            by <b>{selectedBook.author}</b>
             </p>
-            <p>< i class='bx  bxs-hot'  ></i> Seen in 500 binds</p>
-            <button className="carousel-cta">Buy on Bookshop</button>
+
+            {selectedBook.bio && (
+  <p style={{ fontFamily: "Libre", color: "white", margin: "1rem 0" }}>
+    {showFullBio ? selectedBook.bio : `${selectedBook.bio.slice(0, 200)}... `}
+    {selectedBook.bio.length > 200 && (
+      <span
+        onClick={() => setShowFullBio(!showFullBio)}
+        style={{ 
+          color: "#DEA262", 
+          textDecoration: "none", 
+          marginLeft: "5px", 
+          cursor: "pointer" 
+        }}
+      >
+        {showFullBio ? "See less ‹" : "See more ›"}
+      </span>
+    )}
+  </p>
+)}
+
+            <button className="carousel-cta">Buy Now</button>
             </div>
           </div>
         </Modal>
@@ -241,7 +305,7 @@ useEffect(() => {
       />
     )}
 
-    {activeNav === "about" && (
+    {activeNav ==="Support" && (
       <Modal onClose={() => setIsModalOpen(false)}>
         <h2 className="modalHeading">Team Bound</h2>
         <p className="modalCopy">
@@ -265,63 +329,59 @@ useEffect(() => {
     )}
   </>
 )}
-      {/* ==== HEADER, SIDEBAR, HERO, ETC. ==== */}
       <div className="homepage-header">{/* your header (logo, nav) */}</div>
 
-      <div className="homepage-content">
+      <div className="homepage-content" style={{ zIndex: 5, position: "relative" }}>
+        <div className="profile">
+          <h1>LydiaIbbi</h1>
+          <div id="profile-info">
+          <p>100 Books</p>
+          <p>16 Binds</p>
+          </div>
+          <hr></hr>
+          <div className="copy-news-article-details">
+          <p id="copy-news-article-date">25th July 2025</p>
+          <h3 id="copy-news-article-title">The first chapter...</h3>
+          <p>This week's update: Launching Bound!</p>
+          <p id="copy-news-article-link"><b>Read More</b></p>
+          </div>
+        </div>
         <aside className="sidebar">
       <div class="logo">
         <img id="logo" src={logo} width="32px" height="32px"></img>
       </div>
-          <button class="nav-button" onClick={toggleDrawer}>
-            <div class="nav-button__lines">
-              <span class="nav-button__line"></span>
-              <span class="nav-button__line"></span>
-              <span class="nav-button__line"></span>
-            </div>
-          </button>
-          <div className="sidebar-bottom">
-
-            <button id="about-bound-button">INSTAGRAM</button>
-          </div>
-        </aside>
-
-      <div className={`nav-project-drawer ${isDrawerOpen ? 'active' : ''}`}>
-        <ul>
+      <ul>
           <li class="nav-project-drawer-item">
             <a href="#home"
                   className={activeNav === "home" ? "active" : ""}
                   onClick={() => setActiveNav("home")}
                 >
-            <div class="nav-project-drawer-item-image"></div>
-            <div class="nav-project-drawer-item-title">HOME</div></a>
+            <div class="nav-project-drawer-item-title">Home</div></a>
           </li>
           <hr></hr>
-          <li>
-                <button id="nav-link"
-                  className={`nav-link ${
-                    activeNav === "friends" ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setActiveNav("friends");
-                    // Only open the generic modal if no book is selected
-                    if (!selectedBook) setIsModalOpen(true);
-                  }}
-                ><div class="nav-project-drawer-item-title">FRIENDS</div>
-                </button>
-              </li>
+          <li class="nav-project-drawer-item">
+            <a id="news-nav" href="#news"
+  className={activeNav === "news" ? "active" : ""}
+  onClick={(e) => {
+    e.preventDefault();
+    setActiveNav("news");
+    navigate("/news");
+  }}
+>
+  <div className="nav-project-drawer-item-title">News</div>
+</a>
+          </li>
           <hr></hr>
           <li class="nav-project-drawer-item">
             <a id="bookshelf-nav" href="#bookshelf"
                   className={activeNav === "bookshelf" ? "active" : ""}
                   onClick={(e) => {
                     e.preventDefault();
-                    setActiveNav("bookshelf");
+                    setActiveNav("bind");
                     navigate("/bind");
                   }}
                 >
-            <div class="nav-project-drawer-item-image"></div>
-            <div class="nav-project-drawer-item-title">BINDS</div>
+            <div class="nav-project-drawer-item-title">My Binds</div>
           </a>
           </li>
           <hr></hr>
@@ -334,29 +394,41 @@ useEffect(() => {
                     navigate("/favourite-books");
                   }}
                 >
-            <div class="nav-project-drawer-item-image"></div>
-            <div class="nav-project-drawer-item-title">BOOKSHELF</div>
+            <div class="nav-project-drawer-item-title">My Books</div>
           </a>
           </li>
+              <hr></hr>
+          <li>
+  <button
+    id="nav-link"
+    className={`nav-link ${activeNav === "friends" ? "active" : ""}`}
+    onClick={() => {
+      setActiveNav("friends");
+      if (!selectedBook) setIsModalOpen(true);
+    }}
+  >
+    <div className="nav-project-drawer-item-title">
+      <i className="bx bx-group" style={{ color: "#ffffff" }}></i>
+    </div>
+  </button>
+</li>
           <hr></hr>
           <li class="nav-project-drawer-item">
             <button id="nav-link"
                   className={`nav-link ${
-                    activeNav === "about" ? "active" : ""
+                    activeNav === "Support" ? "active" : ""
                   }`}
                   onClick={() => {
-                    setActiveNav("about");
+                    setActiveNav("Support");
                     // Only open the generic modal if no book is selected
                     if (!selectedBook) setIsModalOpen(true);
                   }}
                 >
-            <div class="nav-project-drawer-item-image"></div>
-            <div class="nav-project-drawer-item-title">ABOUT</div>
+            <i className="bx bx-donate-heart" style={{ color: "#ffffff" }}></i>
           </button>
           </li>
-          <hr></hr>
         </ul>
-      </div>
+        </aside>
 
         <div id="homepage-content">
         <HeroCarousel />
@@ -365,9 +437,8 @@ useEffect(() => {
           <div id="toast" className="toast">
   {toastMessage}
 </div>
-
-          <h3>Your Bookshelf</h3>
-          <hr></hr>
+          
+          <h3 id="bookshelf-title">Your Bookshelf</h3>
           <div className="grid-container">
             {books.map((book, index) => (
               <div
@@ -376,16 +447,6 @@ useEffect(() => {
                 onClick={() => openBookModal(book)}
                 style={{ cursor: "pointer" }}
               >
-                <img src={book.cover} alt={`Cover of ${book.title}`} />
-                <h3
-                  style={{
-                    fontFamily: 'Libre',
-                    fontSize: "15px",
-                    margin: "5px",
-                  }}
-                >
-                  {book.title}
-                </h3>
                 <p
                   style={{
                     fontFamily: 'Libre',
@@ -394,14 +455,14 @@ useEffect(() => {
                     margin: "5px",
                   }}
                 >
-                  {book.author}
+                  {book.genre}
                 </p>
+                <img src={book.cover} alt={`Cover of ${book.title}`} />
               </div>
             ))}
           </div>
 
-          <h3>Top Books Today</h3>
-          <hr></hr>
+          <h3 id="bookshelf-title">Top Books Today</h3>
           <div className="grid-container">
             {books.map((book, index) => (
               <div
@@ -410,26 +471,17 @@ useEffect(() => {
                 onClick={() => openBookModal(book)}
                 style={{ cursor: "pointer" }}
               >
-                <img src={book.cover} alt={`Cover of ${book.title}`} />
-                <h3
-                  style={{
-                    fontFamily: 'Libre',
-                    fontSize: "15px",
-                    margin: 5,
-                  }}
-                >
-                  {book.title}
-                </h3>
                 <p
                   style={{
-                    color: "rgb(222, 162, 98)",
                     fontFamily: 'Libre',
                     fontSize: "15px",
+                    color: "#DEA262",
                     margin: "5px",
                   }}
                 >
-                  {book.author}
+                  {book.genre}
                 </p>
+                <img src={book.cover} alt={`Cover of ${book.title}`} />
               </div>
             ))}
           </div>
