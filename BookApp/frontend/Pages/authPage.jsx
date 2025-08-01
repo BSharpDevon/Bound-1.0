@@ -1,16 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Carousel from '../src/components/imageCarousel.jsx';
 import axios from 'axios';
 import logo from '../src/assets/images/logo.svg';
-import group from '../src/assets/images/group2.svg';
+import group from '../src/assets/images/authPage-image.png';
 import Footer from '../src/components/footer.jsx';
 import { useDispatch } from 'react-redux';
 import { setMemberId } from '../src/Redux/slices/userSlice.js';
+import { motion, AnimatePresence } from 'framer-motion';
+
+function RotatingText({ messages, interval = 3000 }) {
+  const [current, setCurrent] = useState(0);
+
+useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(i => (i + 1) % messages.length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [messages.length, interval]);
+
+    return (
+    <div style={{ position: 'relative', height: '1.5em'}}>
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          style={{ position: 'absolute', width: '100%' }}
+        >
+          {messages[current]}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 function AuthPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const demoLines = [
+  "Beth and Jake were recommended The Great Gatsby.",
+  "Alicia and Jenni are now reading The Little Prince.",
+  "Eve and Frank found The Hobbit together."
+];
 
   // State to keep track of Sign In inputs
   const [emailSignIn, setEmailSignIn] = useState('');
@@ -23,7 +57,6 @@ function AuthPage() {
   const [passwordSignUp, setPasswordSignUp] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
-  // 👋 Function to sign the user in like a bouncer checking the guest list
   const signInBtn = async () => {
     if (!emailSignIn || !passwordSignIn) {
       alert('Oi! Email and password, please.');
@@ -40,10 +73,10 @@ function AuthPage() {
 
       console.log('Login response:', response.data);
 
-      const { success, memberId, email } = response.data;
+      const { success, memberId, email, fullName } = response.data;
 
       if (success) {
-        dispatch(setMemberId({ memberId, email, fullName: "User" })); // fullName not sent from login, so default for now
+        dispatch(setMemberId({ memberId, email, fullName })); // fullName not sent from login, so default for now
         navigate('/homepage');
       } else {
         alert('Invalid email or password. Try again!');
@@ -81,7 +114,7 @@ function AuthPage() {
 
       console.log('Signup response:', response.data);
 
-      const { success, memberId, user } = response.data;
+      const { success, memberId, user, fullName } = response.data;
 
       if (success && user) {
         const { email, fullName } = user;
@@ -134,18 +167,21 @@ function AuthPage() {
 
       {/* Fun Book Vibes and Signup Panel */}
       <div className="header-section">
-        <div id="girl-image">
-          <img id="girl" src={group} alt="Woman reading a book" />
+        <div id="hero-image-container">
+          <img id="hero-image" src={group} alt="Woman reading a book" />
+          <div className="my-rotator-wrapper">
+  <RotatingText messages={demoLines} interval={3000} />
+</div>
+
         </div>
 
-        <div className="intro-section">
+ <div className="intro-section">
           <div id="introMessage">
-            <h1>
-              Let Your <span className="highlight">Friends</span> Find Your Next Best Book
+            <h1 className="authPage-header">
+              <span className="highlight">Bound.</span> The best way to find books you&apos;ll both love.
             </h1>
             <p>
-              Bound searches millions of titles to match your excellent (and probably chaotic) tastes.
-              Sign up to get your first recommendation!
+              Reading with your partner or book club buddy? No more compromising — Bound searches through <span className="highlight">millions</span> of titles to find a book you'll both enjoy.
             </p>
 
             <div className="signup">
@@ -182,7 +218,7 @@ function AuthPage() {
                     type="checkbox"
                     onChange={(e) => setIsChecked(e.target.checked)}
                   />
-                  I solemnly swear I’ve read the <b>Privacy Policy</b>. Pinky promise.
+                  I solemnly swear I&apos;ve read the <b>Privacy Policy</b>. Pinky promise.
                 </label>
                 <br />
                 <input
@@ -196,11 +232,6 @@ function AuthPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Carousel of dreams */}
-      <div className="carousel-bottom">
-        <Carousel />
       </div>
 
       <Footer />

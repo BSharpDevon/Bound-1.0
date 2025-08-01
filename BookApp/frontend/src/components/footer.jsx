@@ -2,7 +2,7 @@
 function Footer(){
     return(
         <footer>
-            <p>&copy; Bound</p>
+            <p>&copy; Bound 🕯️</p>
         </footer>
     )
 }

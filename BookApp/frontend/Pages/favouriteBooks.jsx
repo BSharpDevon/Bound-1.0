@@ -1,156 +1,173 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+/* BookSearch.jsx */
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../src/assets/images/logo.svg";
-import Footer from "../src/components/footer.jsx";
-import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
+import { useSelector } from "react-redux";
 
 const BookSearch = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const memberId = useSelector((state) => state.user.memberId);
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [results, setResults] = useState([]);
+  const [shelfBooks, setShelfBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState(""); // State for success message
-  const navigate = useNavigate();
-  const fullName = useSelector((state) => state.user.fullName);
-  const memberId = useSelector((state) => state.user.memberId); // Access the userId from Redux state
+  const [message, setMessage] = useState("");
+  const wrapperRef = useRef(null);
 
-  const handleInputChange = (e) => setSearchTerm(e.target.value);
+  // AbortController ref to cancel in-flight requests
+  const abortCtrlRef = useRef(null);
 
-  const handleSearch = async () => {
+  // Click-outside clears dropdown
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setResults([]);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Debounced search effect
+  useEffect(() => {
+    // Clear results if input empty
     if (!searchTerm.trim()) {
-      alert("Please enter a book title.");
+      setResults([]);
+      setError("");
+      setLoading(false);
       return;
     }
+
     setLoading(true);
     setError("");
-    setBooks([]); // Clear previous search results
-    try {
-      const response = await axios.get("http://localhost:8000/search-bookshelf/search", {
-        params: { searchRequest: searchTerm },
-      });
-      const data = response.data;
-      if (data.success) {
-        setBooks(data.books);
-      } else {
-        setError(data.message || "Search failed.");
+
+    // Cancel previous request
+    if (abortCtrlRef.current) {
+      abortCtrlRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortCtrlRef.current = controller;
+
+    const timeoutId = setTimeout(async () => {
+      try {
+        const response = await axios.get(
+          "https://www.googleapis.com/books/v1/volumes",
+          {
+            params: { q: searchTerm, maxResults: 20 },
+            signal: controller.signal,
+          }
+        );
+        const books = (response.data.items || []).map((item) => ({
+          id: item.id,
+          title: item.volumeInfo.title,
+          imageLinks: item.volumeInfo.imageLinks || {},
+        }));
+        setResults(books);
+      } catch (err) {
+        if (axios.isCancel(err)) {
+          // request was aborted — no need to set error
+        } else {
+          console.error(err);
+          setError("Search failed. Please try again.");
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError("Failed to fetch books. Please try again later.");
-      console.error("Search Error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    }, 300); // 300ms debounce
 
-  // Function to select a book
-  const handleBookSelect = (book) => {
-    setSelectedBook(book); // Update the selected book state
-    setSearchTerm(book.title); // Update the input field with the selected book's title
-  };
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [searchTerm]);
 
-  // Function to add the selected book to favourites and navigate to homepage
-  const handleSubmit = async () => {
-    
-    // error message if person isn't logged on for some reason.
-    if (!memberId) {
-      alert("You must be logged in to add a book to your favourites.");
-      return;
-    }
-
-    if (!selectedBook) {
-      alert("Please select a book to continue.");
-      return;
-    }
-
-    try {
-      const response = await axios.post("http://localhost:8000/search-bookshelf/favouriteBooks", {
-        googlebookId: selectedBook.id, // Send the googlebookId (from selected book)
-        memberId, // Retrieves user id from Redux store
-      });
-      console.log("Submission Response:", response.data);
-      if (response.data.success) {
-        setMessage("Book successfully added to your favourites!");
-        // Optionally, you can navigate to the homepage after a short delay
-        setTimeout(() => navigate("/homepage"), 1500);
-      } else {
-        setError(response.data.message || "Submission failed. Please try again.");
+  const handleAdd = useCallback(
+    async (book) => {
+      if (!memberId) {
+        alert("Please log in to add books.");
+        return;
       }
-    } catch (err) {
-      setError("An error occurred while submitting the book. Please try again.");
-      console.error("Submission Error:", err);
-    }
-  };
+      try {
+        await axios.post(
+          "http://localhost:8000/search-bookshelf/favouriteBooks",
+          { googlebookId: book.id, memberId }
+        );
+        setShelfBooks((prev) => [...prev, book]);
+        setMessage(`Added "${book.title}" to your shelf.`);
+        setResults([]);
+        setSearchTerm("");
+      } catch (err) {
+        console.error(err);
+        setError("Failed to add book. Please try again.");
+      }
+    },
+    [memberId]
+  );
+
+  const getThumbnail = (book) =>
+    book.imageLinks.thumbnail ||
+    `https://books.google.com/books/content?id=${book.id}&printsec=frontcover&img=1&zoom=2`;
 
   return (
     <div id="favouriteBooksContent">
-      <img id="logo" src={logo} alt="Bound Logo" />
-      <h2>WELCOME {fullName}!</h2>
+      <div id="favouriteBooksHeader">
+      <button class="carousel-cta" onClick={() => navigate("/homepage")}>
+        <i className="bx bx-home-alt"></i> HOME
+      </button>
+      </div>
+      <h2>Build Your Bookshelf</h2>
       <p className="favouriteBooksMessage">
-        There's nothing like a good book. Let's get started by adding a book to your library.
+        Search and add books to your shelf.
       </p>
-      <div className="book-search-container">
-        <label>
+
+      <div className="book-search-container" ref={wrapperRef}>
+        <div className="search-input-wrapper">
           <input
             type="text"
-            placeholder="Choose book"
+            placeholder="Title, Author, ISBN..."
             value={searchTerm}
-            onChange={handleInputChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSearch();
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // no more Enter key trigger
           />
-          <button onClick={handleSearch} disabled={loading}>
-            SEARCH
-          </button>
-          <br />
-          <button onClick={handleSubmit} disabled={!selectedBook || loading}>
-            SUBMIT
-          </button>
-        </label>
 
-        {loading && <p>Loading...</p>}
-        {error && <p className="error">{error}</p>}
-        {message && <p className="success">{message}</p>} {/* Success message */}
-
-        <div className="book-results">
-          {books.length > 0 ? (
-            books.map((book) => (
-              <div
-                key={book.id}
-                className={`book-display ${selectedBook?.id === book.id ? "selected" : ""}`}
-                onClick={() => handleBookSelect(book)}
-                tabIndex={0}
-                role="button"
-                onKeyDown={(e) => e.key === "Enter" && handleBookSelect(book)}
-                style={{
-                  cursor: "pointer",
-                  marginBottom: "10px",
-                  border: selectedBook?.id === book.id ? "2px solid blue" : "1px solid #ccc",
-                  padding: "10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <img src={book.thumbnail} alt={book.title} style={{ width: "100px" }} />
-                <h2>{book.title}</h2>
-                <p>
-                  <strong>Authors:</strong> {book.authors.join(", ")}
-                </p>
-                <p>{book.description}</p>
-                <a href={book.link} target="_blank" rel="noopener noreferrer">
-                  More info
-                </a>
-              </div>
-            ))
-          ) : (
-            !loading && <p>No searches yet.</p>
+          {results.length > 0 && (
+            <ul className="search-dropdown">
+              {results.map((book) => (
+                <li key={book.id} className="dropdown-item">
+                  <img src={getThumbnail(book)} alt={book.title} />
+                  <span className="title">{book.title}</span>
+                  <button
+                    onClick={() => handleAdd(book)}
+                    className="carousel-cta"
+                  >
+                    + ADD
+                  </button>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
+
+        {error && <p className="error">{error}</p>}
+        {message && <p className="success">{message}</p>}
+
+        <div className="book-results">
+          <div className="book-shelf">
+            {shelfBooks.map((book) => (
+              <div
+                key={book.id}
+                className="book"
+                style={{ backgroundImage: `url(${getThumbnail(book)})` }}
+              />
+            ))}
+            {shelfBooks.length === 0 && (
+              <p className="empty-message">Your shelf is empty.</p>
+            )}
+          </div>
+        </div>
       </div>
-      
-      <Footer />
     </div>
   );
 };
