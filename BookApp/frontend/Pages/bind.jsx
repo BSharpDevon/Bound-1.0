@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/assets/images/logo.svg";
 import Modal from "../src/components/Modal";
-import Sidebar from "../src/components/Sidebar";
 
 function BindPage() {
   const navigate = useNavigate();
@@ -90,12 +89,89 @@ function BindPage() {
   return (
     <div className="homepage">
 
-      <Sidebar
-  activeNav={activeNav}
-  setActiveNav={setActiveNav}
-  setIsModalOpen={setIsModalOpen}
-/>
-
+      <aside className="sidebar">
+      <div class="logo">
+        <img id="logo" src={logo} width="32px" height="32px"></img>
+      </div>
+      <ul>
+          <li class="nav-project-drawer-item">
+            <a href="#home"
+                  className={activeNav === "home" ? "active" : ""}
+                  onClick={() => setActiveNav("home")}
+                >
+            <div class="nav-project-drawer-item-title">Home</div></a>
+          </li>
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <a id="news-nav" href="#news"
+  className={activeNav === "news" ? "active" : ""}
+  onClick={(e) => {
+    e.preventDefault();
+    setActiveNav("news");
+    navigate("/news");
+  }}
+>
+  <div className="nav-project-drawer-item-title">News</div>
+</a>
+          </li>
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <a id="bookshelf-nav" href="#bookshelf"
+                  className={activeNav === "bookshelf" ? "active" : ""}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveNav("bind");
+                    navigate("/bind");
+                  }}
+                >
+            <div class="nav-project-drawer-item-title">My Binds</div>
+          </a>
+          </li>
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <a id="bookshelf-nav" href="#bookshelf"
+                  className={activeNav === "bookshelf" ? "active" : ""}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveNav("bookshelf");
+                    navigate("/favourite-books");
+                  }}
+                >
+            <div class="nav-project-drawer-item-title">My Books</div>
+          </a>
+          </li>
+              <hr></hr>
+          <li>
+  <button
+    id="nav-link"
+    className={`nav-link ${activeNav === "friends" ? "active" : ""}`}
+    onClick={() => {
+      setActiveNav("friends");
+      if (!selectedBook) setIsModalOpen(true);
+    }}
+  >
+    <div className="nav-project-drawer-item-title">
+      <i className="bx bx-group" style={{ color: "#ffffff" }}></i>
+    </div>
+  </button>
+</li>
+          <hr></hr>
+          <li class="nav-project-drawer-item">
+            <button id="nav-link"
+                  className={`nav-link ${
+                    activeNav === "Support" ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setActiveNav("Support");
+                    // Only open the generic modal if no book is selected
+                    if (!selectedBook) setIsModalOpen(true);
+                  }}
+                >
+            <i className="bx bx-donate-heart" style={{ color: "#ffffff" }}></i>
+          </button>
+          </li>
+        </ul>
+        </aside>
 
       {/* Main content */}
       {isBindComplete ? (
@@ -141,21 +217,6 @@ function BindPage() {
                   alt={`Cover of ${book.title}`}
                   className="book-cover-image"
                 />
-                <p
-                  style={{
-                    margin: 5,
-                  }}
-                >
-                  {book.title}
-                </p>
-                <p
-                  style={{
-                    color: "#DEA262",
-                    margin: 0,
-                  }}
-                >
-                  {book.author}
-                </p>
               </div>
             ))}
           </div>
