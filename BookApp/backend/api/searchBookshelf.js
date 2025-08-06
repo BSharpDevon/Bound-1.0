@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 // Configure CORS
 app.use(cors({
-  origin: "http://localhost:5173", // Replace with your frontend's URL
+  origin: "http://localhost:5173",
   methods: ["GET", "POST"],
   credentials: true,
 }));
