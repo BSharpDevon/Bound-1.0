@@ -27,7 +27,7 @@ SELECT * FROM books;
 
 CREATE TABLE favourite_books (
     member_id INT,                             -- Links to the member who liked the book
-    book_id INT,                               -- Links to the book being rated
+    googlebook_id INT,                               -- Links to the book being rated
     rating INT CHECK (rating BETWEEN 1 AND 5), -- Rating (1 to 5 scale)
     review VARCHAR(255),                       -- User's review of the book
     PRIMARY KEY (member_id, book_id),          -- Composite primary key for uniqueness

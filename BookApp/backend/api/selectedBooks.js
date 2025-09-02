@@ -14,6 +14,10 @@ const router = express.Router();
 
 // Route to handle adding books to favourites
 router.post("/favouriteBooks", async (req, res) => {
+  console.log("Incoming body:", req.body);
+  console.log("googlebookId received:", req.body.googlebookId);
+  console.log("memberId received:", req.body.memberId);
+
   const { googlebookId, memberId } = req.body;  // Extract googlebookId and memberId from request body
 
   // Check if both googlebookId and memberId are provided
@@ -45,5 +49,13 @@ router.post("/favouriteBooks", async (req, res) => {
     return res.status(500).json({ error: "Database error" });
   }
 });
+
+app.use("/search-bookshelf", router);
+
+// commented out the below as was causing conflicts with server.js and not allowing backend to run 
+// const PORT = process.env.PORT || 8000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
 
 export default router;  // Export the router

@@ -1,5 +1,5 @@
 /* BookSearch.jsx */
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -83,17 +83,21 @@ const BookSearch = () => {
     };
   }, [searchTerm]);
 
+console.log('Redux memberId:', memberId);
+
   const handleAdd = useCallback(
     async (book) => {
       if (!memberId) {
         alert("Please log in to add books.");
         return;
       }
+      console.log('Attempting to add book:', book, 'with memberId:', memberId);
       try {
-        await axios.post(
-          "http://localhost:8000/search-bookshelf/favouriteBooks",
-          { googlebookId: book.id, memberId }
-        );
+      await axios.post("http://localhost:8000/search-bookshelf/favouriteBooks", {
+        googlebookId: book.id,
+        memberId: memberId
+  });
+
         setShelfBooks((prev) => [...prev, book]);
         setMessage(`Added "${book.title}" to your shelf.`);
         setResults([]);
