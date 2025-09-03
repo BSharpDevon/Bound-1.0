@@ -108,7 +108,7 @@ searchBookshelf.post('/favouriteBooks', (req, res) => {
   }
 
   // SQL query to insert the book into the 'favourites' table
-  const insertQuery = "INSERT INTO favourite_books (googlebookId, member_id) VALUES (?, ?)";
+  const insertQuery = "INSERT INTO favourite_books (googlebook_id, member_id) VALUES (?, ?)";
 
   // Execute the query using callback-based interface
   connection.query(insertQuery, [googlebookId, memberId], (err, results) => {

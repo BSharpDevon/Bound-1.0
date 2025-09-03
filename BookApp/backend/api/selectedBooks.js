@@ -27,7 +27,7 @@ router.post("/favouriteBooks", async (req, res) => {
 
   try {
     // Check if the book is already a favourite
-    const [results] = await pool.query("SELECT * FROM favourite_books WHERE member_id = ? AND googlebookId = ?", [memberId, googlebookId]);
+    const [results] = await pool.query("SELECT * FROM favourite_books WHERE member_id = ? AND googlebook_id = ?", [memberId, googlebookId]);
 
     if (results.length > 0) {  // If the book is already a favourite
       return res.status(409).json({
@@ -37,7 +37,7 @@ router.post("/favouriteBooks", async (req, res) => {
     }
 
     // Insert the book as a favourite
-    const [insertResult] = await pool.query("INSERT INTO favourite_books (member_id, googlebookId) VALUES (?, ?)", [memberId, googlebookId]);
+    const [insertResult] = await pool.query("INSERT INTO favourite_books (member_id, googlebook_id) VALUES (?, ?)", [memberId, googlebookId]);
 
     return res.status(201).json({
       success: true,
