@@ -89,8 +89,8 @@ searchBookshelf.get('/search', (req, res) => {
 
 // FavouriteBooks Endpoint
 searchBookshelf.post('/favouriteBooks', (req, res) => {
-  const { googlebookId, member_id } = req.body;
-  console.log("Received favouriteBooks request for Google Book ID:", {googlebookId, member_id});
+  const { googlebookId, memberId } = req.body;
+  console.log("Received favouriteBooks request for Google Book ID:", {googlebookId, memberId});
 
   // Validate googlebookId
   if (!googlebookId || googlebookId.trim() === "") {
@@ -100,7 +100,7 @@ searchBookshelf.post('/favouriteBooks', (req, res) => {
     });
   }
 
-  if (!member_id || typeof member_id !== 'number') {
+  if (!memberId || typeof memberId !== 'number') {
     return res.status(400).json({
       success: false,
       message: "User ID is required and must be a valid number.",
@@ -108,15 +108,15 @@ searchBookshelf.post('/favouriteBooks', (req, res) => {
   }
 
   // SQL query to insert the book into the 'favourites' table
-  const insertQuery = "INSERT INTO favourite_books (googlebookId, member_id) VALUES (?, ?)";
+  const insertQuery = "INSERT INTO favourite_books (googlebook_id, member_id) VALUES (?, ?)";
 
   // Execute the query using callback-based interface
-  connection.query(insertQuery, [googlebookId, member_id], (err, results) => {
+  connection.query(insertQuery, [googlebookId, memberId], (err, results) => {
     if (err) {
       console.error("Error adding book to favourites:", {
         error: err.message,
         googlebookId,
-        member_id,
+        memberId,
       });
       return res.status(500).json({
         success: false,

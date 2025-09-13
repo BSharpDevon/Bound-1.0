@@ -41,8 +41,9 @@ app.get("/search-members", (req,res) => {
 
 testDatabaseConnection ();
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}!`);
+// commented out the below as was causing conflicts with server.js and not allowing backend to run 
+// const PORT = process.env.PORT || 8000;
+// app.listen(PORT, () => {
+//     console.log(`Server started on port ${PORT}!`);
 
-}); 
+// }); 
