@@ -21,15 +21,15 @@ app.use('/selected-books', selectedBooksRoutes);
 app.use('/search-bookshelf', searchBookshelfRoutes);
 app.use('/login-page', loginPageRoutes);
 
-
-pool.getConnection((err, connection) => {
-  if (err) {
-      console.error('Server: Database connection failed: ' + err.message);
-  } else {
-      console.log('Server: Connected to database.');
-      connection.release(); // Release the connection back to the pool
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Server: Connected to database.');
+    connection.release();
+  } catch (err) {
+    console.error('Server: Database connection failed: ' + err.message);
   }
-});
+})();
 
 // Set up the server to listen on a specific port
 const PORT = process.env.PORT || 8000;
