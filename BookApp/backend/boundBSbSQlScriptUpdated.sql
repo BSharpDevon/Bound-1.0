@@ -66,16 +66,15 @@ SELECT * FROM bind_books;
 -- Table to keep friend pairs + add new friendships
 
 CREATE TABLE friends (
-    friendship_id INT PRIMARY KEY AUTO_INCREMENT,
-    friends_email VARCHAR(250) NOT NULL,
-    FOREIGN KEY (friends_email) REFERENCES members(email)
-        ON DELETE CASCADE ON UPDATE CASCADE
+	friendship_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	inviter_id INT,
+	invitee_id INT,
+	FOREIGN KEY (inviter_id) REFERENCES members(member_id),
+	FOREIGN KEY (invitee_id) REFERENCES members(member_id)
+		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 SELECT * FROM friends;
-
-INSERT INTO friends (friends_email, friends_id)
-VALUES ('beth@cfg.com', 2);
 
 -- 2) Rebuild parent table: use Google Books ID as the PK
 CREATE TABLE books (
