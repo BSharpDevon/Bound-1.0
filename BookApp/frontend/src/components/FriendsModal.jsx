@@ -18,7 +18,7 @@ const FriendsModal = ({
       <input
         className="friend-search-input"
         type="text"
-        placeholder="Search users by name"
+        placeholder="Search users by email"
         value={searchUserEmail}
         onChange={handleInputChange}
       />
