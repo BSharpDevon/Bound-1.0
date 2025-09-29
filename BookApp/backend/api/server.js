@@ -7,6 +7,7 @@ import selectedBooksRoutes from './selectedBooks.js'; // Correct import for sele
 import searchBookshelfRoutes from './searchBookshelf.js';
 import loginPageRoutes from './logInPage.js';
 import addFriendRoutes from './addfriend.js';
+import searchMemberRoutes from 'searchmembers.js';
 
 dotenv.config(); // Load environment variables
 
@@ -22,6 +23,7 @@ app.use('/selected-books', selectedBooksRoutes);
 app.use('/search-bookshelf', searchBookshelfRoutes);
 app.use('/login-page', loginPageRoutes);
 app.use('/friends', addFriendRoutes);
+app.use('/friends', searchMemberRoutes);
 
 pool.getConnection((err, connection) => {
   if (err) {

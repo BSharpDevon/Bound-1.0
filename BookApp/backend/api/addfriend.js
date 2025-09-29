@@ -17,7 +17,7 @@ router.get("/search-members", async (req, res) => {
     SELECT member_id, full_name, email
     FROM members
     WHERE full_name LIKE ? OR email LIKE ?
-    LIMIT 10;
+    LIMIT 20;
   `;
   const search = `%${query}%`;
 
